@@ -19,9 +19,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="${pageContext.servletContext.contextPath}/danh-sach.htm">Danh sách sản phẩm</a></li>
-				<li><a href="#">Tạo hóa đơn</a></li>
-				<li><a href="#">Tạo phiếu nhập</a></li>
-				<li><a href="#">Tạo phiếu xuất</a></li>
+				<li><a href="${pageContext.servletContext.contextPath}/danh-sach-kho-hang.htm">Danh sách kho hàng</a></li>
 			</ul>
 		</div>
 	</nav>

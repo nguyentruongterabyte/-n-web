@@ -1,10 +1,14 @@
 package poly.entity;
 
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
@@ -28,6 +32,10 @@ public class Product {
 	@DecimalMin(value = "0", message = "Giá bán không được âm!")
 	@NotNull(message = "Vui lòng nhập giá bán!")
 	private float outPrice;
+	
+	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
+	private Collection<InventoryCapability> inventoryCapability;
+	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
