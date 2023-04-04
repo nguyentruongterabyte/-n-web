@@ -6,24 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import poly.dao.ProductDao;
-import poly.entity.Product;
 
+import poly.dao.InventoryDao;
+import poly.entity.Inventory;
 
 @Controller
 @RequestMapping("/")
-public class ProductListController {
+public class InventoryListController {
 	@Autowired
-	private ProductDao productDao;
+	private InventoryDao inventoryDao;
 	
-	@RequestMapping("danh-sach")
+	@RequestMapping("danh-sach-kho-hang")
 	public String showList(ModelMap model) {
-	
-		List<Product> list = productDao.getAll();
-		model.addAttribute("products", list);
-		return "productList";
+		List<Inventory> list = inventoryDao.getAll();
+		model.addAttribute("inventories", list);
+		return "inventoryList";
 	}
-	
-	
-	
 }

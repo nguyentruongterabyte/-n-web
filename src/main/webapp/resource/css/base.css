@@ -58,3 +58,16 @@
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
+
+.no-resize {
+	resize: none;
+}
+
+
+.mt-8 {
+	margin-top: 8px;
+}
+
+.mt-12 {
+	margin-top: 12px;
+}
