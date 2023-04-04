@@ -11,6 +11,9 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resource/css/base.css">
+<link rel="stylesheet"
+	href="${pageContext.servletContext.contextPath}/resource/css/selectBox.css">
+
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
@@ -99,108 +102,37 @@
 									placeholder="Địa chỉ" disabled></th>
 								<th><input type="text" class="form-control"
 									placeholder="Giá thuê" disabled></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-<%-- 							<c:forEach items="${inventories}" var="i"> --%>
-<!-- 								<tr> -->
-<%-- 									<td>${i.id}</td> --%>
-<%-- 									<td>${i.name}</td> --%>
-<%-- 									<td>${i.address}</td> --%>
-<%-- 									<td>${i.rentPrice}</td> --%>
-<!-- 								</tr> -->
-<%-- 							</c:forEach> --%>
+							<c:forEach items="${inventories}" var="i">
+								<tr>
+									<td>${i.id}</td>
+									<td>${i.name}</td>
+									<td>${i.address}</td>
+									<td>${i.rentPrice}</td>
+									<td>
+										<form data-placement="top" data-toggle="tooltip"
+											title="Option">
+											<button class="btn btn-default btn-xs"
+												data-toggle="modal" data-target="#option">
+												<span class="glyphicon glyphicon-option-horizontal"></span>
+											</button>
+										</form>
+									</td>
+								</tr>
+							</c:forEach>
 
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Kho 1</td>
-									<td>Thủ Đức</td>
-									<td>1000000</td>
-								</tr>
 						</tbody>
 					</table>
 				</div>
-				<div>
-					<button class="btn btn-success">Thêm</button>
-				</div>
+				<form action="${pageContext.servletContext.contextPath}/tao-kho-hang.htm">
+					<button class="btn btn-success">
+						<span class="glyphicon glyphicon-plus"></span>
+						Tạo kho hàng mới
+					</button>
+				</form>
 			</div>
 			<div class="col-md-6">
 				<h4>Thông tin</h4>
@@ -294,6 +226,11 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>
+				<div class="mt-12">
+					<button class="btn btn-warning">
+						Chỉnh sửa
+					</button>
 				</div>
 			</div>
 		</div>
