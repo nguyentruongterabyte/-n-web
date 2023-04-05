@@ -11,8 +11,6 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resource/css/base.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/resource/css/selectBox.css">
 
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -127,7 +125,7 @@
 						</tbody>
 					</table>
 				</div>
-				<form action="${pageContext.servletContext.contextPath}/tao-kho-hang.htm">
+				<form action="${pageContext.servletContext.contextPath}/kho-hang/tao-moi.htm" method="post">
 					<button class="btn btn-success">
 						<span class="glyphicon glyphicon-plus"></span>
 						Tạo kho hàng mới
@@ -191,46 +189,6 @@
 									<td>${inventoryCapability.currentCount}</td>
 								</tr>
 							</c:forEach>
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td>Rockstar</td> -->
-<!-- 								<td>50</td> -->
-<!-- 								<td>15</td> -->
-<!-- 							</tr> -->
 						</tbody>
 					</table>
 				</div>

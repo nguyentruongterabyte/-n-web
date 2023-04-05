@@ -64,9 +64,9 @@ public class InventoryCapability {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public InventoryCapability(Id embeddedId, int maxCount, int last, int currentCount) {
+	public InventoryCapability(Inventory inventory, Product product, int maxCount, int last, int currentCount) {
 		super();
-		this.embeddedId = embeddedId;
+		this.embeddedId = new Id(product, inventory);
 		this.maxCount = maxCount;
 		this.last = last;
 		this.currentCount = currentCount;
