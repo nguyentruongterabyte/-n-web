@@ -107,7 +107,7 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${inventories}" var="i">
-								<tr>
+								<tr onclick="location.href='${pageContext.servletContext.contextPath}/danh-sach-kho-hang.htm?id=${i.id}'">
 									<td>${i.id}</td>
 									<td>${i.name}</td>
 									<td>${i.address}</td>
@@ -156,19 +156,19 @@
 					</div>
 					<div class="col-md-9">
 						<div>
-							<input class="form-control" id="inventory-id" type="text" value="1" readonly>
+							<input class="form-control" id="inventory-id" type="text" value="${inventory.id}" readonly>
 						</div>
 						<div class="mt-8">
-							<input class="form-control" id="inventory-name" type="text" value="Kho 1" readonly>
+							<input class="form-control" id="inventory-name" type="text" value="${inventory.name}" readonly>
 						</div>
 						<div class="mt-8">
-							<textarea class="form-control no-resize" id="inventory-address" rows="3" cols="40" readonly>Thủ Đức</textarea>
+							<textarea class="form-control no-resize" id="inventory-address" rows="3" cols="40" readonly>${inventory.address}</textarea>
 						</div>
 						<div class="mt-8">
-							<input class="form-control" id="inventory-term" type="text" value="1" readonly>
+							<input class="form-control" id="inventory-term" type="text" value="${inventory.term}" readonly>
 						</div>
 						<div class="mt-8">
-							<input class="form-control" id="inventory-rent-price" type="text" value="100000" readonly>
+							<input class="form-control" id="inventory-rent-price" type="text" value="${inventory.rentPrice}" readonly>
 						</div>
 					</div>
 				</div>
@@ -184,46 +184,53 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>Rockstar</td>
-								<td>50</td>
-								<td>15</td>
-							</tr>
+							<c:forEach var="inventoryCapability" items="${inventory.inventoryCapability}">
+								<tr>
+									<td>${inventoryCapability.embeddedId.product.name}</td>
+									<td>${inventoryCapability.maxCount}</td>
+									<td>${inventoryCapability.currentCount}</td>
+								</tr>
+							</c:forEach>
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td>Rockstar</td> -->
+<!-- 								<td>50</td> -->
+<!-- 								<td>15</td> -->
+<!-- 							</tr> -->
 						</tbody>
 					</table>
 				</div>

@@ -12,14 +12,14 @@ import javax.persistence.ManyToOne;
 public class InventoryCapability {
 	
 	@Embeddable
-	public class Id implements Serializable {
+	public static class Id implements Serializable {
 		private static final long serialVersionUID = 1L;
 		@ManyToOne
-		@JoinColumn(name = "InventoryId")
+		@JoinColumn(name="ProductId")
 		private Product product;
 		
 		@ManyToOne
-		@JoinColumn(name = "ProductId")
+		@JoinColumn(name="InventoryId")
 		private Inventory inventory;
 
 		public Id() {
@@ -48,7 +48,10 @@ public class InventoryCapability {
 		public void setInventory(Inventory inventory) {
 			this.inventory = inventory;
 		}
-		
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
 		
 	}
 	

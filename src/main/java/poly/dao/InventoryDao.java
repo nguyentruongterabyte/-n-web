@@ -29,4 +29,10 @@ public class InventoryDao {
 		
 		return list;
 	}
+	
+	public Inventory get(int id) {
+		Session session = factory.getCurrentSession();
+		Inventory i = (Inventory) session.get(Inventory.class, (Integer) id);
+		return i;
+	}
 }

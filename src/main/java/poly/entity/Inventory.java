@@ -75,7 +75,14 @@ public class Inventory {
 	public void setTerm(int term) {
 		this.term = term;
 	}
-	
+
+	public Collection<InventoryCapability> getInventoryCapability() {
+		return inventoryCapability;
+	}
+
+	public void setInventoryCapability(Collection<InventoryCapability> inventoryCapability) {
+		this.inventoryCapability = inventoryCapability;
+	}
 	
 	
 }
