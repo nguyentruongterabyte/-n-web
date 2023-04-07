@@ -81,7 +81,7 @@
 							rows="3" cols="40" />
 					</div>
 					<div class="mt-8">
-						<form:input path="term" class="form-control" />
+						<form:input type="number" min="0" path="term" class="form-control" />
 					</div>
 					<div class="mt-8">
 						<form:input path="rentPrice" class="form-control" />
@@ -107,10 +107,11 @@
 									<td class="col-md-5">
 										<select class="form-control"
 										name="product" id="product-select">
+											<option value="">---Chọn sản phẩm---</option>
 											<c:forEach var="p" items="${products}">
 												<option value="${p.id}">${p.name}</option>
 											</c:forEach>
-										</select></td>
+									</select></td>
 									<td class="col-md-2"></td>
 									<td class="col-md-2"></td>
 									<td class="col-md-2"></td>
@@ -123,7 +124,7 @@
 		</div>
 	</div>
 	<script>
-		$('#product-select').on('blur', function() {
+		$('#product-select').on('change', function() {
 			var productName = $(this).find(":selected").text();
 			var productId = $(this).find(":selected").val();
 			$(this).find('option[value=' + productId + ']').remove();
@@ -137,14 +138,10 @@
 				+		`<option selected="selected" value="` 
 						+ productId	+ `">`
 						+ productName + `</option>`	
-				+		`<c:forEach var="p" items="${products}">
-						<option value="${p.id}">${p.name}</option>
-						</c:forEach>
-						</select></td>`
 				+ 	`</td>`
-				+	`<td class="col-md-2"><input class="form-control" value="0" name="maxCounts[]"></td>`
-				+	`<td class="col-md-2"><input class="form-control" value="0" name="lasts[]"></td>`
-				+	`<td class="col-md-2"><input class="form-control" value="0" name="currentCounts[]"></td>`
+				+	`<td class="col-md-2"><input type="number" min="0" class="form-control" value="0" name="maxCounts[]"></td>`
+				+	`<td class="col-md-2"><input type="number" min="0" class="form-control" value="0" name="lasts[]"></td>`
+				+	`<td class="col-md-2"><input type="number" min="0" class="form-control" value="0" name="currentCounts[]"></td>`
 			+	`</tr>`;
 			
 			$('#inventory-capability-input').before(html);
