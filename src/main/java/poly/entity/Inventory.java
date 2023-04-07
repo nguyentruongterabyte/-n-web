@@ -1,5 +1,6 @@
 package poly.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ public class Inventory {
 	
 	public Inventory() {
 		super();
+		this.inventoryCapability = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 

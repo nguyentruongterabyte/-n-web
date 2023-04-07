@@ -62,6 +62,7 @@ public class InventoryCapability {
 	private int currentCount;
 	public InventoryCapability() {
 		super();
+		
 		// TODO Auto-generated constructor stub
 	}
 	public InventoryCapability(Inventory inventory, Product product, int maxCount, int last, int currentCount) {

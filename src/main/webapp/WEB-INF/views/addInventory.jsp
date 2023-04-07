@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,7 @@
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resource/css/selectBox.css">
 </head>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
 .inventory-capability {
 	max-height: 85vh;
@@ -69,20 +71,20 @@
 				</div>
 				<div class="col-md-4">
 					<div class="mt-12">
-						<form:input path="id" class="form-control" readonly="true"/>
+						<form:input path="id" class="form-control" readonly="true" />
 					</div>
 					<div class="mt-8">
 						<form:input path="name" class="form-control" />
 					</div>
 					<div class="mt-8">
 						<form:textarea path="address" class="form-control no-resize"
-							rows="3" cols="40"/>
+							rows="3" cols="40" />
 					</div>
 					<div class="mt-8">
-						<form:input path="term" class="form-control"/>
+						<form:input path="term" class="form-control" />
 					</div>
 					<div class="mt-8">
-						<form:input path="rentPrice" class="form-control"/>
+						<form:input path="rentPrice" class="form-control" />
 					</div>
 					<button class="btn btn-success btn-sm mt-16">Lưu</button>
 				</div>
@@ -90,171 +92,64 @@
 					<div class="inventory-capability">
 						<table class="table table-hover inventory-capability__table">
 							<thead class="inventory-capability__table-heading">
-								<tr>
-									<th></th>
-									<th>Sản phẩm</th>
-									<th>Số lượng tối đa</th>
-									<th>Số lượng tồn kỳ trước</th>
-									<th>Số lượng hiện tại</th>
+								<tr class="row">
+									<th class="col-md-1"></th>
+									<th class="col-md-5">Sản phẩm</th>
+									<th class="col-md-2">Số lượng tối đa</th>
+									<th class="col-md-2">Tồn kỳ trước</th>
+									<th class="col-md-2">Số lượng hiện tại</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td></td>
-									<td>
-										<input type="checkbox" id="option-view-button">
-									</td>
-									<td></td>
-									<td></td>
-									<td></td>
+							<tbody id="inventory-capability-body">
+								<tr id="inventory-capability-input" class="row row-no-padding">
+									<td class="col-md-1"><span
+										class="glyphicon glyphicon-asterisk"></span></td>
+									<td class="col-md-5">
+										<select class="form-control"
+										name="product" id="product-select">
+											<c:forEach var="p" items="${products}">
+												<option value="${p.id}">${p.name}</option>
+											</c:forEach>
+										</select></td>
+									<td class="col-md-2"></td>
+									<td class="col-md-2"></td>
+									<td class="col-md-2"></td>
 								</tr>
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
-<!-- 								<tr> -->
-<!-- 									<td></td> -->
-<!-- 									<td>Sản phẩm 1</td> -->
-<!-- 									<td>50</td> -->
-<!-- 									<td>10</td> -->
-<!-- 									<td>25</td> -->
-<!-- 								</tr> -->
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</form:form>
-
 		</div>
 	</div>
+	<script>
+		$('#product-select').on('blur', function() {
+			var productName = $(this).find(":selected").text();
+			var productId = $(this).find(":selected").val();
+			$(this).find('option[value=' + productId + ']').remove();
+			var html = 
+				`<tr class="row row-no-padding">` 
+				+	`<td class="col-md-1"></td>`
+				+	`<td class="col-md-5">`
+				+		`<select class="form-control"
+						name="productsId[]" id="product-select">`
+						
+				+		`<option selected="selected" value="` 
+						+ productId	+ `">`
+						+ productName + `</option>`	
+				+		`<c:forEach var="p" items="${products}">
+						<option value="${p.id}">${p.name}</option>
+						</c:forEach>
+						</select></td>`
+				+ 	`</td>`
+				+	`<td class="col-md-2"><input class="form-control" value="0" name="maxCounts[]"></td>`
+				+	`<td class="col-md-2"><input class="form-control" value="0" name="lasts[]"></td>`
+				+	`<td class="col-md-2"><input class="form-control" value="0" name="currentCounts[]"></td>`
+			+	`</tr>`;
+			
+			$('#inventory-capability-input').before(html);
+			
+		}); 
+	</script>
 </body>
 </html>
