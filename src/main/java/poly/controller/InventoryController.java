@@ -7,7 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import poly.dao.InventoryDao;
 import poly.dao.ProductDao;
@@ -41,5 +46,17 @@ public class InventoryController {
 		return "addInventory";
 	}
 	
-
+	@RequestMapping(value = "/tao-moi/xac-thuc", method = RequestMethod.POST)
+	public String validate(ModelMap model, @ModelAttribute("inventory") @Validated Inventory inventory,
+							@RequestParam("productsId[]") String[] productsId,
+							@RequestParam("maxCounts[]") String[] maxCounts,
+							@RequestParam("lasts[]") String[] lasts,
+							@RequestParam("currentCounts[]") String[] currentCounts,
+							BindingResult errors
+			) { 
+		
+		
+		
+		return "addInventory";
+	}
 }

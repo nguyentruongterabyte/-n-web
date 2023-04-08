@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Inventory {
@@ -16,9 +19,13 @@ public class Inventory {
 	@GeneratedValue
 	@Column(name = "Id")
 	private int id;
+	@NotBlank(message = "Vui lòng nhập tên kho hàng!")
 	private String name;
+	@NotBlank(message= "Vui lòng nhập địa chỉ!")
 	private String address;
+	@NotNull(message="Vui lòng nhập giá thuê!")
 	private float rentPrice;
+	@NotNull(message="Vui lòng nhập kỳ!")
 	private int term;
 	@OneToMany(mappedBy = "embeddedId.inventory", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapability;
@@ -28,6 +35,8 @@ public class Inventory {
 		this.inventoryCapability = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 	public Inventory(int id, String name, String address, float rentPrice, int term) {
 		super();

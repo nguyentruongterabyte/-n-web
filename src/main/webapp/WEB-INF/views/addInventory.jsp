@@ -88,7 +88,7 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<form:form action="abc" modelAttribute="inventory" method="post">
+			<form:form action="${pageContext.servletContext.contextPath}/kho-hang/tao-moi/xac-thuc.htm" modelAttribute="inventory" method="post">
 				<div class="col-md-2">
 					<div class="mt-12">
 						<form:label path="id">Mã kho</form:label>
@@ -107,16 +107,18 @@
 					</div>
 				</div>
 				<div class="col-md-4">
+					${message}
 					<div class="mt-12">
 						<form:input path="id" class="form-control" readonly="true" />
 					</div>
 					<div class="mt-8">
 						<form:input path="name" class="form-control" />
-						<form:errors path="name">Vui lòng nhập tên</form:errors>
+						<form:errors path="name" element="div"/>
 					</div>
 					<div class="mt-8">
 						<form:textarea path="address" class="form-control no-resize"
 							rows="3" cols="40" />
+						<form:errors path="address" element="div"/>
 					</div>
 					<div class="mt-8">
 						<form:input type="number" min="0" path="term" class="form-control" />
