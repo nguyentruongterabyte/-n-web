@@ -31,6 +31,43 @@
 	z-index: 2;
 	background-color: #fff;
 }
+
+.product-capability__option {
+	position: relative !important;
+}
+
+.product-capability__option-btn {
+	margin: 8px 0;
+}
+
+.product-capability__option-btn span {
+	display: none;
+}
+
+.product-capability:hover .product-capability__option-btn span {
+	display: block
+}
+
+.product-capability__option:hover .product-capability__option-btn-group {
+ 	display: block; 
+}
+
+.product-capability__option-btn-group {
+	position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 70%; 
+    display: none;
+}
+
+.product-capability__option-btn-delete {
+	background: #fff;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 </style>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -75,6 +112,7 @@
 					</div>
 					<div class="mt-8">
 						<form:input path="name" class="form-control" />
+						<form:errors path="name">Vui lòng nhập tên</form:errors>
 					</div>
 					<div class="mt-8">
 						<form:textarea path="address" class="form-control no-resize"
@@ -84,7 +122,7 @@
 						<form:input type="number" min="0" path="term" class="form-control" />
 					</div>
 					<div class="mt-8">
-						<form:input path="rentPrice" class="form-control" />
+						<form:input type="number" min="0" path="rentPrice" class="form-control" />
 					</div>
 					<button class="btn btn-success btn-sm mt-16">Lưu</button>
 				</div>
@@ -129,15 +167,22 @@
 			var productId = $(this).find(":selected").val();
 			$(this).find('option[value=' + productId + ']').remove();
 			var html = 
-				`<tr class="row row-no-padding">` 
-				+	`<td class="col-md-1"></td>`
+				`<tr class="product-capability row row-no-padding" data-product-id="` + productId + `" data-product-name="` + productName +`">` 
+				+	`<td class="product-capability__option col-md-1">
+						<div class="product-capability__option-btn">
+							<span class="glyphicon glyphicon-triangle-right"></span>
+						</div>
+						<div class="product-capability__option-btn-group">
+							<div class="product-capability__option-btn-delete" onclick="deleteProduct(` + productId + `)">Xóa</div>
+						</div>
+					</td>`
 				+	`<td class="col-md-5">`
 				+		`<select class="form-control"
-						name="productsId[]" id="product-select">`
+						name="productsId[]">`
 						
-				+		`<option selected="selected" value="` 
-						+ productId	+ `">`
-						+ productName + `</option>`	
+				+			`<option selected="selected" value="` 
+							+ productId	+ `">`
+							+ productName + `</option>`	
 				+ 	`</td>`
 				+	`<td class="col-md-2"><input type="number" min="0" class="form-control" value="0" name="maxCounts[]"></td>`
 				+	`<td class="col-md-2"><input type="number" min="0" class="form-control" value="0" name="lasts[]"></td>`
@@ -147,6 +192,24 @@
 			$('#inventory-capability-input').before(html);
 			
 		}); 
+	</script>
+	
+	<script>
+		function deleteProduct(productId) {
+			var ok = confirm('Bạn có chắc muốn xóa sản phẩm này?');
+			if (ok) {
+				var deleteObject = $('tr[data-product-id="' + productId + '"]');
+				var productName = deleteObject.attr('data-product-name');
+				
+				// Trả lại option cho thanh chọn sản phẩm
+				var html = `<option value="` + productId + `">` + productName + `</option>`;
+				var productSelect = $('#product-select');
+				productSelect.append(html);
+				
+				// Xóa product đó ở danh sách sức chứa của kho hàng
+				deleteObject.remove();
+			}
+		}
 	</script>
 </body>
 </html>
