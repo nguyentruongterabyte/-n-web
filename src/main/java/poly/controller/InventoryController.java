@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.tomcat.util.log.UserDataHelper.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +46,7 @@ public class InventoryController {
 		return "addInventory";
 	}
 	
-	@RequestMapping(value = "tao-moi/xac-thuc")
+	@RequestMapping(value = "tao-moi/xac-thuc", method = RequestMethod.POST)
 	public String validate(ModelMap model, @ModelAttribute("inventory") Inventory inventory,
 							@RequestParam(value = "productsId[]", required = false) String[] productsId,
 							@RequestParam(value = "maxCounts[]", required = false) String[] maxCounts,
@@ -65,10 +63,6 @@ public class InventoryController {
 		
 		if (inventory.getAddress().trim().length() == 0) {
 			errors.rejectValue("address", "inventory", "Vui lòng nhập địa chỉ của kho!");
-		}
-		
-		if (errors.hasErrors()) {
-			model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
 		}
 		
 		Collection<InventoryCapability> inventoryCapability = new ArrayList<>();
@@ -125,6 +119,15 @@ public class InventoryController {
 		
 		model.addAttribute("products", products);
 		model.addAttribute("inventory", inventory);
+		if (errors.hasErrors()) {
+			model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
+		} else {
+			String message = inventoryDao.save(inventory);
+			model.addAttribute("message", message);
+			model.addAttribute("inventories", inventoryDao.getAll());
+			return "inventoryList";
+		}
+		
 		return "addInventory";
 	}
 }

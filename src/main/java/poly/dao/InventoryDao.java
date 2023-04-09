@@ -2,11 +2,13 @@ package poly.dao;
 
 import java.util.List;
 
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -42,5 +44,22 @@ public class InventoryDao {
 		
 		int maxId = (int) query.uniqueResult();
 		return maxId;
+	}
+	
+	public String save(Inventory inventory) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		String message = "";
+		try {
+			session.save(inventory);
+			t.commit();
+			message = "Thêm mới kho hàng thành công!";
+		} catch (Exception e) {
+			t.rollback();
+			return "Thêm mới thất bại!";
+		} finally {
+			session.close();
+		}
+		return message;
 	}
 }
