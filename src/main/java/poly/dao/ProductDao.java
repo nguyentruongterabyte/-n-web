@@ -92,7 +92,7 @@ public class ProductDao {
 	
 	public Product get(int id) {
 		Session session = factory.getCurrentSession();
-		Product p = (Product) session.load(Product.class,(Integer) id);
+		Product p = (Product) session.get(Product.class,(Integer) id);
 		return p;
 	}
 }

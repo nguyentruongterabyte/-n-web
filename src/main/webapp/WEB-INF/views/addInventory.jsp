@@ -48,25 +48,26 @@
 	display: block
 }
 
-.product-capability__option:hover .product-capability__option-btn-group {
- 	display: block; 
+.product-capability__option:hover .product-capability__option-btn-group
+	{
+	display: block;
 }
 
 .product-capability__option-btn-group {
 	position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 70%; 
-    display: none;
+	z-index: 1;
+	left: 0;
+	top: 70%;
+	display: none;
 }
 
 .product-capability__option-btn-delete {
 	background: #fff;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    border: 1px solid #ccc;
-    padding: 4px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	border: 1px solid #ccc;
+	padding: 4px 10px;
+	border-radius: 4px;
+	cursor: pointer;
 }
 </style>
 <body>
@@ -88,46 +89,62 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<form:form action="${pageContext.servletContext.contextPath}/kho-hang/tao-moi/xac-thuc.htm" modelAttribute="inventory" method="post">
-				<div class="col-md-2">
-					<div class="mt-12">
-						<form:label path="id">Mã kho</form:label>
+			<form:form
+				action="${pageContext.servletContext.contextPath}/kho-hang/tao-moi/xac-thuc.htm"
+				modelAttribute="inventory" method="post">
+				<div class="col-md-6">
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<form:label path="id">Mã kho</form:label>
+						</div>
+						<div class="col-md-8">
+							<form:input path="id" class="form-control" readonly="true"/>
+							<form:errors path="id" element="div" />
+						</div>
 					</div>
-					<div style="margin-top: 16px;">
-						<form:label path="name">Tên kho</form:label>
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<form:label path="name">Tên kho</form:label>
+						</div>
+						<div class="col-md-8">
+							<form:input path="name" class="form-control" />
+							<form:errors path="name" element="div" />
+						</div>
 					</div>
-					<div style="margin-top: 12px;">
-						<form:label path="address">Địa chỉ</form:label>
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<form:label path="address">Địa chỉ</form:label>
+						</div>
+						<div class="col-md-8">
+							<form:textarea path="address" cols="40" rows="3" class="form-control no-resize"/>
+							<form:errors path="address"/>
+						</div>
 					</div>
-					<div style="margin-top: 60px;">
-						<form:label path="term">Kỳ</form:label>
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<form:label path="term">Kỳ</form:label>
+						</div>
+						<div class="col-md-8">
+							<form:input type="number" min="0" path="term"
+								class="form-control" />
+							<form:errors path="term" element="div" />
+						</div>
 					</div>
-					<div style="margin-top: 18px;">
-						<form:label path="rentPrice">Giá thuê</form:label>
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<form:label path="rentPrice">Giá thuê</form:label>
+						</div>
+						<div class="col-md-8">
+							<form:input type="number" min="0" step="100" path="rentPrice"
+								class="form-control" />
+							<form:errors path="term" element="div" />
+						</div>
+					</div>
+					<div class="row row-no-padding">
+						<button class="col-md-offset-10 col-md-2 mt-12 btn btn-success">Lưu</button>
 					</div>
 				</div>
-				<div class="col-md-4">
-					${message}
-					<div class="mt-12">
-						<form:input path="id" class="form-control" readonly="true" />
-					</div>
-					<div class="mt-8">
-						<form:input path="name" class="form-control" />
-						<form:errors path="name" element="div"/>
-					</div>
-					<div class="mt-8">
-						<form:textarea path="address" class="form-control no-resize"
-							rows="3" cols="40" />
-						<form:errors path="address" element="div"/>
-					</div>
-					<div class="mt-8">
-						<form:input type="number" min="0" path="term" class="form-control" />
-					</div>
-					<div class="mt-8">
-						<form:input type="number" min="0" path="rentPrice" class="form-control" />
-					</div>
-					<button class="btn btn-success btn-sm mt-16">Lưu</button>
-				</div>
+
 				<div class="col-md-6">
 					<div class="inventory-capability">
 						<table class="table table-hover inventory-capability__table">
@@ -141,11 +158,30 @@
 								</tr>
 							</thead>
 							<tbody id="inventory-capability-body">
+								<c:forEach var="inventoryCapability" items="${inventory.inventoryCapability}">
+									<tr class="product-capability row row-no-padding" data-product-id="${inventoryCapability.embeddedId.product.id}" data-product-name="${inventoryCapability.embeddedId.product.name}">
+										<td class="product-capability__option col-md-1">
+											<div class="product-capability__option-btn">
+												<span class="glyphicon glyphicon-triangle-right"></span>
+											</div>
+											<div class="product-capability__option-btn-group">
+												<div class="product-capability__option-btn-delete" onclick="deleteProduct(${inventoryCapability.embeddedId.product.id})">Xóa</div>
+											</div>
+										</td>	
+										<td class="col-md-5">
+											<select class="form-control" name="productsId[]">
+												<option selected="selected" value="${inventoryCapability.embeddedId.product.id}">${inventoryCapability.embeddedId.product.name}</option>
+											</select>
+										</td>	
+										<td class="col-md-2"><input type="number" min="0" class="form-control" name="maxCounts[]" value="${inventoryCapability.maxCount}"></td>										
+										<td class="col-md-2"><input type="number" min="0" class="form-control" name="lasts[]" value="${inventoryCapability.last}"></td>										
+										<td class="col-md-2"><input type="number" min="0" class="form-control" name="currentCounts[]" value="${inventoryCapability.currentCount}"></td>										
+									</tr>
+								</c:forEach>
 								<tr id="inventory-capability-input" class="row row-no-padding">
 									<td class="col-md-1"><span
 										class="glyphicon glyphicon-asterisk"></span></td>
-									<td class="col-md-5">
-										<select class="form-control"
+									<td class="col-md-5"><select class="form-control"
 										name="product" id="product-select">
 											<option value="">---Chọn sản phẩm---</option>
 											<c:forEach var="p" items="${products}">
@@ -195,7 +231,7 @@
 			
 		}); 
 	</script>
-	
+
 	<script>
 		function deleteProduct(productId) {
 			var ok = confirm('Bạn có chắc muốn xóa sản phẩm này?');
@@ -212,6 +248,9 @@
 				deleteObject.remove();
 			}
 		}
+	</script>
+	<script>
+		
 	</script>
 </body>
 </html>

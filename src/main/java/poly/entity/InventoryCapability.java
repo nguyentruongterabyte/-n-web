@@ -53,6 +53,8 @@ public class InventoryCapability {
 			return serialVersionUID;
 		}
 		
+		
+		
 	}
 	
 	@EmbeddedId
@@ -65,13 +67,19 @@ public class InventoryCapability {
 		
 		// TODO Auto-generated constructor stub
 	}
-	public InventoryCapability(Inventory inventory, Product product, int maxCount, int last, int currentCount) {
+	
+	
+	
+	public InventoryCapability(Id embeddedId, int maxCount, int last, int currentCount) {
 		super();
-		this.embeddedId = new Id(product, inventory);
+		this.embeddedId = embeddedId;
 		this.maxCount = maxCount;
 		this.last = last;
 		this.currentCount = currentCount;
 	}
+
+
+
 	public Id getEmbeddedId() {
 		return embeddedId;
 	}
