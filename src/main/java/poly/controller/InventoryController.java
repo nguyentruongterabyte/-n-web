@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import poly.dao.InventoryCapabilityDao;
 import poly.dao.InventoryDao;
 import poly.dao.ProductDao;
 import poly.entity.Inventory;
@@ -27,6 +29,21 @@ public class InventoryController {
 	private InventoryDao inventoryDao;
 	@Autowired
 	private ProductDao productDao;
+	@Autowired
+	private InventoryCapabilityDao inventoryCapabilityDao;
+	
+	@RequestMapping("danh-sach")
+	public String showList(@RequestParam(value="id", required = false) String id, ModelMap model) {		
+		List<Inventory> list = inventoryDao.getAll();
+		model.addAttribute("inventories", list);
+		if (id == null) {
+			model.addAttribute("inventory", new Inventory());
+		} else {
+			Inventory i = inventoryDao.get(Integer.parseInt(id));
+			model.addAttribute("inventory", i);
+		}
+		return "inventoryList";
+	}
 	
 	@RequestMapping("tao-moi")
 	public String addInventory(ModelMap model) {
@@ -47,7 +64,9 @@ public class InventoryController {
 	}
 	
 	@RequestMapping(value = "tao-moi/xac-thuc", method = RequestMethod.POST)
-	public String validate(ModelMap model, @ModelAttribute("inventory") Inventory inventory,
+	public String validate(ModelMap model,
+							RedirectAttributes redirectAttributes, 
+							@ModelAttribute("inventory") Inventory inventory,
 							@RequestParam(value = "productsId[]", required = false) String[] productsId,
 							@RequestParam(value = "maxCounts[]", required = false) String[] maxCounts,
 							@RequestParam(value = "lasts[]", required = false) String[] lasts,
@@ -100,6 +119,7 @@ public class InventoryController {
 				int currentCount = Integer.parseInt(currentCounts[i]);
 				InventoryCapability.Id embeddedId = new InventoryCapability.Id(product, inventory); 
 				inventoryCapability.add(new InventoryCapability(embeddedId, maxCount, last, currentCount));
+				
 			}
 			
 		}
@@ -123,9 +143,20 @@ public class InventoryController {
 			model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
 		} else {
 			String message = inventoryDao.save(inventory);
-			model.addAttribute("message", message);
-			model.addAttribute("inventories", inventoryDao.getAll());
-			return "inventoryList";
+			if ("Thêm mới kho hàng thành công!".equals(message)) {
+				/*
+				// Test xem message có đúng như trong inventoryDao không
+				System.out.println("equal");
+				*/
+				redirectAttributes.addFlashAttribute("type", "success");
+				redirectAttributes.addFlashAttribute("inventory", inventory);
+			} else if ("Thêm mới thất bại!".equals(message)) {
+				//System.out.println("equal");
+				redirectAttributes.addFlashAttribute("type", "error");
+			}
+			inventoryCapabilityDao.saveList(inventoryCapability);
+			redirectAttributes.addFlashAttribute("message", message);
+			return "redirect:../danh-sach.htm";
 		}
 		
 		return "addInventory";

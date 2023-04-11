@@ -79,10 +79,10 @@
 			<ul class="nav navbar-nav">
 				<li><a href="#">Home</a></li>
 				<li><a
-					href="${pageContext.servletContext.contextPath}/danh-sach.htm">Danh
+					href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm">Danh
 						sách sản phẩm</a></li>
 				<li class="active"><a
-					href="${pageContext.servletContext.contextPath}/danh-sach-kho-hang.htm">Danh
+					href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm">Danh
 						sách kho hàng</a></li>
 			</ul>
 		</div>
@@ -124,7 +124,7 @@
 						<div class="col-md-4">
 							<form:label path="term">Kỳ</form:label>
 						</div>
-						<div class="col-md-8">
+						<div class="col-md-3">
 							<form:input type="number" min="0" path="term"
 								class="form-control" />
 							<form:errors path="term" element="div" />
@@ -134,7 +134,7 @@
 						<div class="col-md-4">
 							<form:label path="rentPrice">Giá thuê</form:label>
 						</div>
-						<div class="col-md-8">
+						<div class="col-md-5">
 							<form:input type="number" min="0" step="100" path="rentPrice"
 								class="form-control" />
 							<form:errors path="term" element="div" />
