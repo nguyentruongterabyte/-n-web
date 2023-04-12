@@ -181,14 +181,14 @@
 	<div class="container">
 		<div id="toast">
 			<c:choose>
-				<c:when test="${type eq 'success'}">
+				<c:when test="${messageType eq 'success'}">
 					<!-- Toast success -->
 					<div class="toast toast--success">
 						<div class="toast__icon">
 							<span class="glyphicon glyphicon-ok-sign"></span>
 						</div>
 						<div class="toast__body">
-							<h3 class="toast__title">Success</h3>
+							<h3 class="toast__title">Thành công</h3>
 							<p class="toast__msg">${message}</p>
 						</div>
 						<div class="toast__close">
@@ -196,13 +196,13 @@
 						</div>
 					</div>
 				</c:when>
-				<c:when test="${type eq 'error' }">
-					<div class="toast toast--warning">
+				<c:when test="${messageType eq 'error' }">
+					<div class="toast toast--error">
 						<div class="toast__icon">
 							<span class="glyphicon glyphicon-ok-sign"></span>
 						</div>
 						<div class="toast__body">
-							<h3 class="toast__title">Warning</h3>
+							<h3 class="toast__title">Lỗi</h3>
 							<p class="toast__msg">${message}</p>
 						</div>
 						<div class="toast__close">
@@ -210,6 +210,7 @@
 						</div>
 					</div>
 				</c:when>
+				
 			</c:choose>
 		</div>
 		<div class="row">
@@ -240,7 +241,7 @@
 						<tbody>
 							<c:forEach items="${inventories}" var="i">
 								<tr
-									onclick="location.href='${pageContext.servletContext.contextPath}/danh-sach-kho-hang.htm?id=${i.id}'">
+									onclick="location.href='${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm?id=${i.id}'">
 									<td>${i.id}</td>
 									<td>${i.name}</td>
 									<td>${i.address}</td>
@@ -340,9 +341,11 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="mt-12">
-					<button class="btn btn-warning">Chỉnh sửa</button>
-				</div>
+				<c:if test="${inventory.id != 0}">
+					<div class="mt-12">
+						<button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/kho-hang/chinh-sua.htm?id=${inventory.id}'">Chỉnh sửa</button>
+					</div>	
+				</c:if>
 			</div>
 		</div>
 	</div>

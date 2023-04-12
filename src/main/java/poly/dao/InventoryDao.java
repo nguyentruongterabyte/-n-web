@@ -62,4 +62,21 @@ public class InventoryDao {
 		}
 		return message;
 	}
+	
+	public String update(Inventory inventory) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		String message = "";
+		try {
+			session.update(inventory);
+			t.commit();
+			message = "Cập nhật kho hàng thành công!";
+		} catch (Exception e) {
+			t.rollback();
+			return "Cập nhật thất bại!";
+		} finally {
+			session.close();
+		}
+		return message;
+	}
 }

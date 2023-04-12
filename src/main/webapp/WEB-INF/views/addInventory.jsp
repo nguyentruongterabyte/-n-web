@@ -6,7 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Thêm mới kho hàng</title>
+<c:choose>
+	<c:when test="${pageType eq 'edit'}">
+		<title>Chỉnh sửa kho hàng</title>
+	</c:when>
+	<c:when test="${pageType eq 'add'}">
+		<title>Thêm mới kho hàng</title>
+	</c:when>
+	<c:otherwise>
+		<title>Thêm mới kho hàng</title>
+	</c:otherwise>
+</c:choose>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -90,8 +100,9 @@
 	<div class="container">
 		<div class="row">
 			<form:form
-				action="${pageContext.servletContext.contextPath}/kho-hang/tao-moi/xac-thuc.htm"
+				action="${pageContext.servletContext.contextPath}/kho-hang/xac-thuc.htm"
 				modelAttribute="inventory" method="post">
+				<input name="pageType" value="${pageType}" style="display: none;">
 				<div class="col-md-6">
 					<div class="row mt-12">
 						<div class="col-md-4">
@@ -183,7 +194,7 @@
 										class="glyphicon glyphicon-asterisk"></span></td>
 									<td class="col-md-5"><select class="form-control"
 										name="product" id="product-select">
-											<option value="">---Chọn sản phẩm---</option>
+											<option value="">--- Chọn sản phẩm ---</option>
 											<c:forEach var="p" items="${products}">
 												<option value="${p.id}">${p.name}</option>
 											</c:forEach>

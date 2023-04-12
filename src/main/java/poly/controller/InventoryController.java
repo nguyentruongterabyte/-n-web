@@ -40,6 +40,11 @@ public class InventoryController {
 			model.addAttribute("inventory", new Inventory());
 		} else {
 			Inventory i = inventoryDao.get(Integer.parseInt(id));
+			if (i == null) {
+				model.addAttribute("messageType", "error");
+				model.addAttribute("message", "Không thể lấy được thông tin kho hàng!");
+				return "inventoryList";
+			}
 			model.addAttribute("inventory", i);
 		}
 		return "inventoryList";
@@ -56,6 +61,7 @@ public class InventoryController {
 		
 		inventory.setInventoryCapability(inventoryCapability);
 		
+		model.addAttribute("pageType", "add");
 		model.addAttribute("inventory", inventory);
 		model.addAttribute("products", products);
 		
@@ -63,17 +69,39 @@ public class InventoryController {
 		return "addInventory";
 	}
 	
-	@RequestMapping(value = "tao-moi/xac-thuc", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "chinh-sua")
+	public String edit(ModelMap model, 
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value="id") String id) {
+		Inventory inventory = inventoryDao.get(Integer.parseInt(id));
+		if (inventory == null) {
+			redirectAttributes.addFlashAttribute("messageType", "error");
+			redirectAttributes.addFlashAttribute("message", "Không thể lấy được thông tin kho hàng!");
+			return "redirect:danh-sach.htm";
+		}
+		List<Product> products = productDao.getAll();
+		for (Product product : products) {
+		
+		}
+		
+		model.addAttribute("pageType", "edit");
+		model.addAttribute("products", products);
+		model.addAttribute("inventory", inventory);
+		return "addInventory";
+	}
+	
+	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST)
 	public String validate(ModelMap model,
 							RedirectAttributes redirectAttributes, 
 							@ModelAttribute("inventory") Inventory inventory,
+							@RequestParam(value = "pageType") String pageType,
 							@RequestParam(value = "productsId[]", required = false) String[] productsId,
 							@RequestParam(value = "maxCounts[]", required = false) String[] maxCounts,
 							@RequestParam(value = "lasts[]", required = false) String[] lasts,
 							@RequestParam(value = "currentCounts[]", required = false) String[] currentCounts,
 							BindingResult errors
 			) { 
-		
 		List<Product> products = productDao.getAll();
 		
 		if (inventory.getName().trim().length() == 0) {
@@ -83,6 +111,8 @@ public class InventoryController {
 		if (inventory.getAddress().trim().length() == 0) {
 			errors.rejectValue("address", "inventory", "Vui lòng nhập địa chỉ của kho!");
 		}
+		
+		
 		
 		Collection<InventoryCapability> inventoryCapability = new ArrayList<>();
 		
@@ -142,21 +172,34 @@ public class InventoryController {
 		if (errors.hasErrors()) {
 			model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
 		} else {
-			String message = inventoryDao.save(inventory);
-			if ("Thêm mới kho hàng thành công!".equals(message)) {
-				/*
+			if (pageType.equals("add")) {				
+				String message = inventoryDao.save(inventory);
+				if ("Thêm mới kho hàng thành công!".equals(message)) {
+					/*
 				// Test xem message có đúng như trong inventoryDao không
 				System.out.println("equal");
-				*/
-				redirectAttributes.addFlashAttribute("type", "success");
-				redirectAttributes.addFlashAttribute("inventory", inventory);
-			} else if ("Thêm mới thất bại!".equals(message)) {
-				//System.out.println("equal");
-				redirectAttributes.addFlashAttribute("type", "error");
+					 */
+					redirectAttributes.addFlashAttribute("messsageType", "success");
+					redirectAttributes.addFlashAttribute("inventory", inventory);
+					inventoryCapabilityDao.saveList(inventoryCapability);
+				} else if ("Thêm mới thất bại!".equals(message)) {
+					//System.out.println("equal");
+					redirectAttributes.addFlashAttribute("messageType", "error");
+				}
+				redirectAttributes.addFlashAttribute("message", message);
+				return "redirect:../danh-sach.htm";
+			} else if (pageType.equals("edit")) {
+				String message = inventoryDao.update(inventory);
+				if ("Cập nhật kho hàng thành công!".equals(message)) {
+					redirectAttributes.addFlashAttribute("messageType", "success");
+					redirectAttributes.addFlashAttribute("inventory", inventory);
+					inventoryCapabilityDao.saveList(inventoryCapability);
+				} else if ("Cập nhật thất bại!".equals(message)) {
+					redirectAttributes.addAttribute("messageType", "error");
+				}
+				redirectAttributes.addFlashAttribute("message", message);
+				return "redirect:danh-sach.htm";
 			}
-			inventoryCapabilityDao.saveList(inventoryCapability);
-			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:../danh-sach.htm";
 		}
 		
 		return "addInventory";

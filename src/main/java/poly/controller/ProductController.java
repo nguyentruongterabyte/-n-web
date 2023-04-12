@@ -1,5 +1,7 @@
 package poly.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,13 @@ import poly.entity.Product;
 public class ProductController {
 	@Autowired
 	private ProductDao productDao;
+	
+	@RequestMapping("danh-sach")
+	public String showList(ModelMap model) {
+		List<Product> list = productDao.getAll();
+		model.addAttribute("products", list);
+		return "productList";
+	}
 	
 	@RequestMapping(value = "validate", method = RequestMethod.POST)
 	public String validate(ModelMap model, @ModelAttribute("product") @Validated Product product,

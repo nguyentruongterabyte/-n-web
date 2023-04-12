@@ -65,8 +65,8 @@
 					<form:input path="outPrice" class="form-control"/>
 					<form:errors path="outPrice" />
 				</div>
-
-				<button>Chỉnh sửa</button>
+				
+				<button onclick="href.location=${pageContext.servletContext.contextPath}">Chỉnh sửa</button>
 			</form:form>
 
 		</div>
