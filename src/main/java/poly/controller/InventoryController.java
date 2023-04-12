@@ -166,10 +166,11 @@ public class InventoryController {
 		}
 */	
 		inventory.setInventoryCapability(inventoryCapability);
-		
+		model.addAttribute("pageType", pageType);
 		model.addAttribute("products", products);
 		model.addAttribute("inventory", inventory);
 		if (errors.hasErrors()) {
+			model.addAttribute("messageType", "error");	
 			model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
 		} else {
 			if (pageType.equals("add")) {				
@@ -187,7 +188,7 @@ public class InventoryController {
 					redirectAttributes.addFlashAttribute("messageType", "error");
 				}
 				redirectAttributes.addFlashAttribute("message", message);
-				return "redirect:../danh-sach.htm";
+				return "redirect:/kho-hang/danh-sach.htm";
 			} else if (pageType.equals("edit")) {
 				String message = inventoryDao.update(inventory);
 				if ("Cập nhật kho hàng thành công!".equals(message)) {
@@ -198,7 +199,7 @@ public class InventoryController {
 					redirectAttributes.addAttribute("messageType", "error");
 				}
 				redirectAttributes.addFlashAttribute("message", message);
-				return "redirect:danh-sach.htm";
+				return "redirect:/kho-hang/danh-sach.htm";
 			}
 		}
 		

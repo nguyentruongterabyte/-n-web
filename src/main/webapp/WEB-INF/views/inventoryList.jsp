@@ -58,108 +58,6 @@
 	z-index: 1;
 }
 
-#toast {
-	position: fixed;
-	top: calc(var(--navbar-height)+ 32px);
-	right: 32px;
-	z-index: 1;
-}
-
-.toast {
-	display: flex;
-	align-items: center;
-	background-color: #fff;
-	min-width: 400px;
-	max-width: 450px;
-	padding: 8px 0;
-	border-radius: 2px;
-	border-left: 4px solid;
-	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
-	animation: slideInLeft ease .3s, fadeOut linear 1s 3s forwards;
-}
-
-@keyframes slideInLeft {
-	from { 
-		transform :translateX(calc(100% + 32px));
-		opacity: 0;
-	}
-
-	to {
-		transform: translateX(0);
-		opacity: 1;
-	}
-}
-@keyframes fadeOut {
-	to {
-		opacity:0;	
-	}
-}
-.toast+.toast {
-	margin-top: 24px;
-}
-
-.toast--success {
-	border-color: #47d864;
-}
-
-.toast--success .toast__icon {
-	color: #47d864;
-}
-
-.toast--info {
-	border-color: #2f86ab;
-}
-
-.toast--info .toast__icon {
-	color: #2f86ab;
-}
-
-.toast--warning {
-	border-color: #ffc021;
-}
-
-.toast--warning .toast__icon {
-	color: #ffc021;
-}
-
-.toast--error {
-	border-color: #ff623d;
-}
-
-.toast--error .toast__icon {
-	color: #ff623d;
-}
-
-.toast__icon {
-	font-size: 24px;
-}
-
-.toast__icon, .toast__close {
-	padding: 0 16px;
-}
-
-.toast__close {
-	font-size: 20px;
-	color: rgba(0, 0, 0, 0.3);
-	cursor: pointer;
-}
-
-.toast__body {
-	flex-grow: 1;
-}
-
-.toast__title {
-	font-size: 16px;
-	font-weight: 600;
-	color: #333;
-}
-
-.toast__msg {
-	font-size: 14px;
-	color: #888;
-	margin-top: 6px;
-	line-height: 1.5;
-}
 </style>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -199,7 +97,7 @@
 				<c:when test="${messageType eq 'error' }">
 					<div class="toast toast--error">
 						<div class="toast__icon">
-							<span class="glyphicon glyphicon-ok-sign"></span>
+							<span class="glyphicon glyphicon-exclamation-sign"></span>
 						</div>
 						<div class="toast__body">
 							<h3 class="toast__title">Lỗi</h3>

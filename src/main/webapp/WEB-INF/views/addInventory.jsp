@@ -21,8 +21,6 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resource/css/base.css">
-<link rel="stylesheet"
-	href="${pageContext.servletContext.contextPath}/resource/css/selectBox.css">
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
@@ -98,6 +96,40 @@
 		</div>
 	</nav>
 	<div class="container">
+		<div id="toast">
+			<c:choose>
+				<c:when test="${messageType eq 'success'}">
+					<!-- Toast success -->
+					<div class="toast toast--success">
+						<div class="toast__icon">
+							<span class="glyphicon glyphicon-ok-sign"></span>
+						</div>
+						<div class="toast__body">
+							<h3 class="toast__title">Thành công</h3>
+							<p class="toast__msg">${message}</p>
+						</div>
+						<div class="toast__close">
+							<i class="glyphicon glyphicon-remove"></i>
+						</div>
+					</div>
+				</c:when>
+				<c:when test="${messageType eq 'error' }">
+					<div class="toast toast--error">
+						<div class="toast__icon">
+							<span class="glyphicon glyphicon-exclamation-sign"></span>
+						</div>
+						<div class="toast__body">
+							<h3 class="toast__title">Lỗi</h3>
+							<p class="toast__msg">${message}</p>
+						</div>
+						<div class="toast__close">
+							<i class="glyphicon glyphicon-remove"></i>
+						</div>
+					</div>
+				</c:when>
+				
+			</c:choose>
+		</div>
 		<div class="row">
 			<form:form
 				action="${pageContext.servletContext.contextPath}/kho-hang/xac-thuc.htm"
