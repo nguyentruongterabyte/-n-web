@@ -41,6 +41,23 @@
 	background: #fff;
 
 }
+
+.product-list__item {
+	position: relative;
+	cursor: pointer;
+}
+
+.product-list__item:hover .product-list__item-delete-btn {
+	display: block;
+}
+
+.product-list__item-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 4px;
+	display: none;	
+}
+
 </style>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -50,16 +67,45 @@
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a href="#">Home</a></li>
-				<li><a
+				<li class="active"><a
 					href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm">Danh
 						sách sản phẩm</a></li>
-				<li class="active"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm">Danh
 						sách kho hàng</a></li>
 			</ul>
 		</div>
 	</nav>
 	<div class="container">
+		<c:if test="${message.type ne null}">
+			<div id="toast">
+				<div class="toast toast--${message.type}">
+					<div class="toast__icon">
+						<c:choose>		
+							<c:when test="${message.type eq 'success'}">
+								<span class="glyphicon glyphicon-ok-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'error'}">
+								<span class="glyphicon glyphicon-exclamation-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'info'}">
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'warning'}">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+							</c:when>
+						</c:choose>
+					</div>
+					<div class="toast__body">
+						<h3 class="toast__title"></h3>
+						<p class="toast__msg">${message.content}</p> 
+					</div>
+					<div class="toast__close">
+						<span class="glyphicon glyphicon-remove-circle"></span>
+					</div>
+				</div>
+			</div>
+		</c:if>
 		<div class="row row-no-padding">
 
 			<!-- Danh sách sản phẩm -->
@@ -81,38 +127,21 @@
 								<th><input type="text" class="form-control" placeholder="Mã vạch" disabled></th>
 								<th><input type="text" class="form-control" placeholder="Giá bán" disabled></th>
 								<th></th>
-								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 
 							<c:forEach var="p" items="${products}">
-								<tr>
+								<tr <c:if test="${product.id == p.id}">class="product-list__item info"</c:if> class="product-list__item">
 									<td>${p.id}</td>
 									<td>${p.name}</td>
 									<td>${p.barCode}</td>
 									<td>${p.outPrice}</td>
 									<td>
-										<form
-											action="${pageContext.servletContext.contextPath}/san-pham/${p.id}.htm?lnkEdit"
-											method="post" data-placement="top" data-toggle="tooltip"
-											title="Sửa">
-											<button class="btn btn-primary btn-xs" data-title="Edit"
-												data-toggle="modal" data-target="#edit">
-												<span class="glyphicon glyphicon-pencil"> </span>
-											</button>
-										</form>
+										<button onclick="event.stopPropagation(); deleteProduct(${p.id});" type="button" title="Delete" class="product-list__item-delete-btn btn btn-danger btn-xs">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
 									</td>
-									<td>
-										<form data-placement="top" data-toggle="tooltip"
-											title="Delete">
-											<button class="btn btn-danger btn-xs" data-title="Delete"
-												data-toggle="modal" data-target="#delete">
-												<span class="glyphicon glyphicon-trash"></span>
-											</button>
-										</form>
-									</td>
-
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -122,5 +151,13 @@
 		</div>
 	</div>
 	<script src="${pageContext.servletContext.contextPath}/resource/js/filter.js"></script>
+	<script>
+		function deleteProduct(productId) {
+			var ok = confirm('Bạn có chắc muốn xóa sản phẩm này?');
+			if (ok) {
+				location.href = "${pageContext.servletContext.contextPath}/san-pham/xoa.htm?id=" + productId;
+			}
+		}
+	</script>
 </body>
 </html>

@@ -21,6 +21,7 @@ import poly.dao.ProductDao;
 import poly.entity.Inventory;
 import poly.entity.InventoryCapability;
 import poly.entity.Product;
+import poly.message.Message;
  
 @Controller
 @RequestMapping("/kho-hang")
@@ -41,8 +42,8 @@ public class InventoryController {
 		} else {
 			Inventory i = inventoryDao.get(Integer.parseInt(id));
 			if (i == null) {
-				model.addAttribute("messageType", "error");
-				model.addAttribute("message", "Không thể lấy được thông tin kho hàng!");
+				Message message = new Message("error", "Không thể lấy được thông tin kho hàng!");
+				model.addAttribute("message", message);
 				return "inventoryList";
 			}
 			model.addAttribute("inventory", i);
@@ -70,19 +71,43 @@ public class InventoryController {
 	}
 	
 	
+	@RequestMapping(value = "xoa")
+	public String delete(RedirectAttributes redirectAttributes,
+			@RequestParam(value="id") String id) {
+		Message message = new Message();
+		if (id == null) {
+			message.setType("error");
+			message.setContent("Lỗi lấy thông tin!");
+		} else {
+			message = inventoryDao.delete(Integer.parseInt(id));
+			if (message.getType().equals("error")) {
+				redirectAttributes.addFlashAttribute("message", message);
+				return "redirect:danh-sach.htm?id=" + id;
+			}
+		}
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:danh-sach.htm";
+	}
+	
 	@RequestMapping(value = "chinh-sua")
 	public String edit(ModelMap model, 
 			RedirectAttributes redirectAttributes,
 			@RequestParam(value="id") String id) {
 		Inventory inventory = inventoryDao.get(Integer.parseInt(id));
 		if (inventory == null) {
-			redirectAttributes.addFlashAttribute("messageType", "error");
-			redirectAttributes.addFlashAttribute("message", "Không thể lấy được thông tin kho hàng!");
+			Message message = new Message("error", "Không thể lấy được thông tin kho hàng!");
+			redirectAttributes.addFlashAttribute("message", message);
 			return "redirect:danh-sach.htm";
 		}
 		List<Product> products = productDao.getAll();
-		for (Product product : products) {
-		
+		// Loại bỏ sản phẩm đã có trong sức chứa kho hàng
+		for (InventoryCapability inventoryCapability : inventory.getInventoryCapability()) {
+			for (Product product : products) {
+				if (product.getId() == inventoryCapability.getEmbeddedId().getProduct().getId()) {
+					products.remove(product);
+					break;
+				}
+			}
 		}
 		
 		model.addAttribute("pageType", "edit");
@@ -170,36 +195,77 @@ public class InventoryController {
 		model.addAttribute("products", products);
 		model.addAttribute("inventory", inventory);
 		if (errors.hasErrors()) {
-			model.addAttribute("messageType", "error");	
-			model.addAttribute("message", "Vui lòng sửa các lỗi sau!");
+			Message message = new Message("error", "Vui lòng nhập những dòng bắt buộc!");
+ 			model.addAttribute("message", message);
 		} else {
 			if (pageType.equals("add")) {				
-				String message = inventoryDao.save(inventory);
-				if ("Thêm mới kho hàng thành công!".equals(message)) {
+				Message message = inventoryDao.save(inventory);
+				if (message.getType().equals("success")) {
 					/*
-				// Test xem message có đúng như trong inventoryDao không
-				System.out.println("equal");
+					// Test xem message có đúng như trong inventoryDao không
+					System.out.println("equal");
 					 */
-					redirectAttributes.addFlashAttribute("messsageType", "success");
-					redirectAttributes.addFlashAttribute("inventory", inventory);
 					inventoryCapabilityDao.saveList(inventoryCapability);
-				} else if ("Thêm mới thất bại!".equals(message)) {
-					//System.out.println("equal");
-					redirectAttributes.addFlashAttribute("messageType", "error");
-				}
+				} 
 				redirectAttributes.addFlashAttribute("message", message);
-				return "redirect:/kho-hang/danh-sach.htm";
+				return "redirect:/kho-hang/danh-sach.htm?id=" + inventory.getId();
 			} else if (pageType.equals("edit")) {
-				String message = inventoryDao.update(inventory);
-				if ("Cập nhật kho hàng thành công!".equals(message)) {
-					redirectAttributes.addFlashAttribute("messageType", "success");
-					redirectAttributes.addFlashAttribute("inventory", inventory);
-					inventoryCapabilityDao.saveList(inventoryCapability);
-				} else if ("Cập nhật thất bại!".equals(message)) {
-					redirectAttributes.addAttribute("messageType", "error");
-				}
+				Message message = inventoryDao.update(inventory);
+				if (message.getType().equals("success")) {
+					
+					Inventory inventory2 = inventoryDao.get(inventory.getId());
+					if (productsId != null) {		
+						// Xóa những sản phẩm trong sức chứa kho hàng không còn trong inventory2
+						for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapability()) {
+							int index = 0;
+							for (String productId : productsId) {
+								if (Integer.parseInt(productId) == inventoryCapability2.getEmbeddedId().getProduct().getId()) {
+									break;
+								}
+								index++;
+							}							
+							
+							
+							if (index == productsId.length) {
+								// Nếu chạy hết productsId mà không có sản phẩm tức là sản phẩm đã bị xóa trên giao diện
+								// vì vậy ta sẽ xóa ở trong database
+								inventoryCapabilityDao.delete(inventoryCapability2.getEmbeddedId());
+							}
+						}
+						
+						// Lưu mới, cập nhật sức chứa kho hàng
+						for (int i = 0; i < productsId.length; i++) {
+							int index = 0;
+							for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapability()) {
+								if (inventoryCapability2.getEmbeddedId().getProduct().getId() == Integer.parseInt(productsId[i])) {
+									inventoryCapability2.setMaxCount(Integer.parseInt(maxCounts[i]));
+									inventoryCapability2.setLast(Integer.parseInt(lasts[i]));
+									inventoryCapability2.setCurrentCount(Integer.parseInt(currentCounts[i]));
+									inventoryCapabilityDao.update(inventoryCapability2);
+									break;
+								}
+								index++;
+							}
+							if (index == inventory2.getInventoryCapability().toArray().length) {
+								Product product = productDao.get(Integer.parseInt(productsId[i]));
+								InventoryCapability.Id embeddedId = new InventoryCapability.Id(product, inventory2);
+								int maxCount = Integer.parseInt(maxCounts[i]);
+								int last = Integer.parseInt(lasts[i]);
+								int currentCount = Integer.parseInt(currentCounts[i]);
+								inventoryCapabilityDao.save(new InventoryCapability(embeddedId, maxCount, last, currentCount));
+							}
+						}	
+					} else {
+						// nếu productsId null thì có nghĩa là người dùng đã xóa hết sản phẩm trong giao diện
+						// vì vậy ta chỉ cần xóa hết trong database của sức chứa kho hàng
+	
+						for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapability()) {
+							inventoryCapabilityDao.delete(inventoryCapability2.getEmbeddedId());
+						}
+					}
+				} 
 				redirectAttributes.addFlashAttribute("message", message);
-				return "redirect:/kho-hang/danh-sach.htm";
+				return "redirect:/kho-hang/danh-sach.htm?id=" + inventory.getId();
 			}
 		}
 		

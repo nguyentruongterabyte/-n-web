@@ -16,12 +16,12 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Quản lý</a>
 			</div>
-			<ul class="nav navbar-nav">
-				<li><a href="#">Home</a></li>
+			<ul  class="nav navbar-nav">
+				<li  class="active"><a href="#">Home</a></li>
 				<li><a
 					href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm">Danh
 						sách sản phẩm</a></li>
-				<li class="active"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm">Danh
 						sách kho hàng</a></li>
 			</ul>

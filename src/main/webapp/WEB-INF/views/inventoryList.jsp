@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,20 +30,8 @@
 	z-index: 1;
 }
 
-.inventory-list__table {
-	position: relative;
-	max-height: 85vh;
-}
-
-.inventory-list__table-heading {
-	position: sticky;
-	top: 38px;
-	right: 0;
-	background: #fff;
-}
-
 .inventory-capability {
-	max-height: 25vh;
+	max-height: 20vh;
 	overflow-y: scroll;
 }
 
@@ -56,7 +45,25 @@
 	right: 0;
 	left: 0;
 	z-index: 1;
+	background: #fff;
 }
+
+.inventory-list__item {
+	position: relative;
+	cursor: pointer;
+}
+
+.inventory-list__item:hover .inventory-list__item-delete-btn {
+	display: block;
+}
+
+.inventory-list__item-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 4px;
+	display: none;
+}
+
 
 </style>
 <body>
@@ -77,40 +84,35 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div id="toast">
-			<c:choose>
-				<c:when test="${messageType eq 'success'}">
-					<!-- Toast success -->
-					<div class="toast toast--success">
-						<div class="toast__icon">
-							<span class="glyphicon glyphicon-ok-sign"></span>
-						</div>
-						<div class="toast__body">
-							<h3 class="toast__title">Thành công</h3>
-							<p class="toast__msg">${message}</p>
-						</div>
-						<div class="toast__close">
-							<i class="glyphicon glyphicon-remove"></i>
-						</div>
+		<c:if test="${message.type ne null}">
+			<div id="toast">
+				<div class="toast toast--${message.type}">
+					<div class="toast__icon">
+						<c:choose>		
+							<c:when test="${message.type eq 'success'}">
+								<span class="glyphicon glyphicon-ok-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'error'}">
+								<span class="glyphicon glyphicon-exclamation-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'info'}">
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'warning'}">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+							</c:when>
+						</c:choose>
 					</div>
-				</c:when>
-				<c:when test="${messageType eq 'error' }">
-					<div class="toast toast--error">
-						<div class="toast__icon">
-							<span class="glyphicon glyphicon-exclamation-sign"></span>
-						</div>
-						<div class="toast__body">
-							<h3 class="toast__title">Lỗi</h3>
-							<p class="toast__msg">${message}</p>
-						</div>
-						<div class="toast__close">
-							<i class="glyphicon glyphicon-remove"></i>
-						</div>
+					<div class="toast__body">
+						<h3 class="toast__title"></h3>
+						<p class="toast__msg">${message.content}</p> 
 					</div>
-				</c:when>
-				
-			</c:choose>
-		</div>
+					<div class="toast__close">
+						<span class="glyphicon glyphicon-remove-circle"></span>
+					</div>
+				</div>
+			</div>
+		</c:if>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="panel panel-primary mt-12 inventory-list filterable">
@@ -138,20 +140,16 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${inventories}" var="i">
-								<tr
+								<tr  <c:if test="${i.id == inventory.id}">class="inventory-list__item info"</c:if> class="inventory-list__item"
 									onclick="location.href='${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm?id=${i.id}'">
 									<td>${i.id}</td>
 									<td>${i.name}</td>
 									<td>${i.address}</td>
-									<td>${i.rentPrice}</td>
+									<td><fmt:formatNumber value="${i.rentPrice}" type="currency" currencyCode="VND" maxFractionDigits="0"/></td>
 									<td>
-										<form data-placement="top" data-toggle="tooltip"
-											title="Option">
-											<button class="btn btn-default btn-xs" data-toggle="modal"
-												data-target="#option">
-												<span class="glyphicon glyphicon-option-horizontal"></span>
-											</button>
-										</form>
+										<button onclick="event.stopPropagation(); deleteInventory(${i.id});" type="button" title="Delete" class="inventory-list__item-delete-btn btn btn-danger btn-xs">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -211,7 +209,7 @@
 					</div>
 					<div class="col-md-5">
 						<input class="form-control" id="inventory-rent-price" type="text"
-							value="${inventory.rentPrice}" readonly>
+							value="<fmt:formatNumber value="${inventory.rentPrice}" type="currency" currencyCode="VND" maxFractionDigits="0"/>" readonly>
 					</div>
 				</div>
 
@@ -220,7 +218,7 @@
 
 				<div class="inventory-capability">
 					<table class="table table-hover inventory-capability__list">
-						<thead class="inventory-capability__list">
+						<thead class="inventory-capability__list-heading">
 							<tr>
 								<th>Sản phẩm</th>
 								<th>Số lượng tối đa</th>
@@ -240,14 +238,41 @@
 					</table>
 				</div>
 				<c:if test="${inventory.id != 0}">
-					<div class="mt-12">
-						<button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/kho-hang/chinh-sua.htm?id=${inventory.id}'">Chỉnh sửa</button>
-					</div>	
+					<div class="row">				
+						<div class="mt-12 col-md-2">
+							<button type="button" class="btn btn-info" onclick="location.href='${pageContext.servletContext.contextPath}/kho-hang/chinh-sua.htm?id=${inventory.id}'">Chỉnh sửa</button>
+						</div>	
+						<div class="mt-12 col-md-offset-8 col-md-2">
+							<button onclick="deleteInventory(${inventory.id});" type="button" title="Delete" class="btn btn-danger">
+								Xóa
+							</button>
+						</div>
+					</div>
 				</c:if>
 			</div>
 		</div>
 	</div>
+<!-- 	<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="animate-spin text-center mx-auto mt-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg> -->
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/filter.js"></script>
+	<script>
+		function deleteInventory(inventoryId) {
+			var ok = confirm('Bạn có chắc muốn xóa kho hàng này?');
+			if (ok) {
+				location.href = "${pageContext.servletContext.contextPath}/kho-hang/xoa.htm?id=" + inventoryId;
+			}
+		}
+	</script>
+	<script>	
+		window.addEventListener('load', () => {
+		 	const targetElement = document.querySelector('.inventory-list__item.info');
+		  	if (targetElement) {
+		    	targetElement.scrollIntoView({
+		      	behavior: 'smooth',
+		      	block: 'center'
+		    });
+		  }
+		});
+	</script>
 </body>
 </html>

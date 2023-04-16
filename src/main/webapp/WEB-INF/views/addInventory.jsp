@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,40 +97,32 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div id="toast">
-			<c:choose>
-				<c:when test="${messageType eq 'success'}">
-					<!-- Toast success -->
-					<div class="toast toast--success">
-						<div class="toast__icon">
-							<span class="glyphicon glyphicon-ok-sign"></span>
-						</div>
-						<div class="toast__body">
-							<h3 class="toast__title">Thành công</h3>
-							<p class="toast__msg">${message}</p>
-						</div>
-						<div class="toast__close">
-							<i class="glyphicon glyphicon-remove"></i>
-						</div>
+		<c:if test="${message.type ne null}">
+			<div id="toast">
+				<div class="toast toast--${message.type}">
+					<div class="toast__icon">
+						<c:choose>		
+							<c:when test="${message.type eq 'success'}">
+								<span class="glyphicon glyphicon-ok-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'error'}">
+								<span class="glyphicon glyphicon-exclamation-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'info'}">
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'warning'}">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+							</c:when>
+						</c:choose>
 					</div>
-				</c:when>
-				<c:when test="${messageType eq 'error' }">
-					<div class="toast toast--error">
-						<div class="toast__icon">
-							<span class="glyphicon glyphicon-exclamation-sign"></span>
-						</div>
-						<div class="toast__body">
-							<h3 class="toast__title">Lỗi</h3>
-							<p class="toast__msg">${message}</p>
-						</div>
-						<div class="toast__close">
-							<i class="glyphicon glyphicon-remove"></i>
-						</div>
+					<div class="toast__body">
+						<h3 class="toast__title"></h3>
+						<p class="toast__msg">${message.content}</p> 
 					</div>
-				</c:when>
-				
-			</c:choose>
-		</div>
+				</div>
+			</div>
+		</c:if>
 		<div class="row">
 			<form:form
 				action="${pageContext.servletContext.contextPath}/kho-hang/xac-thuc.htm"
@@ -178,6 +171,7 @@
 							<form:label path="rentPrice">Giá thuê</form:label>
 						</div>
 						<div class="col-md-5">
+												
 							<form:input type="number" min="0" step="100" path="rentPrice"
 								class="form-control" />
 							<form:errors path="term" element="div" />
@@ -226,7 +220,7 @@
 										class="glyphicon glyphicon-asterisk"></span></td>
 									<td class="col-md-5"><select class="form-control"
 										name="product" id="product-select">
-											<option value="">--- Chọn sản phẩm ---</option>
+											<option value="">Chọn sản phẩm</option>
 											<c:forEach var="p" items="${products}">
 												<option value="${p.id}">${p.name}</option>
 											</c:forEach>

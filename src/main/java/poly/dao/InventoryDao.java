@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import poly.entity.Inventory;
+import poly.message.Message;
 
 @Transactional
 @Repository
@@ -46,34 +47,64 @@ public class InventoryDao {
 		return maxId;
 	}
 	
-	public String save(Inventory inventory) {
+	public Message save(Inventory inventory) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
-		String message = "";
+		Message message = new Message();
 		try {
 			session.save(inventory);
 			t.commit();
-			message = "Thêm mới kho hàng thành công!";
+			message.setType("success");
+			message.setContent("Thêm mới kho hàng thành công!");
 		} catch (Exception e) {
 			t.rollback();
-			return "Thêm mới thất bại!";
+			message.setType("error");
+			message.setContent("Thêm mới thất bại!");
 		} finally {
 			session.close();
 		}
 		return message;
 	}
 	
-	public String update(Inventory inventory) {
+	public Message update(Inventory inventory) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
-		String message = "";
+		Message message = new Message();
 		try {
 			session.update(inventory);
 			t.commit();
-			message = "Cập nhật kho hàng thành công!";
+			message.setType("success");
+			message.setContent("Cập nhật kho hàng thành công!");
 		} catch (Exception e) {
 			t.rollback();
-			return "Cập nhật thất bại!";
+			message.setType("error");
+			message.setContent("Cập nhật thất bại!");
+		} finally {
+			session.close();
+		}
+		return message;
+	}
+	
+	public Message delete(int inventoryId) {
+		Inventory i = this.get(inventoryId);
+		/*
+		 // test xem i có được get không
+		System.out.println(i.getName());
+		*/
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		Message message = new Message();
+		try {
+			i.setInventoryCapability(null);
+			session.delete(i);
+			t.commit();
+			message.setType("success");
+			message.setContent("Xóa kho hàng thành công!\n" + i.getName());
+		} catch (Exception e) {
+			// TODO: handle exception
+			t.rollback();
+			message.setType("error");
+			message.setContent("Xóa thất bại!\n" + "Hãy xóa những sản phẩm trong sức chứa kho hàng trước!");
 		} finally {
 			session.close();
 		}
