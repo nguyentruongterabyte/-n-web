@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import poly.dao.ProductDao;
 import poly.entity.Product;
+import poly.message.Message;
 
 @Transactional
 @Controller
@@ -23,7 +24,7 @@ import poly.entity.Product;
 public class ProductController {
 	@Autowired
 	private ProductDao productDao;
-	
+	// RequestMapping
 	@RequestMapping("danh-sach")
 	public String showList(ModelMap model) {
 		List<Product> list = productDao.getAll();
@@ -31,7 +32,7 @@ public class ProductController {
 		return "productList";
 	}
 	
-	@RequestMapping(value = "validate", method = RequestMethod.POST)
+	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST)
 	public String validate(ModelMap model, @ModelAttribute("product") @Validated Product product,
 			BindingResult errors) {
 		if (product.getInPrice() > product.getOutPrice()) {
@@ -39,9 +40,10 @@ public class ProductController {
 		} 
 		
 		if (errors.hasErrors()) {
-			model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
+			Message message = new Message("error","Vui lòng sửa những lỗi sau đây!");
+			model.addAttribute("message", message);
 		} else {
-			String message = productDao.update(product);
+			Message message = productDao.update(product);
 			model.addAttribute("message", message);
 			model.addAttribute("products", productDao.getAll());
 			return "productList";

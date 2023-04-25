@@ -195,7 +195,7 @@ public class InventoryController {
 		model.addAttribute("products", products);
 		model.addAttribute("inventory", inventory);
 		if (errors.hasErrors()) {
-			Message message = new Message("error", "Vui lòng nhập những dòng bắt buộc!");
+			Message message = new Message("error", "Vui lòng sửa những lỗi sau đây!");
  			model.addAttribute("message", message);
 		} else {
 			if (pageType.equals("add")) {				

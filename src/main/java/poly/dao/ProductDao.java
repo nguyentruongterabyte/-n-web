@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import poly.entity.Product;
+import poly.message.Message;
 
 
 @Transactional
@@ -30,20 +31,22 @@ public class ProductDao {
 		return list;
 	}
 	
-	public String save(Product product) {
+	public Message save(Product product) {
 		
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
-		String message = "";
+		Message message = new Message();
 		try {
 			session.save(product);
 			t.commit();
-			message = "Thêm mới sản phẩm mới thành công!";
+			message.setType("success");
+			message.setContent("Thêm mới sản phẩm mới thành công!");
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();
-			return "Thêm mới thất bại!";
+			message.setType("error");
+			message.setContent("Thêm mới thất bại!");
 		} finally {
 			session.close();
 		}
@@ -51,19 +54,21 @@ public class ProductDao {
 
 	}
 	
-	public String update(Product product) {
+	public Message update(Product product) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
-		String message = "";
+		Message message = new Message();
 		try {
 			session.update(product);
 			t.commit();
-			message = "Cập nhật sản phẩm thành công!";
+			message.setType("success");
+			message.setContent("Cập nhật sản phẩm thành công!");
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();
-			return "Cập nhật thất bại!";
+			message.setType("error");
+			message.setContent("Cập nhật thất bại!");
 		} finally {
 			session.close();
 		}
@@ -71,19 +76,21 @@ public class ProductDao {
 
 	}
 	
-	public String delete(int productId) {
+	public Message delete(int productId) {
 		Product p = this.get(productId);
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
-		String message = "";
+		Message message = new Message();
 		try {
 			session.delete(p);
 			t.commit();
-			message = "Xóa sản phẩm thành công!";
+			message.setType("success");
+			message.setContent("Xóa sản phẩm thành công!");
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();
-			return "Xóa sản phẩm thất bại";
+			message.setType("error");
+			message.setContent("Xóa sản phẩm thất bại!");
 		} finally {
 			session.close();
 		}
