@@ -148,6 +148,10 @@
 						</tbody>
 					</table>
 				</div>
+		<form action="${pageContext.servletContext.contextPath}/san-pham/them-moi.htm" method="post">
+		
+			<button class="btn btn-success" onclick="">Thêm mới sản phẩm</button>
+		</form>
 			</div>
 		</div>
 	</div>

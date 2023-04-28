@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<base href="${pageContext.servletContext.contextPath}/">
 <meta charset="UTF-8">
 <title>Chỉnh sửa thông tin</title>
 <link rel="stylesheet"
@@ -29,15 +30,16 @@
 		</div>
 	</nav>
 	<div class="container">
-		${message}
+		${message.content}
 		<div class="row">
 			<form:form modelAttribute="product"
 				class="row col-md-8 col-md-offset-2"
-				action="${pageContext.servletContext.contextPath}/san-pham/validate.htm"
-				method="post">
+				action="${pageContext.servletContext.contextPath}/san-pham/xac-thuc.htm"
+				method="post"
+				enctype="multipart/form-data">
 				<div class="form-group col-md-2">
 					<form:label path="id">Mã sản phẩm</form:label>
-					<form:input path="id" class="form-control" />
+					<form:input path="id" class="form-control col-md-2" />
 					<form:errors path="id" />
 				</div>
 				<div class="form-group col-md-6">
@@ -51,9 +53,8 @@
 					<form:errors path="barCode" />
 				</div>
 				<div class="form-group col-md-6">
-					<form:label path="picture">Ảnh sản phẩm</form:label>
-					<form:input type="file" path="picture" class="form-control" />
-					<form:errors path="picture" />
+					<label for="picture">Ảnh sản phẩm</label>
+					<input type="file" id="picture" name="picture" class="form-control" />
 				</div>
 				<div class="form-group col-md-3">
 					<form:label path="inPrice">Giá nhập</form:label>
@@ -66,7 +67,7 @@
 					<form:errors path="outPrice" />
 				</div>
 				
-				<button onclick="href.location=${pageContext.servletContext.contextPath}">Chỉnh sửa</button>
+				<button>Chỉnh sửa</button>
 			</form:form>
 
 		</div>

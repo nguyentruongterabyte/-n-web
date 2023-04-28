@@ -57,7 +57,7 @@ public class InventoryController {
 		Inventory inventory = new Inventory();
 		inventory.setId(maxId + 1);
 		
-		List<Product> products = productDao.getAll();		
+		List<Product> products = productDao.getAll();	
 		Collection<InventoryCapability> inventoryCapability = inventory.getInventoryCapability();
 		
 		inventory.setInventoryCapability(inventoryCapability);

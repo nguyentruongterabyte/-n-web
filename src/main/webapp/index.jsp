@@ -27,6 +27,14 @@
 			</ul>
 		</div>
 	</nav>
-
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4" style="background-color: red; height: 50vh;"></div>
+			<div class="col-md-4" style="background-color: blue; height: 50vh;"></div>
+			<div class="col-md-6" style="background-color: black; height: 100vh;"></div>
+		</div>
+	</div>
+	
 </body>
 </html>

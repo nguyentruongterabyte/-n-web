@@ -20,6 +20,13 @@ public class ProductDao {
 	@Autowired
 	private SessionFactory factory;
 	
+	public int getMaxId() {
+		Session session = factory.getCurrentSession();
+		Query query = session.createQuery("SELECT max(p.id) FROM Product p");
+		int maxId = (int) query.uniqueResult();
+		return maxId;
+	}
+	
 	public List<Product> getAll() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Product";
