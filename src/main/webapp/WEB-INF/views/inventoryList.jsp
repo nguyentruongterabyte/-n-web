@@ -171,7 +171,7 @@
 					<div class="col-md-3">
 						<label for="inventory-id">Mã kho</label>
 					</div>
-					<div class="col-md-9">
+					<div class="col-md-4">
 						<input class="form-control" id="inventory-id" type="text"
 							value="${inventory.id}" readonly>
 					</div>
@@ -223,6 +223,7 @@
 								<th>Sản phẩm</th>
 								<th>Số lượng tối đa</th>
 								<th>Số lượng hiện tại</th>
+								<th>Đơn vị</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -232,6 +233,7 @@
 									<td>${inventoryCapability.embeddedId.product.name}</td>
 									<td>${inventoryCapability.maxCount}</td>
 									<td>${inventoryCapability.currentCount}</td>
+									<td>${inventoryCapability.embeddedId.product.unit}</td>
 								</tr>
 							</c:forEach>
 						</tbody>

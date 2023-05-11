@@ -127,6 +127,7 @@
 								<th><input type="text" class="form-control" placeholder="Tên sản phẩm" disabled></th>
 								<th><input type="text" class="form-control" placeholder="Mã vạch" disabled></th>
 								<th><input type="text" class="form-control" placeholder="Giá bán" disabled></th>
+								<th><input type="text" class="form-control" placeholder="Đơn vị" disabled></th>
 								<th></th>
 							</tr>
 						</thead>
@@ -138,6 +139,7 @@
 									<td>${p.name}</td>
 									<td>${p.barCode}</td>
 									<td><fmt:formatNumber value="${p.outPrice}" type="currency" currencyCode="VND" minFractionDigits="0"></fmt:formatNumber></td>
+									<td>${p.unit}</td>
 									<td>
 										<button onclick="event.stopPropagation(); deleteProduct(${p.id});" type="button" title="Delete" class="product-list__item-delete-btn btn btn-danger btn-xs">
 											<span class="glyphicon glyphicon-trash"></span>

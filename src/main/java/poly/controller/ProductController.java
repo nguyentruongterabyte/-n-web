@@ -41,24 +41,26 @@ public class ProductController {
 	
 	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST)
 	public String validate(ModelMap model,
-			@ModelAttribute("product") @Validated Product product,
-			@RequestParam(value = "picture", required = false) MultipartFile picture,
-			BindingResult errors) {
-		if (product.getInPrice() > product.getOutPrice()) {
-			errors.rejectValue("inPrice", "product", "Giá nhập phải nhỏ hơn giá bán!");
-		} 
+			
+			@RequestParam(value = "productImage", required = false) MultipartFile picture) {
+		Message message = new Message();
 		
-		System.out.println(picture.getOriginalFilename());
-		
-		if (errors.hasErrors()) {
-			Message message = new Message("error","Vui lòng sửa những lỗi sau đây!");
+		if (picture.isEmpty()) {
+			message.setType("error");
+			message.setContent("Vui lòng chọn file ảnh!");
 			model.addAttribute("message", message);
 		} else {
-			
-			
-			model.addAttribute("products", productDao.getAll());
-			return "redirect:danh-sach.htm";
+			try {
+				String path = context.getRealPath("/resource/images/product/" + picture.getOriginalFilename());
+				picture.transferTo(new File(path));
+			} catch(Exception e) {
+				message.setType("error");
+				message.setContent("Lỗi lưu file ảnh!\n" + e);
+			}
 		}
+		
+		
+		
 		return "addProduct";
 	}
 	

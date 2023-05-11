@@ -32,6 +32,7 @@ public class Product {
 	@DecimalMin(value = "0", message = "Giá bán không được âm!")
 	@NotNull(message = "Vui lòng nhập giá bán!")
 	private float outPrice;
+	private String unit;
 	
 	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapability;
@@ -79,5 +80,22 @@ public class Product {
 	public void setOutPrice(float outPrice) {
 		this.outPrice = outPrice;
 	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public Collection<InventoryCapability> getInventoryCapability() {
+		return inventoryCapability;
+	}
+
+	public void setInventoryCapability(Collection<InventoryCapability> inventoryCapability) {
+		this.inventoryCapability = inventoryCapability;
+	}
+	
 	
 }
