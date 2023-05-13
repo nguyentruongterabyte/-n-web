@@ -5,14 +5,10 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
-import javax.validation.MessageInterpolator.Context;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,10 +36,28 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST)
-	public String validate(ModelMap model,
+	public String validate(
+			ModelMap model,
+			@RequestParam("productId") String productId,
+			@RequestParam("productName") String productName,
+			@RequestParam("barcode") String barCode,
+			@RequestParam("productUnit") String productUnit,
+			@RequestParam("inPrice") String inPrice,
+			@RequestParam("outPrice") String outPrice,
+			@RequestParam("productImage") MultipartFile picture
 			
-			@RequestParam(value = "productImage", required = false) MultipartFile picture) {
+			)
+	{
 		Message message = new Message();
+		
+		System.out.println(
+				"productId = " + productId 
+				+ "\nproductName = " + productName 
+				+ "\nbarcode = " + barCode
+				+ "\nproductUnit = " + productUnit
+				+ "\ninPrice = " + inPrice
+				+ "\noutPrice = " + outPrice
+				);
 		
 		if (picture.isEmpty()) {
 			message.setType("error");
@@ -51,8 +65,15 @@ public class ProductController {
 			model.addAttribute("message", message);
 		} else {
 			try {
-				String path = context.getRealPath("/resource/images/product/" + picture.getOriginalFilename());
-				picture.transferTo(new File(path));
+				String photoPath = "/resource/images/product/" + picture.getOriginalFilename();
+				String photoRealPath = context.getRealPath(photoPath);
+				picture.transferTo(new File(photoRealPath));
+				
+				System.out.println("Photo path: " + photoPath);
+				System.out.println("Photo name: " + picture.getOriginalFilename());
+				System.out.println("Photo type: " + picture.getContentType());
+				
+				model.addAttribute("photoPath", photoPath);
 			} catch(Exception e) {
 				message.setType("error");
 				message.setContent("Lỗi lưu file ảnh!\n" + e);
@@ -80,7 +101,7 @@ public class ProductController {
 		product.setPicture("");
 		product.setInPrice(0);
 		product.setOutPrice(0);
-		model.addAttribute(product);
+		model.addAttribute("product", product);
 		model.addAttribute("pageType", "add");
 		
 		return "addProduct";

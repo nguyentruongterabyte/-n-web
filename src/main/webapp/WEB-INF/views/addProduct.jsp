@@ -67,7 +67,8 @@
 							<label for="product-id">Mã sản phẩm</label>
 						</div>
 						<div class="col-md-4">
-							<input name="productId" id="product-id" class="form-control">
+							<input name="productId" id="product-id" class="form-control" value="${product.id}" 
+							readonly="readonly">
 						</div>
 					</div>
 					<div class="row mt-12">
@@ -101,18 +102,37 @@
 							</select>
 						</div>
 					</div>
-				<div class="row">
-					<button class="col-md-4 btn btn-info">Lưu</button>
-				</div>
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<label for="in-price">Giá nhập</label>
+						</div>
+						<div class="col-md-4">
+							<input type="number" name="inPrice" id = "in-price" class="form-control">
+						</div>
+					</div>
+					<div class="row mt-12">
+						<div class="col-md-4">
+							<label for="out-price">Giá bán</label>
+						</div>
+						<div class="col-md-4">
+							<input type="number" name="outPrice" id = "out-price" class="form-control">
+						</div>
+					</div>
+					<div class="row" style="margin-top: 100px;">
+						<button class="col-md-4 btn btn-info">Lưu</button>
+					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="mt-12">
-						<img id="product-img-preview" alt="choose-img"
-							src="${pageContext.servletContext.contextPath}/resource/images/product/choose.png"
+						<img id="product-img-preview" alt="choose-img" 
+						src="${pageContext.servletContext.contextPath}/resource/images/product/choose.png"
+						<c:if test="${photoPath ne ''}">
+							src="${pageContext.servletContext.contextPath}/${photoPath}"
+						</c:if>
 							class="img-rounded" width="100">
 					</div>
 					<div class="mt-12">
-						<input id="product-img" type="file" class="form-control"
+						<input id="product-img" type="file" 
 							name="productImage">
 					</div>
 				</div>
