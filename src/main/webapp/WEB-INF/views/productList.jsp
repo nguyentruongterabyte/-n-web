@@ -18,7 +18,7 @@
 <style>
 .product-list {
 	margin-top: 12px;
-	max-height: 85vh;
+	max-height: 80vh;
 	overflow-y: scroll; 
 	position: relative;
 }

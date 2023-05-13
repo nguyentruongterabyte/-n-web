@@ -60,15 +60,17 @@ public class ProductController {
 
 		
 		if (!picture.isEmpty()) {
+			if (picture.getContentType() != "image/jpeg") {
+				message.setType("error");
+				message.setContent("File bắt buộc là file ảnh");
+				model.addAttribute("message", message);
+				return "addProduct";
+			}
 			try {
 				String photoPathProcessing = "/resource/images/product/" + picture.getOriginalFilename();
 				photoPath = photoPathProcessing;
 				String photoRealPath = context.getRealPath(photoPathProcessing);
 				picture.transferTo(new File(photoRealPath));
-				System.out.println("Photo path: " + photoPath);
-				System.out.println("Photo name: " + picture.getOriginalFilename());
-				System.out.println("Photo type: " + picture.getContentType());
-				
 				model.addAttribute("photoPath", photoPath);
 			} catch(Exception e) {
 				photoPath = "";
@@ -76,8 +78,6 @@ public class ProductController {
 				message.setType("error");
 				message.setContent("Lỗi lưu file ảnh!\n" + e);
 			}
-			
-			
 		}
 		
 		if (productName.trim().length() == 0) {
@@ -121,16 +121,22 @@ public class ProductController {
 		}
 		
 	
-		System.out.println(
-				"productId = " + productId 
-				+ "\nproductName = " + productName 
-				+ "\nbarcode = " + barCode
-				+ "\nproductUnit = " + productUnit
-				+ "\ninPrice = " + inPrice
-				+ "\noutPrice = " + outPrice
+		Product newProduct = new Product(
+				Integer.parseInt(productId),
+				productName,
+				barCode,
+				photoPath,
+				Float.parseFloat(inPrice),
+				Float.parseFloat(outPrice),
+				productUnit
 				);
-		
-		return "addProduct";
+		productDao.save(newProduct);
+		message.setType("success");
+		message.setContent("Thêm sản phẩm mới thành công!");
+		List<Product> list = productDao.getAll();
+		model.addAttribute("products", list);
+		model.addAttribute("message", message);
+		return "productList";
 	}
 	
 	@RequestMapping(value = "/{id}", params = "lnkEdit")

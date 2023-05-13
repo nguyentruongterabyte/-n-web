@@ -96,6 +96,17 @@ public class Product {
 	public void setInventoryCapability(Collection<InventoryCapability> inventoryCapability) {
 		this.inventoryCapability = inventoryCapability;
 	}
+
+	public Product(int id, String name, String barCode, String picture, float inPrice, float outPrice, String unit) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.barCode = barCode;
+		this.picture = picture;
+		this.inPrice = inPrice;
+		this.outPrice = outPrice;
+		this.unit = unit;
+	}
 	
 	
 }
