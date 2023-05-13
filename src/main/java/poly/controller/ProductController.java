@@ -58,14 +58,7 @@ public class ProductController {
 		model.addAttribute("photoPath", photoPath);
 		model.addAttribute("picture", picture);
 
-		System.out.println(
-				"productId = " + productId 
-				+ "\nproductName = " + productName 
-				+ "\nbarcode = " + barCode
-				+ "\nproductUnit = " + productUnit
-				+ "\ninPrice = " + inPrice
-				+ "\noutPrice = " + outPrice
-				);
+		
 		if (!picture.isEmpty()) {
 			try {
 				String photoPathProcessing = "/resource/images/product/" + picture.getOriginalFilename();
@@ -87,6 +80,55 @@ public class ProductController {
 			
 		}
 		
+		if (productName.trim().length() == 0) {
+			message.setType("error");
+			message.setContent("Không được để trống tên sản phẩm!");
+			model.addAttribute("message", message);
+			return "addProduct";
+		}
+		if (barCode.trim().length() == 0) {
+			message.setType("error");
+			message.setContent("Không được để trống mã vạch sản phẩm!");
+			model.addAttribute("message", message);
+			return "addProduct";
+		}
+		
+		if (inPrice.trim().length() == 0) {
+			message.setType("error");
+			message.setContent("Vui lòng nhập giá nhập!");
+			model.addAttribute("message", message);
+			return "addProduct";
+		}
+		
+		if (Integer.parseInt(inPrice) < 0) {
+			message.setType("error");
+			message.setContent("Giá nhập không hợp lệ!");
+			model.addAttribute("message", message);
+			return "addProduct";
+		}
+		if (outPrice.trim().length() == 0) {
+			message.setType("error");
+			message.setContent("Vui lòng nhập giá bán!");
+			model.addAttribute("message", message);
+			return "addProduct";
+		}
+		
+		if (Integer.parseInt(outPrice) < 0) {
+			message.setType("error");
+			message.setContent("Giá bán không hợp lệ!");
+			model.addAttribute("message", message);
+			return "addProduct";
+		}
+		
+	
+		System.out.println(
+				"productId = " + productId 
+				+ "\nproductName = " + productName 
+				+ "\nbarcode = " + barCode
+				+ "\nproductUnit = " + productUnit
+				+ "\ninPrice = " + inPrice
+				+ "\noutPrice = " + outPrice
+				);
 		
 		return "addProduct";
 	}
@@ -102,13 +144,8 @@ public class ProductController {
 	@RequestMapping(value = "them-moi")
 	public String add(ModelMap model) {
 		int maxId = productDao.getMaxId();
-		Product product = new Product();
-		product.setId(maxId + 1);
-		product.setPicture("");
-		product.setInPrice(0);
-		product.setOutPrice(0);
 		model.addAttribute("photoPath", "");
-		model.addAttribute("product", product);
+		model.addAttribute("productId", maxId);
 		model.addAttribute("pageType", "add");
 		
 		return "addProduct";

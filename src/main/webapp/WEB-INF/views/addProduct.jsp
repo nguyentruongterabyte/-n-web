@@ -33,7 +33,6 @@
 	</nav>
 	<div class="container" id="container">
 		<c:if test="${message.type ne null}">
-		<div id="wrapper">
 			<div id="toast">
 				<div class="toast toast--${message.type}">
 					<div class="toast__icon">
@@ -58,7 +57,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 		</c:if>
 		<div class="row">
 			<form
@@ -96,7 +94,9 @@
 						</div>
 						<div class="col-md-4">
 							<select name="productUnit" id="product-unit" class="form-control">
-								<option selected>${productUnit}</option>
+								<c:if test="${not empty productUnit}">
+									<option selected>${productUnit}</option>
+								</c:if>
 								<option>Chai</option>
 								<option>Thùng</option>
 								<option>Két</option>
