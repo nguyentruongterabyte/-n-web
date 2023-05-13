@@ -30,6 +30,9 @@ public class Inventory {
 	@OneToMany(mappedBy = "embeddedId.inventory", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapability;
 	
+	@OneToMany(mappedBy = "Id", fetch = FetchType.EAGER)
+	private Collection<InOutInventory> inOutInventory;
+	
 	public Inventory() {
 		super();
 		this.inventoryCapability = new ArrayList<>();
@@ -95,5 +98,12 @@ public class Inventory {
 		this.inventoryCapability = inventoryCapability;
 	}
 	
+	public Collection<InOutInventory> getInOutInventory() {
+		return inOutInventory;
+	}
+
+	public void setInOutInventory(Collection<InOutInventory> inOutInventory) {
+		this.inOutInventory = inOutInventory;
+	}
 	
 }
