@@ -44,12 +44,20 @@ public class ProductController {
 			@RequestParam("productUnit") String productUnit,
 			@RequestParam("inPrice") String inPrice,
 			@RequestParam("outPrice") String outPrice,
+			@RequestParam("photoPath") String photoPath, 
 			@RequestParam("productImage") MultipartFile picture
-			
 			)
 	{
 		Message message = new Message();
-		
+		model.addAttribute("productId", productId);
+		model.addAttribute("productName", productName);
+		model.addAttribute("barcode", barCode);
+		model.addAttribute("productUnit", productUnit);
+		model.addAttribute("inPrice", inPrice);
+		model.addAttribute("outPrice", outPrice);
+		model.addAttribute("photoPath", photoPath);
+		model.addAttribute("picture", picture);
+
 		System.out.println(
 				"productId = " + productId 
 				+ "\nproductName = " + productName 
@@ -58,28 +66,26 @@ public class ProductController {
 				+ "\ninPrice = " + inPrice
 				+ "\noutPrice = " + outPrice
 				);
-		
-		if (picture.isEmpty()) {
-			message.setType("error");
-			message.setContent("Vui lòng chọn file ảnh!");
-			model.addAttribute("message", message);
-		} else {
+		if (!picture.isEmpty()) {
 			try {
-				String photoPath = "/resource/images/product/" + picture.getOriginalFilename();
-				String photoRealPath = context.getRealPath(photoPath);
+				String photoPathProcessing = "/resource/images/product/" + picture.getOriginalFilename();
+				photoPath = photoPathProcessing;
+				String photoRealPath = context.getRealPath(photoPathProcessing);
 				picture.transferTo(new File(photoRealPath));
-				
 				System.out.println("Photo path: " + photoPath);
 				System.out.println("Photo name: " + picture.getOriginalFilename());
 				System.out.println("Photo type: " + picture.getContentType());
 				
 				model.addAttribute("photoPath", photoPath);
 			} catch(Exception e) {
+				photoPath = "";
+				model.addAttribute("photoPath", photoPath);
 				message.setType("error");
 				message.setContent("Lỗi lưu file ảnh!\n" + e);
 			}
+			
+			
 		}
-		
 		
 		
 		return "addProduct";
@@ -101,6 +107,7 @@ public class ProductController {
 		product.setPicture("");
 		product.setInPrice(0);
 		product.setOutPrice(0);
+		model.addAttribute("photoPath", "");
 		model.addAttribute("product", product);
 		model.addAttribute("pageType", "add");
 		

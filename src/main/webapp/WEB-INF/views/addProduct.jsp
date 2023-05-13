@@ -13,6 +13,7 @@
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resource/css/base.css">
 </head>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <body>
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -30,8 +31,9 @@
 			</ul>
 		</div>
 	</nav>
-	<div class="container">
+	<div class="container" id="container">
 		<c:if test="${message.type ne null}">
+		<div id="wrapper">
 			<div id="toast">
 				<div class="toast toast--${message.type}">
 					<div class="toast__icon">
@@ -56,6 +58,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		</c:if>
 		<div class="row">
 			<form
@@ -67,7 +70,7 @@
 							<label for="product-id">Mã sản phẩm</label>
 						</div>
 						<div class="col-md-4">
-							<input name="productId" id="product-id" class="form-control" value="${product.id}" 
+							<input name="productId" id="product-id" class="form-control" value="${productId}" 
 							readonly="readonly">
 						</div>
 					</div>
@@ -76,7 +79,7 @@
 							<label for="product-name">Tên sản phẩm</label>
 						</div>
 						<div class="col-md-8">
-							<input name="productName" id="product-name" class="form-control">
+							<input name="productName" id="product-name" class="form-control" value="${productName}">
 						</div>
 					</div>
 					<div class="row mt-12">
@@ -84,7 +87,7 @@
 							<label for="barcode">Mã vạch</label>
 						</div>
 						<div class="col-md-4">
-							<input name="barcode" id="barcode" class="form-control">
+							<input name="barcode" id="barcode" class="form-control" value="${barcode}">
 						</div>
 					</div>
 					<div class="row mt-12">
@@ -93,6 +96,7 @@
 						</div>
 						<div class="col-md-4">
 							<select name="productUnit" id="product-unit" class="form-control">
+								<option selected>${productUnit}</option>
 								<option>Chai</option>
 								<option>Thùng</option>
 								<option>Két</option>
@@ -107,7 +111,7 @@
 							<label for="in-price">Giá nhập</label>
 						</div>
 						<div class="col-md-4">
-							<input type="number" name="inPrice" id = "in-price" class="form-control">
+							<input type="number" name="inPrice" id = "in-price" class="form-control" value = "${inPrice}">
 						</div>
 					</div>
 					<div class="row mt-12">
@@ -115,7 +119,7 @@
 							<label for="out-price">Giá bán</label>
 						</div>
 						<div class="col-md-4">
-							<input type="number" name="outPrice" id = "out-price" class="form-control">
+							<input type="number" name="outPrice" id = "out-price" class="form-control" value="${outPrice}">
 						</div>
 					</div>
 					<div class="row" style="margin-top: 100px;">
@@ -125,15 +129,21 @@
 				<div class="col-md-4">
 					<div class="mt-12">
 						<img id="product-img-preview" alt="choose-img" 
-						src="${pageContext.servletContext.contextPath}/resource/images/product/choose.png"
-						<c:if test="${photoPath ne ''}">
-							src="${pageContext.servletContext.contextPath}/${photoPath}"
-						</c:if>
-							class="img-rounded" width="100">
+						<c:choose>
+							<c:when test="${not empty photoPath}">
+								src="${pageContext.servletContext.contextPath}${photoPath}"
+							</c:when>
+							<c:otherwise>
+								src="${pageContext.servletContext.contextPath}/resource/images/product/choose.png"
+							</c:otherwise>
+						</c:choose>
+						
+							class="img-rounded" width="200">
 					</div>
 					<div class="mt-12">
-						<input id="product-img" type="file" 
+						<input id="product-img" type="file"
 							name="productImage">
+						<input name="photoPath" value="${photoPath}" style="display: none;">
 					</div>
 				</div>
 			</form>
@@ -147,6 +157,8 @@
 			if (input.files[0]) 
 				img.src = URL.createObjectURL(input.files[0]);
 		}
+		
+		
 	</script>
 </body>
 </html>
