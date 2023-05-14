@@ -13,9 +13,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 
-
+@Entity
 public class Order {
 	@Id
 	@GeneratedValue
@@ -32,6 +31,11 @@ public class Order {
 	@NotNull(message = "Vui lòng nhập trạng thái")
 	private String status;
 	
+	@OneToMany(mappedBy = "embeddedId.order", fetch = FetchType.EAGER)
+	private Collection<InOutInventoryDetail> inOutInventoryDetails;
+	
+	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+	private Collection<OrderDetail> orderDetails;
 	public Order() {
 		super();
 	}

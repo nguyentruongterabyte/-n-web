@@ -19,11 +19,75 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 .w3-bar-block .w3-bar-item {padding:20px}
 
 #product-detail	{
-	animation: slideInLeft ease 1s forwards;
+	animation: slideInRight ease 1s forwards;
 }
 
 .product-detail__img {
-	width: 100%;
+	width: 80%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
 }
 
 </style>
@@ -82,13 +146,72 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 		<div class="row" id ="product-detail">
 			<div class = "col-md-6">
 				<img alt="san-pham-${product.id}" class="product-detail__img"
-					src="${pageContext.servletContext.contextPath}/resource/images/product/choose.png"
-					<c:if test="${not empty product.picture}">
-						src="${pageContext.servletContext.contextPath}${product.picture}"
-					</c:if>
-					
+					<c:choose>
+						<c:when test="${not empty product.picture}">
+							src="${pageContext.servletContext.contextPath}${product.picture}"
+						</c:when>
+						<c:otherwise>
+							src="${pageContext.servletContext.contextPath}/resource/images/product/choose.png"
+						</c:otherwise>
+					</c:choose>
 				>
-				
+			</div>
+			<div class= "col-md-6">
+				<form action="${pageContext.servletContext.contextPath}/san-pham/chinh-sua.htm?id=${product.id}" method="post">
+					<div class="row">
+						<div class="col-25">
+							<label for="productName">
+								Tên sản phẩm
+							</label>
+						</div>
+						<div class="col-75">
+							<input type = "text" id="productName" name="productName" value="${product.name}" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="barCode">
+								Mã vạch
+							</label>
+						</div>
+						<div class="col-75">
+							<input type = "text" id="barCode" name="barCode" value="${product.barCode}" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="unit">
+								Đơn vị
+							</label>
+						</div>
+						<div class="col-75">
+							<input type = "text" id="unit" name="unit" value="${product.unit}" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="inPrice">
+								Giá nhập
+							</label>
+						</div>
+						<div class="col-75">
+							<input type = "text" id="inPrice" name="inPrice" value="${product.inPrice}" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-25">
+							<label for="outPrice">
+								Giá bán
+							</label>
+						</div>
+						<div class="col-75">
+							<input type = "text" id="outPrice" name="outPrice" value="${product.outPrice}" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<input type="submit" value="Chỉnh sửa">
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

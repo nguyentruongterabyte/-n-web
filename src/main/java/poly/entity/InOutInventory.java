@@ -12,21 +12,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
 public class InOutInventory {
 	@Id
 	@GeneratedValue
 	@Column(name = "Id")
 	private int id;
+	
 	@NotBlank(message = "Vui lòng nhập Respond!")
 	private int respond;
 	@NotBlank(message = "VUi lòng nhập mã Kho!")
 	
 	@ManyToOne
-	@JoinColumn(name = "Id")
+	@JoinColumn(name = "InventoryId")
 	private Inventory inventory;
 	
 	@DecimalMin(value = "0", message = "Giá mang hàng không được âm!")
@@ -37,6 +38,9 @@ public class InOutInventory {
 	@NotBlank (message = "Vui lòng nhập loại")
 	private boolean type;
 	
+	@OneToMany(mappedBy ="embeddedId.inOutInventory", fetch = FetchType.EAGER)
+	private Collection<InOutInventoryDetail> inOutInventoryDetails;
+
 	public InOutInventory() {
 		super();
 	}
@@ -49,6 +53,14 @@ public class InOutInventory {
 		this.carryFee = carryFee;
 		this.term = term;
 		this.type = type;
+	}
+
+	public Collection<InOutInventoryDetail> getInOutInventoryDetails() {
+		return inOutInventoryDetails;
+	}
+
+	public void setInOutInventoryDetails(Collection<InOutInventoryDetail> inOutInventoryDetails) {
+		this.inOutInventoryDetails = inOutInventoryDetails;
 	}
 
 	public int getId() {

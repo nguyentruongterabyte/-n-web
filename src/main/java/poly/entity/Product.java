@@ -28,10 +28,10 @@ public class Product {
 	private String picture;
 	@DecimalMin(value = "0", message = "Giá nhập không được âm!")
 	@NotNull(message = "Vui lòng giá nhập!")
-	private float inPrice;
+	private int inPrice;
 	@DecimalMin(value = "0", message = "Giá bán không được âm!")
 	@NotNull(message = "Vui lòng nhập giá bán!")
-	private float outPrice;
+	private int outPrice;
 	private String unit;
 	
 	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
@@ -68,16 +68,22 @@ public class Product {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	public float getInPrice() {
+	
+	
+
+	public int getInPrice() {
 		return inPrice;
 	}
-	public void setInPrice(float inPrice) {
+
+	public void setInPrice(int inPrice) {
 		this.inPrice = inPrice;
 	}
-	public float getOutPrice() {
+
+	public int getOutPrice() {
 		return outPrice;
 	}
-	public void setOutPrice(float outPrice) {
+
+	public void setOutPrice(int outPrice) {
 		this.outPrice = outPrice;
 	}
 
@@ -97,7 +103,7 @@ public class Product {
 		this.inventoryCapability = inventoryCapability;
 	}
 
-	public Product(int id, String name, String barCode, String picture, float inPrice, float outPrice, String unit) {
+	public Product(int id, String name, String barCode, String picture, int inPrice, int outPrice, String unit) {
 		super();
 		this.id = id;
 		this.name = name;

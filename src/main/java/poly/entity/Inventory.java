@@ -30,7 +30,7 @@ public class Inventory {
 	@OneToMany(mappedBy = "embeddedId.inventory", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapability;
 	
-	@OneToMany(mappedBy = "Id", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "inventory", fetch = FetchType.EAGER)
 	private Collection<InOutInventory> inOutInventory;
 	
 	public Inventory() {

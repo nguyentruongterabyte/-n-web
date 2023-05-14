@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +50,8 @@ public class ProductController {
 			@RequestParam("inPrice") String inPrice,
 			@RequestParam("outPrice") String outPrice,
 			@RequestParam("photoPath") String photoPath, 
-			@RequestParam("productImage") MultipartFile picture
+			@RequestParam("productImage") MultipartFile picture,
+			@RequestParam("pageType") String pageType
 			)
 	{
 		Message message = new Message();
@@ -63,6 +63,7 @@ public class ProductController {
 		model.addAttribute("outPrice", outPrice);
 		model.addAttribute("photoPath", photoPath);
 		model.addAttribute("picture", picture);
+		model.addAttribute("pageType", pageType);
 
 		
 		if (!picture.isEmpty() && picture != null) {
@@ -128,31 +129,53 @@ public class ProductController {
 			return "addProduct";
 		}
 		
-	
-		Product newProduct = new Product(
-				Integer.parseInt(productId),
-				productName,
-				barCode,
-				photoPath,
-				Float.parseFloat(inPrice),
-				Float.parseFloat(outPrice),
-				productUnit
-				);
-		productDao.save(newProduct);
-		message.setType("success");
-		message.setContent("Thêm sản phẩm mới thành công!");
-		List<Product> list = productDao.getAll();
-		model.addAttribute("products", list);
-		model.addAttribute("message", message);
+		if (pageType.equals("add")) {
+			Product newProduct = new Product(
+					Integer.parseInt(productId),
+					productName,
+					barCode,
+					photoPath,
+					Integer.parseInt(inPrice),
+					Integer.parseInt(outPrice),
+					productUnit
+					);
+			message = productDao.save(newProduct);
+			List<Product> list = productDao.getAll();
+			model.addAttribute("products", list);
+			model.addAttribute("message", message);
+		} else {
+			Product product = new Product(
+					Integer.parseInt(productId),
+					productName,
+					barCode,
+					photoPath,
+					Integer.parseInt(inPrice),
+					Integer.parseInt(outPrice),
+					productUnit
+					);
+			List<Product> list = productDao.getAll();
+			message = productDao.update(product);
+			model.addAttribute("message", message);
+			model.addAttribute("products", list);
+		}
 		return "productList";
 	}
 	
-	@RequestMapping(value = "/{id}", params = "lnkEdit")
-	public String edit(ModelMap model, @PathVariable("id") int id) {
-		Product product = productDao.get(id);
+	@RequestMapping("chinh-sua")
+	public String edit(ModelMap model, 
+			@RequestParam("id") String id) {
+		Product product = productDao.get(Integer.parseInt(id));
 		model.addAttribute("product", product);
 		product.getId();
-		return "productEdit";
+		model.addAttribute("pageType", "edit");
+		model.addAttribute("productId", product.getId());
+		model.addAttribute("productName", product.getName());
+		model.addAttribute("barcode", product.getBarCode());
+		model.addAttribute("productUnit", product.getUnit());
+		model.addAttribute("inPrice", product.getInPrice());
+		model.addAttribute("outPrice", product.getOutPrice());
+		model.addAttribute("photoPath", product.getPicture());
+		return "addProduct";
 	}
 	
 	@RequestMapping(value="xoa")
