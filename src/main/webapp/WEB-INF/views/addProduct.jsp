@@ -14,24 +14,28 @@
 	href="${pageContext.servletContext.contextPath}/resource/css/base.css">
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+.w3-bar-block .w3-bar-item {padding:20px}	
+</style>
 <body>
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Quản lý</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><a href="#">Home</a></li>
-				<li class="active"><a
-					href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm">Danh
-						sách sản phẩm</a></li>
-				<li><a
-					href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm">Danh
-						sách kho hàng</a></li>
-			</ul>
-		</div>
-	</nav>
-	<div class="container" id="container">
+<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-bar-item w3-button">Close Menu</a>
+  <a href="${pageContext.servletContext.contextPath}/" class="w3-bar-item w3-button">Trang chủ</a>
+  <a href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm" class="w3-bar-item w3-button">Danh sách kho hàng</a>
+  <a href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm" class="w3-bar-item w3-button">Danh sách sản phẩm</a>
+</nav>
+<div class="w3-top">
+  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+
+    <div class="w3-center w3-padding-16">Thêm mới sản phẩm</div>
+  </div>
+</div>
+	<div class="container">
 		<c:if test="${message.type ne null}">
 			<div id="toast">
 				<div class="toast toast--${message.type}">
@@ -157,8 +161,13 @@
 			if (input.files[0]) 
 				img.src = URL.createObjectURL(input.files[0]);
 		}
-		
-		
+		function w3_open() {
+			  document.getElementById("mySidebar").style.display = "block";
+			}
+			 
+			function w3_close() {
+			  document.getElementById("mySidebar").style.display = "none";
+			}
 	</script>
 </body>
 </html>

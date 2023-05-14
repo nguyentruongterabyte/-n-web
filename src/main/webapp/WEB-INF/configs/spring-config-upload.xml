@@ -19,8 +19,6 @@
 	 	<!-- maxUploadSize=20MB -->
 	 	<property name="maxUploadSize" value="20971520"/>
 	</bean>
-	
-	
 </beans>
 
 

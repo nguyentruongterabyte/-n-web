@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import poly.dao.ProductDao;
 import poly.entity.Product;
 import poly.message.Message;
+import poly.message.MessageLog;
 
 @Transactional
 @Controller
@@ -27,6 +30,8 @@ public class ProductController {
 	private ProductDao productDao;
 	@Autowired
 	ServletContext context;
+	
+	private static final String UPLOAD_DIRECTORY = "/resource/images/product/";
 	// RequestMapping
 	@RequestMapping("danh-sach")
 	public String showList(ModelMap model) {
@@ -38,6 +43,7 @@ public class ProductController {
 	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST)
 	public String validate(
 			ModelMap model,
+			HttpSession session,
 			@RequestParam("productId") String productId,
 			@RequestParam("productName") String productName,
 			@RequestParam("barcode") String barCode,
@@ -59,19 +65,21 @@ public class ProductController {
 		model.addAttribute("picture", picture);
 
 		
-		if (!picture.isEmpty()) {
-			if (picture.getContentType() != "image/jpeg") {
-				message.setType("error");
-				message.setContent("File bắt buộc là file ảnh");
-				model.addAttribute("message", message);
-				return "addProduct";
-			}
+		if (!picture.isEmpty() && picture != null) {
+//			if (picture.getContentType() != "image/jpeg") {
+//				message.setType("error");
+//				message.setContent("File bắt buộc là file ảnh");
+//				model.addAttribute("message", message);
+//				return "addProduct";
+//			}
 			try {
-				String photoPathProcessing = "/resource/images/product/" + picture.getOriginalFilename();
+				String photoPathProcessing = UPLOAD_DIRECTORY + picture.getOriginalFilename();
 				photoPath = photoPathProcessing;
 				String photoRealPath = context.getRealPath(photoPathProcessing);
 				picture.transferTo(new File(photoRealPath));
 				model.addAttribute("photoPath", photoPath);
+	
+				
 			} catch(Exception e) {
 				photoPath = "";
 				model.addAttribute("photoPath", photoPath);
@@ -147,14 +155,43 @@ public class ProductController {
 		return "productEdit";
 	}
 	
+	@RequestMapping(value="xoa")
+	public String delete(RedirectAttributes redirectAttributes,
+			@RequestParam(value="id") String id) {
+		Message message = new Message();
+		if (id == null) {
+			message.setType("error");
+			message.setContent("Lỗi lấy thông tin");
+			MessageLog.showLog(message);
+		} else {
+			message = productDao.delete(Integer.parseInt(id));
+			MessageLog.showLog(message);
+			if (message.getType().equals("error")) {
+				redirectAttributes.addFlashAttribute("message", message);
+				return "redirect:danh-sach.htm?id=" + id;
+			}
+		}
+		redirectAttributes.addFlashAttribute("message", message);
+		MessageLog.showLog(message);
+		return "redirect:danh-sach.htm";
+	}
+	
 	@RequestMapping(value = "them-moi")
 	public String add(ModelMap model) {
 		int maxId = productDao.getMaxId();
 		model.addAttribute("photoPath", "");
 		model.addAttribute("productId", maxId);
 		model.addAttribute("pageType", "add");
-		
 		return "addProduct";
+	}
+	
+	@RequestMapping(value = "chi-tiet")
+	public String showDetail(
+			ModelMap model,
+			@RequestParam(value="id") String id) {
+		Product product = productDao.get(Integer.parseInt(id));
+		model.addAttribute("product", product);
+		return "productDetail";
 	}
 }
 

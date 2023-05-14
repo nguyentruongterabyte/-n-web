@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 :root { 
-	--navbar-height: 54px;
+	--navbar-height: 68px;
 }
 
 .row-no-padding {
@@ -128,7 +128,7 @@
 		opacity: 0;
 	}
 	to {
-		transform: translate(0);
+		transform: translateX(0);
 		opacity: 1;
 	}
 }
