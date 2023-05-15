@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import javax.persistence.OneToMany;
+
+
+import org.hibernate.validator.constraints.Email;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -16,25 +20,35 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Staff {
 	@Id
 	@GeneratedValue
-	@Column(name="Id")
+	@Column(name = "Id")
 	private int id;
-	@NotBlank(message = "Vui lòng nhập tên nhân viên!")
+
+	@NotBlank(message = "Không được để trống họ tên!")
+
 	private String name;
+
+	@NotBlank(message = "Không được để trống số điện thoại!")
 	private String phone;
 	@NotBlank(message = "Vui lòng nhập giới tính!")
 	private boolean gender;
+
+	@NotBlank(message = "Không được để trống email!")
+	@Email(message = "Email không hợp lệ!")
 	private String email;
 	@NotBlank(message = "Vui lòng nhập địa chỉ!")
 	private String address;
+
 	@NotBlank(message = "Vui lòng nhập mã định danh!")
+
 	private String identifyNumber;
 	@NotBlank(message = "Vui lòng chọn chức vụ!")
 	private String func; // Chức vụ
+
 	@NotBlank(message = "Vui lòng nhập ngày sinh!")
 	private Date birthday;
 	@NotBlank(message = "Không ai làm không lương đâu")
 	private float salary;
-	
+
 	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
 	private Collection<VendorBill> vendorBills;
 
@@ -145,5 +159,6 @@ public class Staff {
 	public void setVendorBills(Collection<VendorBill> vendorBills) {
 		this.vendorBills = vendorBills;
 	}
+
 	
 }

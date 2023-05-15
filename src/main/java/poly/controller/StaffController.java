@@ -57,6 +57,7 @@ public class StaffController {
 			model.addAttribute("staff", staff);
 			return "addStaff";
 		}
+		
 		return "redirect:danh-sach.htm?id=" + staff.getId();  
 	}
 }
