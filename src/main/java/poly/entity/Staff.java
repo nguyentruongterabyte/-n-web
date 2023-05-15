@@ -1,6 +1,7 @@
 package poly.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -45,19 +46,27 @@ public class Staff {
 	private String func; // Chức vụ
 
 	@NotBlank(message = "Vui lòng nhập ngày sinh!")
-	private Date birthday;
+	private String birthday;
 	@NotBlank(message = "Không ai làm không lương đâu")
 	private float salary;
+	
+	private boolean resigned;
 
 	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
 	private Collection<VendorBill> vendorBills;
+	
+	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
+	private Collection<Document> documents;
 
 	public Staff() {
 		super();
+		vendorBills = new ArrayList<>();
+		documents = new ArrayList<>();
 	}
 
 	public Staff(int id, String name, String phone, boolean gender, String email, String address, String identifyNumber,
-			String func, Date birthday, float salary, Collection<VendorBill> vendorBills) {
+			String func, String birthday, float salary, boolean resigned, Collection<VendorBill> vendorBills,
+			Collection<Document> documents) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -69,7 +78,9 @@ public class Staff {
 		this.func = func;
 		this.birthday = birthday;
 		this.salary = salary;
+		this.resigned = resigned;
 		this.vendorBills = vendorBills;
+		this.documents = documents;
 	}
 
 	public int getId() {
@@ -136,11 +147,11 @@ public class Staff {
 		this.func = func;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
@@ -152,6 +163,14 @@ public class Staff {
 		this.salary = salary;
 	}
 
+	public boolean isResigned() {
+		return resigned;
+	}
+
+	public void setResigned(boolean resigned) {
+		this.resigned = resigned;
+	}
+
 	public Collection<VendorBill> getVendorBills() {
 		return vendorBills;
 	}
@@ -160,5 +179,12 @@ public class Staff {
 		this.vendorBills = vendorBills;
 	}
 
-	
+	public Collection<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Collection<Document> documents) {
+		this.documents = documents;
+	}
+
 }

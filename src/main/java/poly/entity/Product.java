@@ -1,6 +1,7 @@
 package poly.entity;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -35,10 +36,29 @@ public class Product {
 	private String unit;
 	
 	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
-	private Collection<InventoryCapability> inventoryCapability;
+	private Collection<InventoryCapability> inventoryCapabilities;
+	
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+	private Collection<OrderDetail> orderDetails;
+	
 	public Product() {
 		super();
-		// TODO Auto-generated constructor stub
+		inventoryCapabilities = new ArrayList<>();
+		orderDetails = new ArrayList<>();
+	}
+
+	public Product(int id, String name, String barCode, String picture, int inPrice, int outPrice, String unit,
+			Collection<InventoryCapability> inventoryCapabilities, Collection<OrderDetail> orderDetails) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.barCode = barCode;
+		this.picture = picture;
+		this.inPrice = inPrice;
+		this.outPrice = outPrice;
+		this.unit = unit;
+		this.inventoryCapabilities = inventoryCapabilities;
+		this.orderDetails = orderDetails;
 	}
 
 	public int getId() {
@@ -94,24 +114,22 @@ public class Product {
 		this.unit = unit;
 	}
 
-	public Collection<InventoryCapability> getInventoryCapability() {
-		return inventoryCapability;
+
+	public Collection<InventoryCapability> getInventoryCapabilities() {
+		return inventoryCapabilities;
 	}
 
-	public void setInventoryCapability(Collection<InventoryCapability> inventoryCapability) {
-		this.inventoryCapability = inventoryCapability;
+	public void setInventoryCapabilities(Collection<InventoryCapability> inventoryCapabilities) {
+		this.inventoryCapabilities = inventoryCapabilities;
 	}
 
-	public Product(int id, String name, String barCode, String picture, int inPrice, int outPrice, String unit) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.barCode = barCode;
-		this.picture = picture;
-		this.inPrice = inPrice;
-		this.outPrice = outPrice;
-		this.unit = unit;
+	public Collection<OrderDetail> getOrderDetails() {
+		return orderDetails;
 	}
-	
+
+	public void setOrderDetails(Collection<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
 	
 }

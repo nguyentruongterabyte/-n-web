@@ -88,13 +88,13 @@ public class ProductDao {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Message message = new Message();
-		if (p.getInventoryCapability().toArray().length > 0) {
+		if (p.getInventoryCapabilities().toArray().length > 0) {
 			message.setType("error");
 			message.setContent("Sản phẩm đã có trong kho hàng. Xóa thất bại!");
 			return message;
 		}
 		try {
-			p.setInventoryCapability(null);
+			p.setInventoryCapabilities(null);
 			session.delete(p);
 			t.commit();
 			message.setType("success");

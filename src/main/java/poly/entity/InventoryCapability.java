@@ -7,6 +7,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class InventoryCapability {
@@ -53,21 +55,24 @@ public class InventoryCapability {
 			return serialVersionUID;
 		}
 		
-		
-		
 	}
 	
 	@EmbeddedId
 	private Id embeddedId;
+	@NotNull(message = "Vui lòng nhập số lượng tối đa!")
+	@DecimalMin(value = "0", message = "Số lượng tối đa phải lớn hơn 0")
 	private int maxCount;
+	@NotNull(message = "Vui lòng nhập số lượng tồn kì trước!")
+	@DecimalMin(value = "0", message = "Số lượng tồn phải lớn hơn hoặc bằng 0")
 	private int last;
+	@NotNull(message = "Vui lòng nhập số lượng hiện tại!")
+	@DecimalMin(value = "0", message = "Số lượng hiện phải lớn hơn hoặc bằng 0")
 	private int currentCount;
 	public InventoryCapability() {
 		super();
 		
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	
 	public InventoryCapability(Id embeddedId, int maxCount, int last, int currentCount) {
@@ -77,8 +82,6 @@ public class InventoryCapability {
 		this.last = last;
 		this.currentCount = currentCount;
 	}
-
-
 
 	public Id getEmbeddedId() {
 		return embeddedId;
@@ -104,7 +107,6 @@ public class InventoryCapability {
 	public void setCurrentCount(int currentCount) {
 		this.currentCount = currentCount;
 	}
-	
-	
-	
+
 }
+

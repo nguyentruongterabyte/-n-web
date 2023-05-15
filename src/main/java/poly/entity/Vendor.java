@@ -35,6 +35,7 @@ public class Vendor {
 
 	public Vendor() {
 		super();
+
 	}
 
 	public Vendor(int id, String name, String phone, String email, String address, Collection<VendorBill> vendorBill,

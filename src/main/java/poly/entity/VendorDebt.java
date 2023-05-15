@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -26,17 +27,22 @@ public class VendorDebt {
 	
 	@NotBlank(message = "Vui lòng nhập số tiền")
 	private float outCome;
+	
+	@OneToOne
+	@JoinColumn(name = "id")
+	private Document document;
 
 	public VendorDebt() {
 		super();
 	}
 
-	public VendorDebt(int id, Vendor vendor, VendorOrder vendorOrder, float outCome) {
+	public VendorDebt(int id, Vendor vendor, VendorOrder vendorOrder, float outCome, Document document) {
 		super();
 		this.id = id;
 		this.vendor = vendor;
 		this.vendorOrder = vendorOrder;
 		this.outCome = outCome;
+		this.document = document;
 	}
 
 	public int getId() {
@@ -69,6 +75,14 @@ public class VendorDebt {
 
 	public void setOutCome(float outCome) {
 		this.outCome = outCome;
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package poly.entity;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +25,7 @@ public class InOutInventory {
 	@Column(name = "Id")
 	private int id;
 	
-	@NotBlank(message = "Vui lòng nhập Respond!")
+	@NotBlank(message = "Vui lòng nhập mã nhân viên chịu trách nhiệm!")
 	private int respond;
 	@NotBlank(message = "VUi lòng nhập mã Kho!")
 	
@@ -34,19 +36,25 @@ public class InOutInventory {
 	@DecimalMin(value = "0", message = "Giá mang hàng không được âm!")
 	@NotBlank(message = "Vui lòng nhập phí mang hàng!")
 	private float carryFee;
-	@NotBlank(message = "Vui lòng nhập kỳ!")
+	@NotNull(message = "Vui lòng nhập kỳ!")
 	private int term;
-	@NotBlank (message = "Vui lòng nhập loại")
+	@NotNull(message = "Vui lòng nhập loại")
 	private boolean type;
 	
 	@OneToMany(mappedBy ="embeddedId.inOutInventory", fetch = FetchType.EAGER)
 	private Collection<InOutInventoryDetail> inOutInventoryDetails;
 
+	@OneToOne
+	@JoinColumn(name = "id")
+	private Document document;
+	
 	public InOutInventory() {
 		super();
+		inOutInventoryDetails  = new ArrayList<>();
 	}
 
-	public InOutInventory(int id, int respond, Inventory inventory, float carryFee, int term, boolean type) {
+	public InOutInventory(int id, int respond, Inventory inventory, float carryFee, int term, boolean type,
+			Collection<InOutInventoryDetail> inOutInventoryDetails, Document document) {
 		super();
 		this.id = id;
 		this.respond = respond;
@@ -54,6 +62,8 @@ public class InOutInventory {
 		this.carryFee = carryFee;
 		this.term = term;
 		this.type = type;
+		this.inOutInventoryDetails = inOutInventoryDetails;
+		this.document = document;
 	}
 
 	public Collection<InOutInventoryDetail> getInOutInventoryDetails() {
@@ -111,4 +121,13 @@ public class InOutInventory {
 	public void setType(boolean type) {
 		this.type = type;
 	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+	
 }

@@ -30,23 +30,26 @@ public class Inventory {
 	@OneToMany(mappedBy = "embeddedId.inventory", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapabilities;
 
-
+	@OneToMany(mappedBy = "inventory", fetch = FetchType.EAGER)
+	private Collection<InOutInventory> inOutInventories;
 	
 	public Inventory() {
 		super();
-		this.inventoryCapabilities = new ArrayList<>();
-		// TODO Auto-generated constructor stub
+		inOutInventories = new ArrayList<>();
+		inventoryCapabilities = new ArrayList<>();
+		
 	}
-	
-	
 
-	public Inventory(int id, String name, String address, float rentPrice, int term) {
+	public Inventory(int id, String name, String address, float rentPrice, int term,
+			Collection<InventoryCapability> inventoryCapabilities, Collection<InOutInventory> inOutInventories) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.rentPrice = rentPrice;
 		this.term = term;
+		this.inventoryCapabilities = inventoryCapabilities;
+		this.inOutInventories = inOutInventories;
 	}
 
 	public int getId() {
@@ -89,16 +92,20 @@ public class Inventory {
 		this.term = term;
 	}
 
-
-
 	public Collection<InventoryCapability> getInventoryCapabilities() {
 		return inventoryCapabilities;
 	}
-
-
 
 	public void setInventoryCapabilities(Collection<InventoryCapability> inventoryCapabilities) {
 		this.inventoryCapabilities = inventoryCapabilities;
 	}
 
+	public Collection<InOutInventory> getInOutInventories() {
+		return inOutInventories;
+	}
+
+	public void setInOutInventories(Collection<InOutInventory> inOutInventories) {
+		this.inOutInventories = inOutInventories;
+	}
+	
 }

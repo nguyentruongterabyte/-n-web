@@ -58,6 +58,7 @@ public class ProductController {
 			@RequestParam("photoPath") String photoPath, 
 			@RequestParam("productImage") MultipartFile picture,
 			@RequestParam("pageType") String pageType
+			
 			)
 	{
 		Message message = new Message();
