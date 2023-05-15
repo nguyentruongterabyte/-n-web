@@ -1,11 +1,14 @@
 package poly.entity;
 
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Staff {
@@ -13,14 +16,24 @@ public class Staff {
 	@GeneratedValue
 	@Column(name="Id")
 	private int id;
+	@NotBlank(message = "Không được để trống họ tên!")
 	private String name;
+	
+	@NotBlank(message = "Không được để trống số điện thoại!")
 	private String phone;
 	private boolean gender;
+	
+	@NotBlank(message = "Không được để trống email!")
+	@Email(message= "Email không hợp lệ!")
 	private String email;
 	private String address;
+	
+	@NotBlank(message = "Không được để trống số CMND/CCCD")
 	private String identifyNumber;
 	private String func; // Chức vụ
-	private Date birthday;
+	
+	@NotBlank(message="Không được để trống ngày sinh!")
+	private String birthday;
 	private float salary;
 	
 	public Staff() {
@@ -28,7 +41,7 @@ public class Staff {
 		// TODO Auto-generated constructor stub
 	}
 	public Staff(int id, String name, String phone, boolean gender, String email, String address, String identifyNumber,
-			String func, Date birthday, float salary) {
+			String func, String birthday, float salary) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -89,10 +102,10 @@ public class Staff {
 	public void setFunc(String func) {
 		this.func = func;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public float getSalary() {
