@@ -58,9 +58,9 @@ public class InventoryController {
 		inventory.setId(maxId + 1);
 		
 		List<Product> products = productDao.getAll();	
-		Collection<InventoryCapability> inventoryCapability = inventory.getInventoryCapability();
+		Collection<InventoryCapability> inventoryCapability = inventory.getInventoryCapabilities();
 		
-		inventory.setInventoryCapability(inventoryCapability);
+		inventory.setInventoryCapabilities(inventoryCapability);
 		
 		model.addAttribute("pageType", "add");
 		model.addAttribute("inventory", inventory);
@@ -101,7 +101,7 @@ public class InventoryController {
 		}
 		List<Product> products = productDao.getAll();
 		// Loại bỏ sản phẩm đã có trong sức chứa kho hàng
-		for (InventoryCapability inventoryCapability : inventory.getInventoryCapability()) {
+		for (InventoryCapability inventoryCapability : inventory.getInventoryCapabilities()) {
 			for (Product product : products) {
 				if (product.getId() == inventoryCapability.getEmbeddedId().getProduct().getId()) {
 					products.remove(product);
@@ -190,7 +190,7 @@ public class InventoryController {
 					+ "}");
 		}
 */	
-		inventory.setInventoryCapability(inventoryCapability);
+		inventory.setInventoryCapabilities(inventoryCapability);
 		model.addAttribute("pageType", pageType);
 		model.addAttribute("products", products);
 		model.addAttribute("inventory", inventory);
@@ -216,7 +216,7 @@ public class InventoryController {
 					Inventory inventory2 = inventoryDao.get(inventory.getId());
 					if (productsId != null) {		
 						// Xóa những sản phẩm trong sức chứa kho hàng không còn trong inventory2
-						for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapability()) {
+						for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapabilities()) {
 							int index = 0;
 							for (String productId : productsId) {
 								if (Integer.parseInt(productId) == inventoryCapability2.getEmbeddedId().getProduct().getId()) {
@@ -236,7 +236,7 @@ public class InventoryController {
 						// Lưu mới, cập nhật sức chứa kho hàng
 						for (int i = 0; i < productsId.length; i++) {
 							int index = 0;
-							for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapability()) {
+							for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapabilities()) {
 								if (inventoryCapability2.getEmbeddedId().getProduct().getId() == Integer.parseInt(productsId[i])) {
 									inventoryCapability2.setMaxCount(Integer.parseInt(maxCounts[i]));
 									inventoryCapability2.setLast(Integer.parseInt(lasts[i]));
@@ -246,7 +246,7 @@ public class InventoryController {
 								}
 								index++;
 							}
-							if (index == inventory2.getInventoryCapability().toArray().length) {
+							if (index == inventory2.getInventoryCapabilities().toArray().length) {
 								Product product = productDao.get(Integer.parseInt(productsId[i]));
 								InventoryCapability.Id embeddedId = new InventoryCapability.Id(product, inventory2);
 								int maxCount = Integer.parseInt(maxCounts[i]);
@@ -259,7 +259,7 @@ public class InventoryController {
 						// nếu productsId null thì có nghĩa là người dùng đã xóa hết sản phẩm trong giao diện
 						// vì vậy ta chỉ cần xóa hết trong database của sức chứa kho hàng
 	
-						for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapability()) {
+						for (InventoryCapability inventoryCapability2 : inventory2.getInventoryCapabilities()) {
 							inventoryCapabilityDao.delete(inventoryCapability2.getEmbeddedId());
 						}
 					}

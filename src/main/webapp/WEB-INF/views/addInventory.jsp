@@ -211,7 +211,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 								</tr>
 							</thead>
 							<tbody id="inventory-capability-body">
-								<c:forEach var="inventoryCapability" items="${inventory.inventoryCapability}">
+								<c:forEach var="inventoryCapability" items="${inventory.inventoryCapabilities}">
 									<tr class="product-capability row row-no-padding" data-product-id="${inventoryCapability.embeddedId.product.id}" data-product-name="${inventoryCapability.embeddedId.product.name}">
 										<td class="product-capability__option col-md-1">
 											<div class="product-capability__option-btn">

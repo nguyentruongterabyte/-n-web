@@ -98,7 +98,7 @@ public class InventoryDao {
 		Transaction t = session.beginTransaction();
 		Message message = new Message();
 		try {
-			i.setInventoryCapability(null);
+			i.setInventoryCapabilities(null);
 			session.delete(i);
 			t.commit();
 			message.setType("success");
