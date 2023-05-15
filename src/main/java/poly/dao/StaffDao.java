@@ -20,6 +20,16 @@ public class StaffDao {
 	@Autowired 
 	private SessionFactory factory;
 	
+	public int getMaxId() {
+		Session session = factory.getCurrentSession();
+		Query query = session.createQuery("SELECT max(s.id) FROM Staff s");
+		
+		if (query.uniqueResult() == null)
+			return 0;
+		int maxId = (int) query.uniqueResult();
+		return maxId;
+	}
+	
 	public List<Staff> getAll() {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Staff";

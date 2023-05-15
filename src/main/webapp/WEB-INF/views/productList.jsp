@@ -19,13 +19,18 @@
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}	
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Karma", sans-serif
+}
+
+.w3-bar-block .w3-bar-item {
+	padding: 20px
+}
 
 .product-list {
 	margin-top: 12px;
 	max-height: 80vh;
-	overflow-y: scroll; 
+	overflow-y: scroll;
 	position: relative;
 }
 
@@ -46,7 +51,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 	top: 38px;
 	right: 0;
 	background: #fff;
-
 }
 
 .product-list__item {
@@ -62,25 +66,33 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 	position: absolute;
 	top: 8px;
 	right: 4px;
-	display: none;	
+	display: none;
 }
-
 </style>
 <body>
-<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()"
-  class="w3-bar-item w3-button">Close Menu</a>
-  <a href="${pageContext.servletContext.contextPath}/" class="w3-bar-item w3-button">Trang chủ</a>
-  <a href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm" class="w3-bar-item w3-button">Danh sách kho hàng</a>
-  <a href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm" class="w3-bar-item w3-button">Danh sách sản phẩm</a>
-</nav>
-<div class="w3-top">
-  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+	<nav
+		class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+		style="display: none; z-index: 2; width: 40%; min-width: 300px"
+		id="mySidebar">
+		<a href="javascript:void(0)" onclick="w3_close()"
+			class="w3-bar-item w3-button">Close Menu</a> <a
+			href="${pageContext.servletContext.contextPath}/"
+			class="w3-bar-item w3-button">Trang chủ</a> <a
+			href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách kho hàng</a> <a
+			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách sản phẩm</a><a
+			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách nhân viên</a>
+	</nav>
+	<div class="w3-top">
+		<div class="w3-white w3-xlarge"
+			style="max-width: 1200px; margin: auto">
+			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
 
-    <div class="w3-center w3-padding-16">Danh sách sản phẩm</div>
-  </div>
-</div>
+			<div class="w3-center w3-padding-16">Danh sách sản phẩm</div>
+		</div>
+	</div>
 	<div class="container">
 		<c:if test="${message.type ne null}">
 			<div id="toast">
@@ -156,10 +168,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 						</tbody>
 					</table>
 				</div>
-		<form action="${pageContext.servletContext.contextPath}/san-pham/them-moi.htm" method="post">
-		
-			<button class="btn btn-success" onclick="">Thêm mới sản phẩm</button>
-		</form>
+				<form
+					action="${pageContext.servletContext.contextPath}/san-pham/them-moi.htm"
+					method="post">
+
+					<button class="btn btn-success">Thêm mới sản
+						phẩm</button>
+				</form>
 			</div>
 		</div>
 	</div>

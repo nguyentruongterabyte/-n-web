@@ -18,8 +18,14 @@
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}	
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Karma", sans-serif
+}
+
+.w3-bar-block .w3-bar-item {
+	padding: 20px
+}
+
 .inventory-list {
 	max-height: 78vh;
 	overflow-y: scroll;
@@ -67,24 +73,29 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 	right: 4px;
 	display: none;
 }
-
-
 </style>
 <body>
-	<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()"
-  class="w3-bar-item w3-button">Close Menu</a>
-  <a href="${pageContext.servletContext.contextPath}/" class="w3-bar-item w3-button">Trang chủ</a>
-  <a href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm" class="w3-bar-item w3-button">Danh sách kho hàng</a>
-  <a href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm" class="w3-bar-item w3-button">Danh sách sản phẩm</a>
-</nav>
-<div class="w3-top">
-  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-    <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+	<nav
+		class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+		style="display: none; z-index: 2; width: 40%; min-width: 300px"
+		id="mySidebar">
+		<a href="javascript:void(0)" onclick="w3_close()"
+			class="w3-bar-item w3-button">Close Menu</a> <a
+			href="${pageContext.servletContext.contextPath}/"
+			class="w3-bar-item w3-button">Trang chủ</a> <a
+			href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách kho hàng</a> <a
+			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách sản phẩm</a>
+	</nav>
+	<div class="w3-top">
+		<div class="w3-white w3-xlarge"
+			style="max-width: 1200px; margin: auto">
+			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
 
-    <div class="w3-center w3-padding-16">Danh sách kho hàng</div>
-  </div>
-</div>
+			<div class="w3-center w3-padding-16">Danh sách kho hàng</div>
+		</div>
+	</div>
 	<div class="container">
 		<c:if test="${message.type ne null}">
 			<div id="toast">
@@ -259,8 +270,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 <!-- 	<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="animate-spin text-center mx-auto mt-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg> -->
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/filter.js"></script>
-	<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
-	
+	<script
+		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
+
 	<script>
 	
 		function deleteInventory(inventoryId) {

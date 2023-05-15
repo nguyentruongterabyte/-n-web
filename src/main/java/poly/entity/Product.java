@@ -36,7 +36,6 @@ public class Product {
 	
 	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapability;
-	
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
