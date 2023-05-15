@@ -32,7 +32,7 @@ public class StaffDao {
 	
 	public List<Staff> getAll() {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM Staff";
+		String hql = "FROM Staff WHERE Resigned = false";
 		Query query = session.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Staff> list = query.list();
@@ -89,22 +89,15 @@ public class StaffDao {
 	
 	public Message delete(int staffId) {
 		Staff s = this.get(staffId);
-		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
 		Message message = new Message();
-		
-		try {
-			session.delete(s);
-			t.commit();
-			message.setType("success");
-			message.setContent("Xóa nhân viên thành công!");
-		} catch(Exception e) {
-			t.rollback();
-			message.setType("error");
-			message.setContent("Xóa nhân viên thất bại!");
-		} finally {
-			session.close();
+		s.setResigned(true);
+		message = this.update(s);
+		if (message.getType().equals("error")) {
+			message.setType("Xóa nhân viên thất bại");
+		} else {
+			message.setContent("Xóa nhân viên thành công!");			
 		}
+		
 		return message;
 	}
 }

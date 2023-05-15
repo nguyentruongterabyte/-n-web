@@ -23,6 +23,8 @@ public class ProductDao {
 	public int getMaxId() {
 		Session session = factory.getCurrentSession();
 		Query query = session.createQuery("SELECT max(p.id) FROM Product p");
+		if (query.uniqueResult() == null)
+			return 0;
 		int maxId = (int) query.uniqueResult();
 		return maxId;
 	}

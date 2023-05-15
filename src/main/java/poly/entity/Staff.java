@@ -1,7 +1,9 @@
 package poly.entity;
 
+
 import java.sql.Date;
 import java.util.ArrayList;
+
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -11,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
-
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -30,28 +32,31 @@ public class Staff {
 
 	@NotBlank(message = "Không được để trống số điện thoại!")
 	private String phone;
-	@NotBlank(message = "Vui lòng nhập giới tính!")
+	
+	@NotNull(message = "Vui lòng nhập giới tính!")
 	private boolean gender;
 
 	@NotBlank(message = "Không được để trống email!")
 	@Email(message = "Email không hợp lệ!")
 	private String email;
+
 	@NotBlank(message = "Vui lòng nhập địa chỉ!")
 	private String address;
 
 	@NotBlank(message = "Vui lòng nhập mã định danh!")
-
 	private String identifyNumber;
 	@NotBlank(message = "Vui lòng chọn chức vụ!")
 	private String func; // Chức vụ
 
+
 	@NotBlank(message = "Vui lòng nhập ngày sinh!")
 	private String birthday;
 	@NotBlank(message = "Không ai làm không lương đâu")
+
 	private float salary;
 	
 	private boolean resigned;
-
+	
 	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
 	private Collection<VendorBill> vendorBills;
 	
@@ -82,6 +87,8 @@ public class Staff {
 		this.vendorBills = vendorBills;
 		this.documents = documents;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -162,7 +169,7 @@ public class Staff {
 	public void setSalary(float salary) {
 		this.salary = salary;
 	}
-
+	
 	public boolean isResigned() {
 		return resigned;
 	}
@@ -170,6 +177,7 @@ public class Staff {
 	public void setResigned(boolean resigned) {
 		this.resigned = resigned;
 	}
+
 
 	public Collection<VendorBill> getVendorBills() {
 		return vendorBills;

@@ -147,11 +147,7 @@ public class ProductController {
 					productUnit
 					);
 			message = productDao.save(newProduct);
-			List<Product> list = productDao.getAll();
-			model.addAttribute("products", list);
-			model.addAttribute("message", message);
 			redirectAttributes.addFlashAttribute("message", message);
-			redirectAttributes.addFlashAttribute("products", list);
 			redirectAttributes.addFlashAttribute("product", newProduct);
 		} else {
 			Product product = new Product(
@@ -163,12 +159,12 @@ public class ProductController {
 					Integer.parseInt(outPrice),
 					productUnit
 					);
-			List<Product> list = productDao.getAll();
 			message = productDao.update(product);
 			redirectAttributes.addFlashAttribute("message", message);
-			redirectAttributes.addFlashAttribute("products", list);
 			redirectAttributes.addFlashAttribute("product", product);
 		}
+		List<Product> list = productDao.getAll();
+		redirectAttributes.addFlashAttribute("products", list);
 		return "redirect:danh-sach.htm";
 	}
 	
@@ -195,7 +191,7 @@ public class ProductController {
 		Message message = new Message();
 		if (id == null) {
 			message.setType("error");
-			message.setContent("Lỗi lấy thông tin");
+			message.setContent("Lỗi lấy thông tin!");
 			MessageLog.showLog(message);
 		} else {
 			message = productDao.delete(Integer.parseInt(id));
