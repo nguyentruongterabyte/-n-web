@@ -1,6 +1,7 @@
 package poly.dao;
 
 import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.hibernate.Query;
@@ -10,44 +11,34 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import poly.entity.Product;
+import poly.entity.Staff;
 import poly.message.Message;
-
 
 @Transactional
 @Repository
-public class ProductDao {
-	@Autowired
+public class StaffDao {
+	@Autowired 
 	private SessionFactory factory;
 	
-	public int getMaxId() {
+	public List<Staff> getAll() {
 		Session session = factory.getCurrentSession();
-		Query query = session.createQuery("SELECT max(p.id) FROM Product p");
-		int maxId = (int) query.uniqueResult();
-		return maxId;
-	}
-	
-	public List<Product> getAll() {
-		Session session = factory.getCurrentSession();
-		String hql = "FROM Product";
+		String hql = "FROM Staff";
 		Query query = session.createQuery(hql);
-
 		@SuppressWarnings("unchecked")
-		List<Product> list = query.list();
-
+		List<Staff> list = query.list();
 		return list;
 	}
 	
-	public Message save(Product product) {
-		
+	public Message save(Staff staff) {
 		Session session = factory.openSession();
-		Transaction t = session.beginTransaction();
+		Transaction t =  session.beginTransaction();
 		Message message = new Message();
+		
 		try {
-			session.save(product);
+			session.save(staff);
 			t.commit();
 			message.setType("success");
-			message.setContent("Thêm mới sản phẩm thành công!");
+			message.setContent("Thêm mới nhân viên thành công!");
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -58,19 +49,17 @@ public class ProductDao {
 			session.close();
 		}
 		return message;
-
 	}
 	
-	public Message update(Product product) {
+	public Message update(Staff staff) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Message message = new Message();
 		try {
-			session.update(product);
+			session.update(staff);
 			t.commit();
 			message.setType("success");
-			message.setContent("Cập nhật sản phẩm thành công!");
-			
+			message.setContent("Cập nhật thông tin nhân viên thành công!");
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();
@@ -80,39 +69,32 @@ public class ProductDao {
 			session.close();
 		}
 		return message;
-
 	}
 	
-	public Message delete(int productId) {
-		Product p = this.get(productId);
+	public Staff get(int id) {
+		Session session = factory.getCurrentSession();
+		Staff s = (Staff) session.get(Staff.class, (Integer) id);
+		return s;
+	}
+	
+	public Message delete(int staffId) {
+		Staff s = this.get(staffId);
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Message message = new Message();
-		if (p.getInventoryCapability().toArray().length > 0) {
-			message.setType("error");
-			message.setContent("Sản phẩm đã có trong kho hàng. Xóa thất bại!");
-			return message;
-		}
+		
 		try {
-			p.setInventoryCapability(null);
-			session.delete(p);
+			session.delete(s);
 			t.commit();
 			message.setType("success");
-			message.setContent("Xóa sản phẩm thành công!");
-		} catch (Exception e) {
-			// TODO: handle exception
+			message.setContent("Xóa nhân viên thành công!");
+		} catch(Exception e) {
 			t.rollback();
 			message.setType("error");
-			message.setContent("Xóa sản phẩm thất bại!");
+			message.setContent("Xóa nhân viên thất bại!");
 		} finally {
 			session.close();
 		}
 		return message;
-	}
-	
-	public Product get(int id) {
-		Session session = factory.getCurrentSession();
-		Product p = (Product) session.get(Product.class,(Integer) id);
-		return p;
 	}
 }
