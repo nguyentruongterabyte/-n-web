@@ -28,13 +28,13 @@ public class Inventory {
 	@NotNull(message="Vui lòng nhập kỳ!")
 	private int term;
 	@OneToMany(mappedBy = "embeddedId.inventory", fetch = FetchType.EAGER)
-	private Collection<InventoryCapability> inventoryCapabilitys;
+	private Collection<InventoryCapability> inventoryCapabilities;
 
 
 	
 	public Inventory() {
 		super();
-		this.inventoryCapabilitys = new ArrayList<>();
+		this.inventoryCapabilities = new ArrayList<>();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -89,13 +89,16 @@ public class Inventory {
 		this.term = term;
 	}
 
-	public Collection<InventoryCapability> getInventoryCapability() {
-		return inventoryCapabilitys;
+
+
+	public Collection<InventoryCapability> getInventoryCapabilities() {
+		return inventoryCapabilities;
 	}
 
-	public void setInventoryCapability(Collection<InventoryCapability> inventoryCapability) {
-		this.inventoryCapabilitys = inventoryCapability;
+
+
+	public void setInventoryCapabilities(Collection<InventoryCapability> inventoryCapabilities) {
+		this.inventoryCapabilities = inventoryCapabilities;
 	}
-	
-	
+
 }
