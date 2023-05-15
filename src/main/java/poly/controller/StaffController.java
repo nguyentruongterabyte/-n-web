@@ -28,7 +28,13 @@ public class StaffController {
 	
 	@RequestMapping("danh-sach")
 	public String showList(
-			ModelMap model) {
+			ModelMap model, 
+			@RequestParam(value="id", required = false) String id) {
+		
+		if (id != null) {
+			Staff staff = staffDao.get(Integer.parseInt(id));
+			model.addAttribute("staff", staff);
+		}
 		List<Staff> list = staffDao.getAll();
 		model.addAttribute("staffs", list);
 		return "staffList";
@@ -107,5 +113,25 @@ public class StaffController {
 		}
 		model.addAttribute("pageType", "edit");
 		return "addStaff";
+	}
+	
+	@RequestMapping("xoa")
+	public String delete(
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value="id") String id
+			) {
+		Message message = new Message();
+		if (id == null) {
+			message.setType("error");
+			message.setContent("Lỗi lấy thông tin!");
+		} else {
+			message = staffDao.delete(Integer.parseInt(id));
+			if (message.getType().equals("error")) {
+				redirectAttributes.addFlashAttribute("message", message);
+				return "redirect:danh-sach.htm?id=" + id;
+			}
+		}
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:danh-sach.htm";
 	}
 }

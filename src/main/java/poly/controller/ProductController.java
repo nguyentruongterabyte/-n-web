@@ -190,7 +190,7 @@ public class ProductController {
 		Message message = new Message();
 		if (id == null) {
 			message.setType("error");
-			message.setContent("Lỗi lấy thông tin");
+			message.setContent("Lỗi lấy thông tin!");
 			MessageLog.showLog(message);
 		} else {
 			message = productDao.delete(Integer.parseInt(id));

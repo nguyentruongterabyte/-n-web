@@ -50,10 +50,11 @@ public class Staff {
 	private String birthday;
 
 
-
 	@NotNull(message = "Không ai làm không lương đâu")
 	private float salary;
 
+	private boolean resigned;
+	
 	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
 	private Collection<VendorBill> vendorBills;
 
@@ -155,6 +156,14 @@ public class Staff {
 
 	public void setSalary(float salary) {
 		this.salary = salary;
+	}
+	
+	public boolean isResigned() {
+		return resigned;
+	}
+
+	public void setResigned(boolean resigned) {
+		this.resigned = resigned;
 	}
 
 	public Collection<VendorBill> getVendorBills() {
