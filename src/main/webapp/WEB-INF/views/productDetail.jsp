@@ -212,12 +212,22 @@ input[type=submit]:hover {
 						<input type="submit" value="Chỉnh sửa">
 					</div>
 				</form>
+				<div class="row">
+					<a style = "border: 1px solid #000; border-radius: 5px; text-decoration: none;"
+					class="col-md-1 glyphicon glyphicon-arrow-left"
+					href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm?id=${product.id}">
+						
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
 	
 </body>
+<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
+
 <script>
+
 function w3_open() {
 	  document.getElementById("mySidebar").style.display = "block";
 	}

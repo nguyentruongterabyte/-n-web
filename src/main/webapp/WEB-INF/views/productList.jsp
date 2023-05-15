@@ -164,6 +164,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 		</div>
 	</div>
 	<script src="${pageContext.servletContext.contextPath}/resource/js/filter.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	<script>
 		function deleteProduct(productId) {
 			var ok = confirm('Bạn có chắc muốn xóa sản phẩm này?');
@@ -178,6 +179,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 			function w3_close() {
 			  document.getElementById("mySidebar").style.display = "none";
 			}
+	</script>
+	<script>
+	window.addEventListener('load', () => {
+	 	const targetElement = document.querySelector('.product-list__item.info');
+	  	if (targetElement) {
+	    	targetElement.scrollIntoView({
+	      	behavior: 'smooth',
+	      	block: 'center'
+	    });
+	  }
+	});
 	</script>
 </body>
 </html>

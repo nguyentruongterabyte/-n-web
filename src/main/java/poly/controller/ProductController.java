@@ -33,7 +33,12 @@ public class ProductController {
 	private static final String UPLOAD_DIRECTORY = "/resource/images/product/";
 	// RequestMapping
 	@RequestMapping("danh-sach")
-	public String showList(ModelMap model) {
+	public String showList(ModelMap model, 
+			@RequestParam(value="id", required = false) String id) {
+		if (id != null) {
+			Product product = productDao.get(Integer.parseInt(id));			
+			model.addAttribute("product", product);
+		}
 		List<Product> list = productDao.getAll();
 		model.addAttribute("products", list);
 		return "productList";
@@ -42,6 +47,7 @@ public class ProductController {
 	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST)
 	public String validate(
 			ModelMap model,
+			RedirectAttributes redirectAttributes,
 			HttpSession session,
 			@RequestParam("productId") String productId,
 			@RequestParam("productName") String productName,
@@ -143,6 +149,9 @@ public class ProductController {
 			List<Product> list = productDao.getAll();
 			model.addAttribute("products", list);
 			model.addAttribute("message", message);
+			redirectAttributes.addFlashAttribute("message", message);
+			redirectAttributes.addFlashAttribute("products", list);
+			redirectAttributes.addFlashAttribute("product", newProduct);
 		} else {
 			Product product = new Product(
 					Integer.parseInt(productId),
@@ -155,10 +164,11 @@ public class ProductController {
 					);
 			List<Product> list = productDao.getAll();
 			message = productDao.update(product);
-			model.addAttribute("message", message);
-			model.addAttribute("products", list);
+			redirectAttributes.addFlashAttribute("message", message);
+			redirectAttributes.addFlashAttribute("products", list);
+			redirectAttributes.addFlashAttribute("product", product);
 		}
-		return "productList";
+		return "redirect:danh-sach.htm";
 	}
 	
 	@RequestMapping("chinh-sua")

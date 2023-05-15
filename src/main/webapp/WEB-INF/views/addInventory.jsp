@@ -252,6 +252,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 			</form:form>
 		</div>
 	</div>
+	<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
+	
 	<script>
 		$('#product-select').on('change', function() {
 			var productName = $(this).find(":selected").text();

@@ -174,6 +174,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 			</form>
 		</div>
 	</div>
+	<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
+	
 	<script>
 		let img = document.getElementById("product-img-preview");
 		let input = document.getElementById("product-img");
