@@ -33,6 +33,7 @@ public class Staff {
 	private String func; // Chức vụ
 	
 	@NotBlank(message="Không được để trống ngày sinh!")
+	@NotNull(message="Không được để trống ngày sinh!")
 	private String birthday;
 	private float salary;
 	

@@ -180,6 +180,13 @@ body, h1, h2, h3, h4, h5, h6 {
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	<script>
+		function deleteStaff(staffId) {
+			var ok = confirm('Bạn có chắc muốn xóa nhân viên này?');
+			if (ok) {
+				location.href = "${pageContext.servletContext.contextPath}/nhan-vien/xoa.htm?id=" + staffId;
+			}
+		}
+	
 		function w3_open() {
 			document.getElementById("mySidebar").style.display = "block";
 		}
@@ -187,6 +194,17 @@ body, h1, h2, h3, h4, h5, h6 {
 		function w3_close() {
 			document.getElementById("mySidebar").style.display = "none";
 		}
+	</script>
+	<script>
+	window.addEventListener('load', () => {
+	 	const targetElement = document.querySelector('.staff-list__item.info');
+	  	if (targetElement) {
+	    	targetElement.scrollIntoView({
+	      	behavior: 'smooth',
+	      	block: 'center'
+	    });
+	  }
+	});
 	</script>
 </body>
 </html>

@@ -43,6 +43,9 @@ public class InventoryDao {
 		Session session = factory.getCurrentSession();
 		Query query = session.createQuery("SELECT max(i.id) FROM Inventory i");
 		
+		if (query.uniqueResult() == null)
+			return 0;
+		
 		int maxId = (int) query.uniqueResult();
 		return maxId;
 	}
