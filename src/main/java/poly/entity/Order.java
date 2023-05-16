@@ -56,9 +56,7 @@ public class Order {
 		orderDetails = new ArrayList<>();
 	}
 	
-	public Order(int id, String transactionDate, float totalPrice, float vat, float finalPrice, String status,
-			Collection<InOutInventoryDetail> inOutInventoryDetails, Collection<OrderDetail> orderDetails,
-			Document document) {
+	public Order(int id, String transactionDate, float totalPrice, float vat, float finalPrice, String status, Document document) {
 		super();
 		this.id = id;
 		this.transactionDate = transactionDate;
@@ -66,8 +64,6 @@ public class Order {
 		this.vat = vat;
 		this.finalPrice = finalPrice;
 		this.status = status;
-		this.inOutInventoryDetails = inOutInventoryDetails;
-		this.orderDetails = orderDetails;
 		this.document = document;
 	}
 

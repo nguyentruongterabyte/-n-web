@@ -28,15 +28,13 @@ import org.hibernate.validator.constraints.NotBlank;
 
 	public GroupOfCustomer() {
 		super();
-		customers = new ArrayList<>();
 	}
 
-	public GroupOfCustomer(int id, String label, float discount, Collection<Customer> customers) {
+	public GroupOfCustomer(int id, String label, float discount) {
 		super();
 		this.id = id;
 		this.label = label;
 		this.discount = discount;
-		this.customers = customers;
 	}
 
 	public int getId() {

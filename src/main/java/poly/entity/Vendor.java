@@ -25,30 +25,26 @@ public class Vendor {
 	private String address;
 	
 	@OneToMany(mappedBy = "vendor", fetch = FetchType.EAGER)
-	private Collection<VendorBill> vendorBill;
+	private Collection<VendorBill> vendorBills;
 	
 	@OneToMany(mappedBy = "vendor", fetch = FetchType.EAGER)
-	private Collection<VendorBill> vendorOrder;
+	private Collection<VendorBill> vendorOrders;
 	
 	@OneToMany(mappedBy = "vendor", fetch = FetchType.EAGER)
-	private Collection<VendorBill> vendorDebt;
+	private Collection<VendorBill> vendorDebts;
 
 	public Vendor() {
 		super();
 
 	}
 
-	public Vendor(int id, String name, String phone, String email, String address, Collection<VendorBill> vendorBill,
-			Collection<VendorBill> vendorOrder, Collection<VendorBill> vendorDebt) {
+	public Vendor(int id, String name, String phone, String email, String address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.phone = phone;
 		this.email = email;
 		this.address = address;
-		this.vendorBill = vendorBill;
-		this.vendorOrder = vendorOrder;
-		this.vendorDebt = vendorDebt;
 	}
 
 	public int getId() {
@@ -91,28 +87,28 @@ public class Vendor {
 		this.address = address;
 	}
 
-	public Collection<VendorBill> getVendorBill() {
-		return vendorBill;
+	public Collection<VendorBill> getVendorBills() {
+		return vendorBills;
 	}
 
-	public void setVendorBill(Collection<VendorBill> vendorBill) {
-		this.vendorBill = vendorBill;
+	public void setVendorBills(Collection<VendorBill> vendorBills) {
+		this.vendorBills = vendorBills;
 	}
 
-	public Collection<VendorBill> getVendorOrder() {
-		return vendorOrder;
+	public Collection<VendorBill> getVendorOrders() {
+		return vendorOrders;
 	}
 
-	public void setVendorOrder(Collection<VendorBill> vendorOrder) {
-		this.vendorOrder = vendorOrder;
+	public void setVendorOrders(Collection<VendorBill> vendorOrders) {
+		this.vendorOrders = vendorOrders;
 	}
 
-	public Collection<VendorBill> getVendorDebt() {
-		return vendorDebt;
+	public Collection<VendorBill> getVendorDebts() {
+		return vendorDebts;
 	}
 
-	public void setVendorDebt(Collection<VendorBill> vendorDebt) {
-		this.vendorDebt = vendorDebt;
+	public void setVendorDebts(Collection<VendorBill> vendorDebts) {
+		this.vendorDebts = vendorDebts;
 	}
 
 }

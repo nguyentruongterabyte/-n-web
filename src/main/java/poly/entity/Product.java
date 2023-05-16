@@ -43,10 +43,9 @@ public class Product {
 	
 	public Product() {
 		super();
-		inventoryCapabilities = new ArrayList<>();
-		orderDetails = new ArrayList<>();
 	}
 
+	
 	public Product(int id, String name, String barCode, String picture, int inPrice, int outPrice, String unit) {
 		super();
 		this.id = id;
@@ -57,6 +56,7 @@ public class Product {
 		this.outPrice = outPrice;
 		this.unit = unit;
 	}
+
 
 	public int getId() {
 		return id;

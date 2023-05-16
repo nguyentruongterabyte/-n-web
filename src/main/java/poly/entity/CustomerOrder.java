@@ -44,19 +44,16 @@ public class CustomerOrder {
 	private Document document;
 	public CustomerOrder() {
 		super();
-		customerDebts  = new ArrayList<>();
 	}
 
 	
-	public CustomerOrder(int id, Customer customer, float discount, float extraPaid, boolean isMultiPaid,
-			Collection<CustomerDebt> customerDebts, Document document) {
+	public CustomerOrder(int id, Customer customer, float discount, float extraPaid, boolean isMultiPaid, Document document) {
 		super();
 		this.id = id;
 		this.customer = customer;
 		this.discount = discount;
 		this.extraPaid = extraPaid;
 		this.isMultiPaid = isMultiPaid;
-		this.customerDebts = customerDebts;
 		this.document = document;
 	}
 

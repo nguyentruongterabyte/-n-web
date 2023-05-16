@@ -53,14 +53,10 @@ public class Customer {
 
 	public Customer() {
 		super();
-		customerOrders =new ArrayList<>();
-		customerBills =new ArrayList<>();
-		customerDebts = new ArrayList<>();
 	}
 
 	public Customer(int id, GroupOfCustomer groupOfCustomer, String name, boolean gender, String phone, String email,
-			String address, String identifyNumber, String birthday, Collection<CustomerOrder> customerOrders,
-			Collection<CustomerDebt> customerDebts, Collection<CustomerBill> customerBills) {
+			String address, String identifyNumber, String birthday) {
 		super();
 		this.id = id;
 		this.groupOfCustomer = groupOfCustomer;
@@ -71,9 +67,6 @@ public class Customer {
 		this.address = address;
 		this.identifyNumber = identifyNumber;
 		this.birthday = birthday;
-		this.customerOrders = customerOrders;
-		this.customerDebts = customerDebts;
-		this.customerBills = customerBills;
 	}
 
 	public int getId() {

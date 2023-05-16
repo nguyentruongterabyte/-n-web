@@ -50,11 +50,9 @@ public class InOutInventory {
 	
 	public InOutInventory() {
 		super();
-		inOutInventoryDetails  = new ArrayList<>();
 	}
 
-	public InOutInventory(int id, int respond, Inventory inventory, float carryFee, int term, boolean type,
-			Collection<InOutInventoryDetail> inOutInventoryDetails, Document document) {
+	public InOutInventory(int id, int respond, Inventory inventory, float carryFee, int term, boolean type, Document document) {
 		super();
 		this.id = id;
 		this.respond = respond;
@@ -62,7 +60,6 @@ public class InOutInventory {
 		this.carryFee = carryFee;
 		this.term = term;
 		this.type = type;
-		this.inOutInventoryDetails = inOutInventoryDetails;
 		this.document = document;
 	}
 
