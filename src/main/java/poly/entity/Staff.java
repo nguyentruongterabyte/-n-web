@@ -49,8 +49,8 @@ public class Staff {
 
 	@NotBlank(message = "Vui lòng nhập ngày sinh!")
 	private String birthday;
-	@NotBlank(message = "Không ai làm không lương đâu")
 
+	@NotNull(message = "Vui lòng nhập lương")
 	private float salary;
 	
 	private boolean resigned;

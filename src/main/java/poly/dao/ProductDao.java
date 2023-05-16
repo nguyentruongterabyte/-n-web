@@ -95,8 +95,14 @@ public class ProductDao {
 			message.setContent("Sản phẩm đã có trong kho hàng. Xóa thất bại!");
 			return message;
 		}
+		
+		if (p.getOrderDetails().toArray().length > 0) {
+			message.setType("error");
+			message.setContent("Sản phẩm đã tồn tại đơn hàng. Xóa thất bại!");
+		}
 		try {
 			p.setInventoryCapabilities(null);
+			p.setOrderDetails(null);
 			session.delete(p);
 			t.commit();
 			message.setType("success");

@@ -1,6 +1,5 @@
 package poly.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -12,7 +11,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
- class GroupOfCustomer {
+public class GroupOfCustomer {
 	@Id
 	@GeneratedValue
 	private int id;

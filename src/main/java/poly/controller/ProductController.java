@@ -210,7 +210,7 @@ public class ProductController {
 	public String add(ModelMap model) {
 		int maxId = productDao.getMaxId();
 		model.addAttribute("photoPath", "");
-		model.addAttribute("productId", maxId);
+		model.addAttribute("productId", maxId + 1);
 		model.addAttribute("pageType", "add");
 		return "addProduct";
 	}

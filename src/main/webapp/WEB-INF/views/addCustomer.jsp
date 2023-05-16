@@ -2,13 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Thông tin nhân viên</title>
+<c:choose>
+	<c:when test="${pageType eq 'add'}">
+		<title>Thêm khách hàng mới</title>
+	</c:when>
+	<c:otherwise>
+		<title>Chỉnh sửa thông tin khách hàng</title>
+	</c:otherwise>
+</c:choose>
 <base href="${pageContext.servletContext.contextPath}">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -49,7 +55,16 @@ body, h1, h2, h3, h4, h5, h6 {
 			style="max-width: 1200px; margin: auto">
 			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
 
-			<div class="w3-center w3-padding-16">Thông tin nhân viên</div>
+			<div class="w3-center w3-padding-16">
+				<c:choose>
+					<c:when test="${pageType eq 'add'}">
+						Thêm khách hàng mới
+					</c:when>
+					<c:otherwise>
+						Chỉnh sửa thông tin khách hàng
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 	</div>
 	<div class="container">
@@ -84,17 +99,17 @@ body, h1, h2, h3, h4, h5, h6 {
 		</c:if>
 		<div class="row row-no-padding">
 			<div class="col-md-8 col-md-offset-2">
-				<form:form action="${pageContext.servletContext.contextPath}/nhan-vien/chinh-sua.htm?id=${staff.id}"
-					modelAttribute="staff" method="post"
+				<form:form action="${pageContext.servletContext.contextPath}/khach-hang/xac-thuc.htm"
+					modelAttribute="customer" method="post"
 				>
 					<div class="row mt-16">
 						<div class="col-md-4">
 							<div class="row">
 								<div class="col-md-6">
-									<form:label path="id">Mã nhân viên</form:label>
+									<form:label path="id">Mã khách hàng</form:label>
 								</div>
 								<div class="col-md-6">
-									<input value="${staff.id}" class="form-control" readonly="readonly"/>
+									<form:input path="id" class="form-control" readonly="true"/>
 								</div>
 							</div>
 						</div>
@@ -104,7 +119,8 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="name">Họ tên</form:label>
 								</div>
 								<div class="col-md-10">
-									<form:input path="name" class="form-control" readonly="true"/>
+									<form:input path="name" class="form-control"/>
+									<form:errors path="name"/>
 								</div>
 							</div>
 						</div>
@@ -116,7 +132,8 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="phone">Số điện thoại</form:label>
 								</div>
 								<div class="col-md-9">
-									<form:input path="phone" class="form-control" readonly="true"/>
+									<form:input path="phone" type="number" class="form-control"/>
+									<form:errors path="phone"/>
 								</div>
 							</div>
 						</div>
@@ -126,7 +143,7 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="gender">Giới tính</form:label>
 								</div>
 								<div class="col-md-7">								
-									<form:select path="gender" class="form-control" disabled="true">
+									<form:select path="gender" class="form-control">
 										<form:option value="0">Nam</form:option>
 										<form:option value="1">Nữ</form:option>
 									</form:select>
@@ -141,7 +158,8 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="email">Email</form:label>
 								</div>
 								<div class="col-md-9">
-									<form:input path="email" class="form-control" readonly="true"/>
+									<form:input path="email" class="form-control" type="email"/>
+									<form:errors path="email"/>
 								</div>
 							</div>
 						</div>
@@ -151,7 +169,8 @@ body, h1, h2, h3, h4, h5, h6 {
 							<form:label path="address">Địa chỉ</form:label>
 						</div>
 						<div class="col-md-8">
-							<form:textarea path="address" cols="40" rows="3" class="form-control no-resize" readonly="true"/>
+							<form:textarea path="address" cols="40" rows="3" class="form-control no-resize"/>
+							<form:errors path="address"/>
 						</div>
 					</div>
 					<div class="row mt-16">
@@ -161,20 +180,21 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="identifyNumber">CMND/CCCD</form:label>
 								</div>
 								<div class="col-md-8">
-									<form:input path="identifyNumber" class="form-control" readonly="true"/>
+									<form:input path="identifyNumber" type="number" class="form-control"/>
+									<form:errors path="identifyNumber"/>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="row">
 								<div class="col-md-3 col-md-offset-1">
-									<form:label path="func">Chức vụ</form:label>
+									<form:label path="groupOfCustomer">Loại khách hàng</form:label>
 								</div>
 								<div class="col-md-8">
-									<form:select path="func" class="form-control" disabled="true">
-										<form:option value="manager">Quản lý</form:option>
-										<form:option value="cashier">Thu ngân</form:option>
-										<form:option value="storekeeper">Thủ kho</form:option>
+									<form:select path="groupOfCustomer.id" class="form-control">
+										<c:forEach var="groupOfCustomer" items="${groupOfCustomers}">
+											<form:option value="${groupOfCustomer.id}">${groupOfCustomer.label}</form:option>
+										</c:forEach>
 									</form:select>
 								</div>
 							</div>
@@ -187,24 +207,15 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="birthday">Ngày sinh</form:label>
 								</div>
 								<div class="col-md-8">
-									<input value="${staff.birthday}" class="form-control" readonly="readonly"/>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="row">
-								<div class="col-md-3 col-md-offset-1">
-									<form:label path="salary">Lương</form:label>
-								</div>
-								<div class="col-md-8">
-									<input value="<fmt:formatNumber value="${staff.salary}" type="currency" currencyCode="VND" maxFractionDigits="0"/>" class="form-control" readonly="readonly" />
+									<form:input path="birthday" class="form-control" type="date" value="${customer.birthday}"/>
+									<form:errors path="birthday" />
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row mt-16">
-						<div class="col-md-3">
-							<form:button class="btn btn-info btn-lg" style="width:100%;">Chỉnh sửa</form:button>
+						<div class="col-md-2">
+							<form:button class="btn btn-success btn-lg" style="width:100%;">Lưu</form:button>
 						</div>
 					</div>
 				</form:form>

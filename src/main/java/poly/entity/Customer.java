@@ -1,6 +1,5 @@
 package poly.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -21,15 +19,10 @@ public class Customer {
 	@GeneratedValue
 	private int id;
 	
-	@NotBlank(message = "Vui lòng nhập nhóm khách hàng!")
-	@ManyToOne
-	@JoinColumn(name = "GroupId")
-	private GroupOfCustomer groupOfCustomer;
 	
 	@NotBlank(message = "Vui lòng nhập tên khách hàng!")
 	private String name;
 	
-	@NotNull(message = "Vui lòng nhập giới tính!")
 	private boolean gender;
 	
 	private String phone;
@@ -38,9 +31,18 @@ public class Customer {
 	@NotBlank(message = "Vui lòng nhập địa chỉ")
 	private String address;
 	
-	@NotBlank(message = "vui lòng nhập mã định danh")
+	@NotBlank(message = "Vui lòng nhập mã định danh")
 	private String identifyNumber;
+	
+	@NotBlank(message = "Vui lòng nhập ngày sinh")
 	private String birthday;
+
+	@ManyToOne
+	@JoinColumn(name = "GroupId")
+	private GroupOfCustomer groupOfCustomer;
+	public Customer() {
+		super();
+	}
 	
 	@OneToMany(mappedBy = "customer", fetch =  FetchType.EAGER)
 	private Collection<CustomerOrder> customerOrders;
@@ -51,9 +53,6 @@ public class Customer {
 	@OneToMany(mappedBy = "customer", fetch =  FetchType.EAGER)
 	private Collection<CustomerBill> customerBills;
 
-	public Customer() {
-		super();
-	}
 
 	public Customer(int id, GroupOfCustomer groupOfCustomer, String name, boolean gender, String phone, String email,
 			String address, String identifyNumber, String birthday) {
@@ -141,6 +140,8 @@ public class Customer {
 		this.birthday = birthday;
 	}
 
+	
+	
 	public Collection<CustomerOrder> getCustomerOrders() {
 		return customerOrders;
 	}
