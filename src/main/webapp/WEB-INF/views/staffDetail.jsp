@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Thông tin nhân viên</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-staff-16.png">
 <base href="${pageContext.servletContext.contextPath}">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

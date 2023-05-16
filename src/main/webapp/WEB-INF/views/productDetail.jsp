@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Chi tiết sản phẩm</title>
 <base href="${pageContext.servletContext.contextPath}">
+<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-barcode-16.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resource/css/base.css">

@@ -15,6 +15,7 @@
 		<title>Chỉnh sửa sản phẩm</title>
 	</c:otherwise>
 </c:choose>
+<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-barcode-16.png">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
