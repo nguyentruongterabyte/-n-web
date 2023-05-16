@@ -102,7 +102,7 @@ public class InventoryDao {
 			session.delete(i);
 			t.commit();
 			message.setType("success");
-			message.setContent("Xóa kho hàng thành công!\n" + i.getName());
+			message.setContent("Xóa kho hàng "+  i.getName()+ "thành công!\n");
 		} catch (Exception e) {
 			// TODO: handle exception
 			t.rollback();
