@@ -65,14 +65,6 @@ public class CustomerController {
 			) {
 		Message message = new Message();
 		Customer checkExist = customerDao.get(customer.getId());
-		System.out.println("Id = " + customer.getId()
-				+ "\nGroup = " + customer.getGroupOfCustomer().getLabel()
-				+ "\nGender = " + customer.isGender()
-				+ "\nPhone = " + customer.getPhone()
-				+ "\nEmail = " + customer.getEmail()
-				+ "\nAddress = " + customer.getAddress()
-				+ "\nIdentifyNumber = " + customer.getIdentifyNumber()
-				+ "\nBirthday = " + customer.getBirthday());
 		if (errors.hasErrors()) {
 			message.setType("error");
 			message.setContent("Vui lòng sửa các lỗi sau!");
@@ -122,9 +114,11 @@ public class CustomerController {
 			) {
 		Customer customer = customerDao.get(Integer.parseInt(id));
 		if (customer != null) {
-			customer.setBirthday(customer.getBirthday().split("")[0]);
+			customer.setBirthday(customer.getBirthday().split(" ")[0]);
 			model.addAttribute("customer", customer);
 		}
+		List<GroupOfCustomer> groupOfCustomers = groupOfCustomerDao.getAll();
+		model.addAttribute("groupOfCustomers", groupOfCustomers);
 		model.addAttribute("pageType", "edit");
 		return "customerDetail";
 	}
@@ -146,6 +140,22 @@ public class CustomerController {
 		}
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:danh-sach.htm";
+	}
+	
+	@RequestMapping("chinh-sua")
+	public String edit(
+			ModelMap model, 
+			@RequestParam("id") String id
+			) {
+		Customer customer = customerDao.get(Integer.parseInt(id));
+		List<GroupOfCustomer> groupOfCustomers = groupOfCustomerDao.getAll();
+		if (customer != null) {
+			customer.setBirthday(customer.getBirthday().split(" ")[0]);
+			model.addAttribute("customer", customer);
+		}
+		model.addAttribute("groupOfCustomers", groupOfCustomers);
+		model.addAttribute("pageType", "edit");
+		return "addCustomer";
 	}
 	
 }

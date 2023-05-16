@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Danh sách khách hàng</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-customer-16.png">
+
 <base href="${pageContext.servletContext.contextPath}">
 
 <link rel="stylesheet"
