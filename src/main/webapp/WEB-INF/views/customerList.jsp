@@ -1,23 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Danh sách nhân viên</title>
+<title>Danh sách khách hàng</title>
 <base href="${pageContext.servletContext.contextPath}">
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resource/css/base.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
 </head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-</head>
 <style>
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Karma", sans-serif
@@ -26,50 +25,6 @@ body, h1, h2, h3, h4, h5, h6 {
 .w3-bar-block .w3-bar-item {
 	padding: 20px
 }
-
-.staff-list {
-	margin-top: 12px;
-	max-height: 80vh;
-	overflow-y: scroll; 
-	position: relative;
-}
-
-.staff-list__heading {
-	position: sticky;
-	top: 0;
-	right: 0;
-	left: 0;
-	z-index: 1;
-}
-
-.staff-list__table {
-	position: relative;
-}
-
-.staff-list__table-heading {
-	position: sticky;
-	top: 38px;
-	right: 0;
-	background: #fff;
-
-}
-
-.staff-list__item {
-	position: relative;
-	cursor: pointer;
-}
-
-.staff-list__item:hover .staff-list__item-delete-btn {
-	display: block;
-}
-
-.staff-list__item-delete-btn {
-	position: absolute;
-	top: 8px;
-	right: 4px;
-	display: none;	
-}
-
 </style>
 <body>
 	<nav
@@ -93,7 +48,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="w3-white w3-xlarge"
 			style="max-width: 1200px; margin: auto">
 			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-			<div class="w3-center w3-padding-16">Danh sách nhân viên</div>
+			<div class="w3-center w3-padding-16">Danh sách khách hàng</div>
 		</div>
 	</div>
 	<div class="container">
@@ -128,38 +83,37 @@ body, h1, h2, h3, h4, h5, h6 {
 		</c:if>
 		<div class="row row-no-padding">
 			<div class="col-md-8 col-md-offset-2">
-				<div class="panel panel-primary staff-list filterable">
-					<div class="staff-list__heading panel-heading">
-						<h3 class="panel-title">Nhân viên</h3>
+				<div class="panel panel-primary customer-list filterable">
+					<div class="customer-list__heading panel-heading">
+						<h3 class="panel-title">Khách hàng</h3>
 						<div class="pull-right">
 							<button class="btn btn-default btn-xs btn-filter">
 								<span class="glyphicon glyphicon-filter"></span> Lọc
 							</button>
 						</div>
 					</div>
-					<table class="staff-list__table table table-hover">
-						<thead class="staff-list__table-heading">
+					<table class="customer-list__table table table-hover">
+						<thead class="customer-list__table-heading">
 							<tr class="filters">
 								<th><input type="text" class="form-control" placeholder="#"
 									disabled></th>
 								<th><input type="text" class="form-control"
-									placeholder="Họ tên nhân viên" disabled></th>
+									placeholder="Họ tên khách hàng" disabled></th>
 								<th><input type="text" class="form-control"
 									placeholder="Số điện thoại" disabled></th>
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-							<c:forEach var="s" items="${staffs}">
-								<tr <c:if test="${staff.id == s.id}">class="staff-list__item info"</c:if>class="staff-list__item"
-									onclick="location.href='${pageContext.servletContext.contextPath}/nhan-vien/chi-tiet.htm?id=${s.id}'"
+							<c:forEach var="c" items="${customers}">
+								<tr <c:if test="${customer.id == c.id}">class="customer-list__item info"</c:if>class="customer-list__item"
+									onclick="location.href='${pageContext.servletContext.contextPath}/khach-hang/chi-tiet.htm?id=${s.id}'"
 								>
 									<td>${s.id}</td>
 									<td>${s.name}</td>
 									<td>${s.phone}</td>
 									<td>
 										<button
-											onclick="event.stopPropagation(); deleteStaff(${s.id});"
+											onclick="event.stopPropagation(); deleteCustomer(${s.id});"
 											type="button" title="Delete"
 											class="staff-list__item-delete-btn btn btn-danger btn-xs">
 											<span class="glyphicon glyphicon-trash"></span>
@@ -170,43 +124,25 @@ body, h1, h2, h3, h4, h5, h6 {
 						</tbody>
 					</table>
 				</div>
-				<form action="${pageContext.servletContext.contextPath}/nhan-vien/them-moi.htm"
+				<form action="${pageContext.servletContext.contextPath}/khach-hang/them-moi.htm"
 					 method="post">
-					<button class="btn btn-success">Thêm nhân viên mới</button>
+					<button class="btn btn-success">Thêm khách hàng mới</button>
 				</form>
 			</div>
-		</div>
+		</div>		
 	</div>
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/filter.js"></script>
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	<script>
-		function deleteCustomer(staffId) {
-			var ok = confirm('Bạn có chắc muốn xóa khách hàng này?');
-			if (ok) {
-				location.href = "${pageContext.servletContext.contextPath}/nhan-vien/xoa.htm?id=" + staffId;
-			}
-		}
-	
-		function w3_open() {
-			document.getElementById("mySidebar").style.display = "block";
-		}
+	function w3_open() {
+		document.getElementById("mySidebar").style.display = "block";
+	}
 
-		function w3_close() {
-			document.getElementById("mySidebar").style.display = "none";
-		}
-	</script>
-	<script>
-	window.addEventListener('load', () => {
-	 	const targetElement = document.querySelector('.staff-list__item.info');
-	  	if (targetElement) {
-	    	targetElement.scrollIntoView({
-	      	behavior: 'smooth',
-	      	block: 'center'
-	    });
-	  }
-	});
+	function w3_close() {
+		document.getElementById("mySidebar").style.display = "none";
+	}
 	</script>
 </body>
 </html>

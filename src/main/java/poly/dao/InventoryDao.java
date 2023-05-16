@@ -97,8 +97,21 @@ public class InventoryDao {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();
 		Message message = new Message();
+		if (i.getInOutInventories().toArray().length > 0) {
+			message.setType("error");
+			message.setContent("Không thể xóa kho hàng vì đã tồn tại đơn nhập xuất!");
+			return message;
+		}
+		
+		if (i.getInventoryCapabilities().toArray().length > 0) {
+			message.setType("error");
+			message.setContent("Không thể xóa kho hàng vì đã tồn tại sản phẩm!");
+			return message;
+		}
+		
 		try {
 			i.setInventoryCapabilities(null);
+			i.setInOutInventories(null);
 			session.delete(i);
 			t.commit();
 			message.setType("success");
@@ -107,7 +120,7 @@ public class InventoryDao {
 			// TODO: handle exception
 			t.rollback();
 			message.setType("error");
-			message.setContent("Xóa thất bại!\n" + "Hãy xóa những sản phẩm trong sức chứa kho hàng trước!");
+			message.setContent("Xóa thất bại!\n" + e);
 		} finally {
 			session.close();
 		}

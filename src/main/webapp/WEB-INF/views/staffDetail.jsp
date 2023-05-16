@@ -40,7 +40,9 @@ body, h1, h2, h3, h4, h5, h6 {
 			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách sản phẩm</a><a
 			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách nhân viên</a>
+			class="w3-bar-item w3-button">Danh sách nhân viên</a><a
+			href="${pageContext.servletContext.contextPath}/khach-hang/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách khách hàng</a>
 	</nav>
 	<div class="w3-top">
 		<div class="w3-white w3-xlarge"
