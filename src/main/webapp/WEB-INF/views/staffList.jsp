@@ -182,8 +182,8 @@ body, h1, h2, h3, h4, h5, h6 {
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	<script>
-		function deleteCustomer(staffId) {
-			var ok = confirm('Bạn có chắc muốn xóa khách hàng này?');
+		function deleteStaff(staffId) {
+			var ok = confirm('Nhân viên này đã nghỉ việc?');
 			if (ok) {
 				location.href = "${pageContext.servletContext.contextPath}/nhan-vien/xoa.htm?id=" + staffId;
 			}

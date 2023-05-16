@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import poly.dao.CustomerDao;
+import poly.dao.GroupOfCustomerDao;
 import poly.entity.Customer;
+import poly.entity.GroupOfCustomer;
 import poly.message.Message;
 
 @Transactional
@@ -25,6 +27,9 @@ import poly.message.Message;
 public class CustomerController {
 	@Autowired
 	CustomerDao customerDao;
+	
+	@Autowired
+	GroupOfCustomerDao groupOfCustomerDao;
 	
 	@RequestMapping("danh-sach")
 	public String showList(
@@ -45,6 +50,8 @@ public class CustomerController {
 		int maxId = customerDao.getMaxId();
 		Customer customer = new Customer();
 		customer.setId(maxId + 1);
+		List<GroupOfCustomer> groupOfCustomers = groupOfCustomerDao.getAll();
+		model.addAttribute("groupOfCustomers", groupOfCustomers);
 		model.addAttribute("customer", customer);
 		model.addAttribute("pageType", "add");
 		return "addCustomer";
@@ -58,6 +65,14 @@ public class CustomerController {
 			) {
 		Message message = new Message();
 		Customer checkExist = customerDao.get(customer.getId());
+		System.out.println("Id = " + customer.getId()
+				+ "\nGroup = " + customer.getGroupOfCustomer().getLabel()
+				+ "\nGender = " + customer.isGender()
+				+ "\nPhone = " + customer.getPhone()
+				+ "\nEmail = " + customer.getEmail()
+				+ "\nAddress = " + customer.getAddress()
+				+ "\nIdentifyNumber = " + customer.getIdentifyNumber()
+				+ "\nBirthday = " + customer.getBirthday());
 		if (errors.hasErrors()) {
 			message.setType("error");
 			message.setContent("Vui lòng sửa các lỗi sau!");
@@ -66,6 +81,8 @@ public class CustomerController {
 			} else {
 				model.addAttribute("pageType", "edit");
 			}
+			List<GroupOfCustomer> groupOfCustomers = groupOfCustomerDao.getAll();
+			model.addAttribute("groupOfCustomers", groupOfCustomers);
 			model.addAttribute("message", message);
 			model.addAttribute("customer", customer);
 			return "addCustomer";
@@ -73,9 +90,21 @@ public class CustomerController {
 		
 		if (checkExist == null) {
 			message = customerDao.save(customer);
+			if (message.getType().equals("error")) {
+				model.addAttribute("message", message);
+				model.addAttribute("customer", customer);
+				model.addAttribute("pageType", "add");
+				return "addCustomer";
+			}
 		}
 		else {
 			message = customerDao.update(customer);
+			if (message.getType().equals("error")) {
+				model.addAttribute("message", message);
+				model.addAttribute("customer", customer);
+				model.addAttribute("pageType", "edit");
+				return "addCustomer";
+			}
 		}
 		
 		List<Customer> list = customerDao.getAll();

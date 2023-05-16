@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
- class GroupOfCustomer {
+public class GroupOfCustomer {
 	@Id
 	@GeneratedValue
 	private int id;

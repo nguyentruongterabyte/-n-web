@@ -25,6 +25,50 @@ body, h1, h2, h3, h4, h5, h6 {
 .w3-bar-block .w3-bar-item {
 	padding: 20px
 }
+
+.customer-list {
+	margin-top: 12px;
+	max-height: 80vh;
+	overflow-y: scroll; 
+	position: relative;
+}
+
+.customer-list__heading {
+	position: sticky;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.customer-list__table {
+	position: relative;
+}
+
+.customer-list__table-heading {
+	position: sticky;
+	top: 38px;
+	right: 0;
+	background: #fff;
+
+}
+
+.customer-list__item {
+	position: relative;
+	cursor: pointer;
+}
+
+.customer-list__item:hover .customer-list__item-delete-btn {
+	display: block;
+}
+
+.customer-list__item-delete-btn {
+	position: absolute;
+	top: 8px;
+	right: 4px;
+	display: none;	
+}
+
 </style>
 <body>
 	<nav
@@ -104,18 +148,19 @@ body, h1, h2, h3, h4, h5, h6 {
 								<th></th>
 							</tr>
 						</thead>
+						<tbody>
 							<c:forEach var="c" items="${customers}">
 								<tr <c:if test="${customer.id == c.id}">class="customer-list__item info"</c:if>class="customer-list__item"
-									onclick="location.href='${pageContext.servletContext.contextPath}/khach-hang/chi-tiet.htm?id=${s.id}'"
+									onclick="location.href='${pageContext.servletContext.contextPath}/khach-hang/chi-tiet.htm?id=${c.id}'"
 								>
-									<td>${s.id}</td>
-									<td>${s.name}</td>
-									<td>${s.phone}</td>
+									<td>${c.id}</td>
+									<td>${c.name}</td>
+									<td>${c.phone}</td>
 									<td>
 										<button
-											onclick="event.stopPropagation(); deleteCustomer(${s.id});"
+											onclick="event.stopPropagation(); deleteCustomer(${c.id});"
 											type="button" title="Delete"
-											class="staff-list__item-delete-btn btn btn-danger btn-xs">
+											class="customer-list__item-delete-btn btn btn-danger btn-xs">
 											<span class="glyphicon glyphicon-trash"></span>
 										</button>
 									</td>
@@ -136,6 +181,12 @@ body, h1, h2, h3, h4, h5, h6 {
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	<script>
+	function deleteCustomer(customerId) {
+		var ok = confirm('Bạn có chắc muốn xóa khách hàng này?');
+		if (ok) {
+			location.href = "${pageContext.servletContext.contextPath}/khach-hang/xoa.htm?id=" + customerId;
+		}
+	}
 	function w3_open() {
 		document.getElementById("mySidebar").style.display = "block";
 	}
