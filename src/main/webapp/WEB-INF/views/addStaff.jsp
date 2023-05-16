@@ -15,6 +15,8 @@
 		<title>Chỉnh sửa nhân viên</title>
 	</c:otherwise>
 </c:choose>
+<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-staff-16.png">
+
 <base href="${pageContext.servletContext.contextPath}">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
