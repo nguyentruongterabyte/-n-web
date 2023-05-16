@@ -34,7 +34,9 @@ public class InventoryController {
 	private InventoryCapabilityDao inventoryCapabilityDao;
 	
 	@RequestMapping("danh-sach")
-	public String showList(@RequestParam(value="id", required = false) String id, ModelMap model) {		
+	public String showList(
+			@RequestParam(value="id", required = false) String id, 
+			ModelMap model) {		
 		List<Inventory> list = inventoryDao.getAll();
 		model.addAttribute("inventories", list);
 		if (id == null) {
