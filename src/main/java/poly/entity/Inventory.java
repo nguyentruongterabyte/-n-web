@@ -40,16 +40,13 @@ public class Inventory {
 		
 	}
 
-	public Inventory(int id, String name, String address, float rentPrice, int term,
-			Collection<InventoryCapability> inventoryCapabilities, Collection<InOutInventory> inOutInventories) {
+	public Inventory(int id, String name, String address, float rentPrice, int term) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.rentPrice = rentPrice;
 		this.term = term;
-		this.inventoryCapabilities = inventoryCapabilities;
-		this.inOutInventories = inOutInventories;
 	}
 
 	public int getId() {

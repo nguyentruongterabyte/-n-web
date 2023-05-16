@@ -47,8 +47,7 @@ public class Product {
 		orderDetails = new ArrayList<>();
 	}
 
-	public Product(int id, String name, String barCode, String picture, int inPrice, int outPrice, String unit,
-			Collection<InventoryCapability> inventoryCapabilities, Collection<OrderDetail> orderDetails) {
+	public Product(int id, String name, String barCode, String picture, int inPrice, int outPrice, String unit) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,8 +56,6 @@ public class Product {
 		this.inPrice = inPrice;
 		this.outPrice = outPrice;
 		this.unit = unit;
-		this.inventoryCapabilities = inventoryCapabilities;
-		this.orderDetails = orderDetails;
 	}
 
 	public int getId() {

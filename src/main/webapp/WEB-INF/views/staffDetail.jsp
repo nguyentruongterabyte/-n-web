@@ -92,7 +92,7 @@ body, h1, h2, h3, h4, h5, h6 {
 									<form:label path="id">Mã nhân viên</form:label>
 								</div>
 								<div class="col-md-6">
-									<input value="${staff.id}" class="form-control" readonly="true"/>
+									<input value="${staff.id}" class="form-control" readonly="readonly"/>
 								</div>
 							</div>
 						</div>

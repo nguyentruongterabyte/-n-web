@@ -1,7 +1,6 @@
 package poly.entity;
 
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class Order {

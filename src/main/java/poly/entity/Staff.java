@@ -1,7 +1,6 @@
 package poly.entity;
 
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import java.util.Collection;
@@ -27,7 +26,6 @@ public class Staff {
 	private int id;
 
 	@NotBlank(message = "Không được để trống họ tên!")
-
 	private String name;
 
 	@NotBlank(message = "Không được để trống số điện thoại!")
@@ -70,8 +68,7 @@ public class Staff {
 	}
 
 	public Staff(int id, String name, String phone, boolean gender, String email, String address, String identifyNumber,
-			String func, String birthday, float salary, boolean resigned, Collection<VendorBill> vendorBills,
-			Collection<Document> documents) {
+			String func, String birthday, float salary) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -83,9 +80,6 @@ public class Staff {
 		this.func = func;
 		this.birthday = birthday;
 		this.salary = salary;
-		this.resigned = resigned;
-		this.vendorBills = vendorBills;
-		this.documents = documents;
 	}
 
 
