@@ -27,7 +27,7 @@ public class InOutInventoryDao {
 	}
 	
 	public int getMaxId(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT MAX(I.ID) FROM INOUTINVENTORY I");
 		if(query.uniqueResult() == null)
 			return 0;
@@ -48,7 +48,7 @@ public class InOutInventoryDao {
 	
 	
 	public Message save(InOutInventory inOutInventory) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 
@@ -69,7 +69,7 @@ public class InOutInventoryDao {
 	}
 
 	public Message update(InOutInventory inOutInventory) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 		try {
@@ -92,7 +92,7 @@ public class InOutInventoryDao {
 	}
 
 	public Message delete(int inOutInventoryId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		InOutInventory inOutInventory= (InOutInventory) session.get(InOutInventory.class, inOutInventoryId);
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();

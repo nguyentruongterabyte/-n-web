@@ -27,7 +27,7 @@ public class CustomerDebtDao {
 	}
 	
 	public int getMaxId(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT MAX(C.ID) FROM CustomerDebt C");
 		if(query.uniqueResult() == null)
 			return 0;
@@ -48,7 +48,7 @@ public class CustomerDebtDao {
 	
 	
 	public Message save(CustomerDebt customerDebt) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 
@@ -69,7 +69,7 @@ public class CustomerDebtDao {
 	}
 
 	public Message update(CustomerDebt customerDebt) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 		try {
@@ -92,7 +92,7 @@ public class CustomerDebtDao {
 	}
 
 	public Message delete(int customerDebtId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		CustomerDebt customerDebt= (CustomerDebt) session.get(CustomerDebt.class, customerDebtId);
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();

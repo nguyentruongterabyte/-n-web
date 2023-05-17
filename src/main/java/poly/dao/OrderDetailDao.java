@@ -26,7 +26,7 @@ public class OrderDetailDao {
 	}
 	
 	public int getMaxId(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT MAX(O.ID) FROM OrderDetail O");
 		if(query.uniqueResult() == null)
 			return 0;
@@ -46,7 +46,7 @@ public class OrderDetailDao {
 	}
 	
 	public Message save(OrderDetail orderDetail) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 
@@ -67,7 +67,7 @@ public class OrderDetailDao {
 	}
 
 	public Message update(OrderDetail orderDetail) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 		try {
@@ -90,7 +90,7 @@ public class OrderDetailDao {
 	}
 
 	public Message delete(int orderDetailId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		OrderDetail orderDetail= (OrderDetail) session.get(OrderDetail.class, orderDetailId);
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();

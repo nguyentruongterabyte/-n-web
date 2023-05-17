@@ -34,7 +34,7 @@ public class CustomerDao {
 	}
 	
 	public List<Customer> getAll() {
-		Session session = factory.getCurrentSession();
+		Session session = factory.openSession();
 		String hql = "FROM Customer";
 		Query query = session.createQuery(hql);
 		
