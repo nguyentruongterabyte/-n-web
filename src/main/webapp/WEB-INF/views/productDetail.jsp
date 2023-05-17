@@ -108,7 +108,9 @@ input[type=submit]:hover {
 			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách nhân viên</a><a
 			href="${pageContext.servletContext.contextPath}/khach-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách khách hàng</a>
+			class="w3-bar-item w3-button">Danh sách khách hàng</a><a
+			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách nhà cung cấp</a>
 	</nav>
 	<div class="w3-top">
 		<div class="w3-white w3-xlarge"

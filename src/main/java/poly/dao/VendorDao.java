@@ -28,7 +28,7 @@ public class VendorDao {
 	
 	public int getMaxId(){
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("SELECT MAX(V.ID) FROM Vendor V");
+		Query query = session.createQuery("SELECT max(v.id) FROM Vendor v");
 		if(query.uniqueResult() == null)
 			return 0;
 		int maxId = (int)query.uniqueResult();
@@ -48,14 +48,14 @@ public class VendorDao {
 	
 	
 	public Message save(Vendor vendor) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 
 		try {
 			session.save(vendor);
 			transaction.commit();
-			message.setType("Success");
+			message.setType("success");
 			message.setContent("Thêm mới nhà cung cấp thành công");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -69,7 +69,7 @@ public class VendorDao {
 	}
 
 	public Message update(Vendor vendor) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 		try {
@@ -92,7 +92,7 @@ public class VendorDao {
 	}
 
 	public Message delete(int vendorId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Vendor vendor= (Vendor) session.get(Vendor.class, vendorId);
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();

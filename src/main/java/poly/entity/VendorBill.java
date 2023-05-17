@@ -1,7 +1,6 @@
 package poly.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,7 +9,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class VendorBill {
 	@Id
-	@GeneratedValue
 	private int id;
 	
 	@ManyToOne

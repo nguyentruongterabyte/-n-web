@@ -15,50 +15,63 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import poly.dao.StaffDao;
-import poly.entity.Staff;
+
+import poly.dao.VendorDao;
+import poly.entity.Vendor;
 import poly.message.Message;
 
 @Transactional
 @Controller
-@RequestMapping("/nhan-vien")
-public class StaffController {
+@RequestMapping("/nha-cung-cap")
+public class VendorController {
 	@Autowired
-	private StaffDao staffDao;
+	private VendorDao vendorDao;
 	
 	@RequestMapping("danh-sach")
-	public String showList(
-			ModelMap model, 
-			@RequestParam(value="id", required = false) String id) {
-		
+	public String showList(ModelMap model,
+			@RequestParam(value="id", required = false) String id
+			) {
 		if (id != null) {
-			Staff staff = staffDao.get(Integer.parseInt(id));
-			model.addAttribute("staff", staff);
+			Vendor vendor = vendorDao.get(Integer.parseInt(id));
+			model.addAttribute("vendor", vendor);
 		}
-		List<Staff> list = staffDao.getAll();
-		model.addAttribute("staffs", list);
-		return "staffList";
+		List<Vendor> list = vendorDao.getAll();
+		
+		model.addAttribute("vendors", list);
+		return "vendorList";
 	}
 	
 	@RequestMapping("them-moi")
 	public String add(ModelMap model) {
-		int maxId = staffDao.getMaxId();
-		Staff staff = new Staff();
-		staff.setId(maxId + 1);
-		model.addAttribute("staff", staff);
+		int maxId = vendorDao.getMaxId();
+		Vendor vendor = new Vendor();
+		vendor.setId(maxId + 1);
+		model.addAttribute("vendor", vendor);
 		model.addAttribute("pageType", "add");
-		return "addStaff";
+		return "addVendor";
 	}
 	
-	@RequestMapping(value="xac-thuc", method = RequestMethod.POST)
+	@RequestMapping("chinh-sua")
+	public String edit(
+			ModelMap model,
+			@RequestParam("id") String id
+			) {
+		Vendor vendor = vendorDao.get(Integer.parseInt(id));
+		if (vendor != null) {
+			model.addAttribute("vendor", vendor);
+		}
+		model.addAttribute("pageType", "edit");
+		return "addVendor";
+	}
+	
+	
+	@RequestMapping(value = "xac-thuc", method = RequestMethod.POST) 
 	public String validate(ModelMap model,
 			RedirectAttributes redirectAttributes,
-			@Validated @ModelAttribute("staff") Staff staff,
-			BindingResult errors
-			) {
+			@Validated @ModelAttribute("vendor") Vendor vendor,
+			BindingResult errors) {
 		Message message = new Message();
-		Staff checkExist = staffDao.get(staff.getId());
-		
+		Vendor checkExist = vendorDao.get(vendor.getId());
 		if (errors.hasErrors()) {
 			message.setType("error");
 			message.setContent("Vui lòng sửa các lỗi sau!");
@@ -68,63 +81,31 @@ public class StaffController {
 				model.addAttribute("pageType", "edit");
 			}
 			model.addAttribute("message", message);
-			model.addAttribute("staff", staff);
-			return "addStaff";
+			model.addAttribute("vendor", vendor);
+			return "addVendor";
 		}
-		
 		if (checkExist == null) {
-			message = staffDao.save(staff);
+			message = vendorDao.save(vendor);
 			if (message.getType().equals("error")) {
 				model.addAttribute("pageType", "add");
-				model.addAttribute("staff", staff);
+				model.addAttribute("vendor", vendor);
 				model.addAttribute("message", message);
-				return "addStaff";
+				return "addVendor";
 			}
 		} else {
-			message = staffDao.update(staff);
+			message = vendorDao.update(vendor);
 			if (message.getType().equals("error")) {
 				model.addAttribute("pageType", "edit");
-				model.addAttribute("staff", staff);
+				model.addAttribute("vendor", vendor);
 				model.addAttribute("message", message);
-				return "addStaff";
+				return "addVendor";
 			}
 		}
-		
-		List<Staff> list = staffDao.getAll();
+		List<Vendor> list = vendorDao.getAll();
 		redirectAttributes.addFlashAttribute("message", message);
-		redirectAttributes.addFlashAttribute("staff", staff);
-		redirectAttributes.addFlashAttribute("staffs", list);
-		
-		return "redirect:danh-sach.htm?id=" + staff.getId();  
-	}
-	
-	@RequestMapping("chi-tiet")
-	public String showDetail(
-			ModelMap model,
-			@RequestParam(value="id") String id
-			) {
-		Staff staff = staffDao.get(Integer.parseInt(id));
-		if (staff != null) {
-			
-			staff.setBirthday(staff.getBirthday().split(" ")[0]);
-			model.addAttribute("staff", staff);
-		}
-		return "staffDetail";
-	}
-	
-	@RequestMapping("chinh-sua")
-	public String edit(
-			ModelMap model,
-			@RequestParam("id") String id
-			) {
-		Staff staff = staffDao.get(Integer.parseInt(id));
-		if (staff != null) {
-			staff.setBirthday(staff.getBirthday().split(" ")[0]);
-			model.addAttribute("staff", staff);
-			
-		}
-		model.addAttribute("pageType", "edit");
-		return "addStaff";
+		redirectAttributes.addFlashAttribute("vendor", vendor);
+		redirectAttributes.addFlashAttribute("vendors", list);
+		return "redirect:danh-sach.htm?id=" + vendor.getId();
 	}
 	
 	@RequestMapping("xoa")
@@ -137,7 +118,7 @@ public class StaffController {
 			message.setType("error");
 			message.setContent("Lỗi lấy thông tin!");
 		} else {
-			message = staffDao.delete(Integer.parseInt(id));
+			message = vendorDao.delete(Integer.parseInt(id));
 			if (message.getType().equals("error")) {
 				redirectAttributes.addFlashAttribute("message", message);
 				return "redirect:danh-sach.htm?id=" + id;
@@ -146,4 +127,4 @@ public class StaffController {
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:danh-sach.htm";
 	}
-}
+ }

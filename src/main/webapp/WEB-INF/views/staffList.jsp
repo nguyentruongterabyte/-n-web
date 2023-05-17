@@ -16,7 +16,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-</head>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <style>
@@ -88,7 +87,9 @@ body, h1, h2, h3, h4, h5, h6 {
 			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách nhân viên</a><a
 			href="${pageContext.servletContext.contextPath}/khach-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách khách hàng</a>
+			class="w3-bar-item w3-button">Danh sách khách hàng</a><a
+			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách nhà cung cấp</a>
 	</nav>
 	<div class="w3-top">
 		<div class="w3-white w3-xlarge"
