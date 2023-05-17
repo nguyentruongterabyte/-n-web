@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Danh sách nhà cung cấp</title>
-<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-vendor-16.png">
+<title>Danh sách đơn từ</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-document-16.png">
 <base href="${pageContext.servletContext.contextPath}">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -24,14 +24,14 @@ body, h1, h2, h3, h4, h5, h6 {
 .w3-bar-block .w3-bar-item {
 	padding: 20px
 }
-.vendor-list {
+.document-list {
 	margin-top: 12px;
 	max-height: 80vh;
 	overflow-y: scroll; 
 	position: relative;
 }
 
-.vendor-list__heading {
+.document-list__heading {
 	position: sticky;
 	top: 0;
 	right: 0;
@@ -39,11 +39,11 @@ body, h1, h2, h3, h4, h5, h6 {
 	z-index: 1;
 }
 
-.vendor-list__table {
+.document-list__table {
 	position: relative;
 }
 
-.vendor-list__table-heading {
+.document-list__table-heading {
 	position: sticky;
 	top: 38px;
 	right: 0;
@@ -51,16 +51,16 @@ body, h1, h2, h3, h4, h5, h6 {
 
 }
 
-.vendor-list__item {
+.document-list__item {
 	position: relative;
 	cursor: pointer;
 }
 
-.vendor-list__item:hover .vendor-list__item-delete-btn {
+.document-list__item:hover .document-list__item-delete-btn {
 	display: block;
 }
 
-.vendor-list__item-delete-btn {
+.document-list__item-delete-btn {
 	position: absolute;
 	top: 8px;
 	right: 4px;
@@ -92,7 +92,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="w3-white w3-xlarge"
 			style="max-width: 1200px; margin: auto">
 			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-			<div class="w3-center w3-padding-16">Danh sách nhà cung cấp</div>
+			<div class="w3-center w3-padding-16">Danh sách đơn từ</div>
 		</div>
 	</div>
 	<div class="container">
@@ -127,46 +127,66 @@ body, h1, h2, h3, h4, h5, h6 {
 		</c:if>
 		<div class="row row-no-padding">
 			<div class="col-md-8 col-md-offset-2">
-				<div class="panel panel-primary vendor-list filterable">
-					<div class="vendor-list__heading panel-heading">
-						<h3 class="panel-title">Nhà cung cấp</h3>
+				<div class="panel panel-primary document-list filterable">
+					<div class="document-list__heading panel-heading">
+						<h3 class="panel-title">Đơn từ</h3>
 						<div class="pull-right">
 							<button class="btn btn-default btn-xs btn-filter">
 								<span class="glyphicon glyphicon-filter"></span> Lọc
 							</button>
 						</div>
 					</div>
-					<table class="vendor-list__table table table-hover">
-						<thead class="vendor-list__table-heading">
+					<table class="document-list__table table table-hover">
+						<thead class="document-list__table-heading">
 							<tr class="filters">
 								<th><input type="text" class="form-control" placeholder="#"
 									disabled></th>
 								<th><input type="text" class="form-control"
-									placeholder="Tên nhà cung cấp" disabled></th>
-								<th><input type="text" class="form-control"
-									placeholder="Số điện thoại" disabled></th>
-								<th><input type="text" class="form-control"
-									placeholder="Email" disabled></th>
-								<th><input type="text" class="form-control"
-									placeholder="Địa chỉ" disabled></th>
+									placeholder="Người lập" disabled></th>
+								<th><input type="text" list="documentType" class="form-control"
+									placeholder="Loại đơn từ" disabled>
+									<datalist id="documentType">
+										<option>Nhập kho</option>
+										<option>Xuất kho</option>
+										<option>Nhập hàng</option>
+										<option>Bán hàng</option>
+										<option>Nợ nhà cung cấp</option>
+										<option>Công nợ khách hàng</option>
+										<option>Thanh toán nhà cung cấp</option>
+										<option>Thanh toán khách hàng</option>
+									</datalist>
+									</th>
+								<th><input type="text" class="form-control" 
+									placeholder="Ngày lập" disabled></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="v" items="${vendors}">
-								<tr <c:if test="${vendor.id == v.id}">class="vendor-list__item info"</c:if>class="vendor-list__item"
+							<c:forEach var="d" items="${documents}">
+								<tr <c:if test="${document.id == d.id}">class="document-list__item info"</c:if>class="document-list__item"
 									
 								>
-									<td>${v.id}</td>
-									<td>${v.name}</td>
-									<td>${v.phone}</td>
-									<td>${v.email}</td>
-									<td>${v.address}</td>
+									<td>${d.id}</td>
+									<td>${d.staff.name}</td>
+									<td>
+										<c:choose>
+											<c:when test="${d.type eq 'outinventory'}">Nhập kho</c:when>											
+											<c:when test="${d.type eq 'ininventory'}">Xuất kho</c:when>											
+											<c:when test="${d.type eq 'vendororder'}">Nhập hàng</c:when>											
+											<c:when test="${d.type eq 'customerorder'}">Bán hàng</c:when>											
+											<c:when test="${d.type eq 'vendordebt'}">Nợ nhà cung cấp</c:when>											
+											<c:when test="${d.type eq 'customerdebt'}">Công nợ khách hàng</c:when>											
+											<c:when test="${d.type eq 'vendorbill'}">Thanh toán nhà cung cấp</c:when>									
+											<c:when test="${d.type eq 'customerbill'}">Thanh toán khách hàng</c:when>
+											<c:otherwise>Không xác định</c:otherwise>											
+										</c:choose>
+									</td>
+									<td>${d.createDate}</td>
 									<td>
 										<button
-											onclick="event.stopPropagation(); deleteVendor(${v.id});"
+											onclick="event.stopPropagation(); deletedocument(${d.id});"
 											type="button" title="Delete"
-											class="vendor-list__item-delete-btn btn btn-danger btn-xs">
+											class="document-list__item-delete-btn btn btn-danger btn-xs">
 											<span class="glyphicon glyphicon-trash"></span>
 										</button>
 									</td>
@@ -175,9 +195,9 @@ body, h1, h2, h3, h4, h5, h6 {
 						</tbody>
 					</table>
 				</div>
-				<form action="${pageContext.servletContext.contextPath}/nha-cung-cap/them-moi.htm"
+				<form action="${pageContext.servletContext.contextPath}/don-tu/them-moi.htm"
 					 method="post">
-					<button class="btn btn-success">Thêm nhà cung cấp mới</button>
+					<button class="btn btn-success">Thêm đơn từ mới</button>
 				</form>
 			</div>
 		</div>
@@ -189,10 +209,10 @@ body, h1, h2, h3, h4, h5, h6 {
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	
 	<script>
-	function deleteVendor(vendorId) {
-		var ok = confirm('Bạn có chắc muốn xóa nhà cung cấp này?');
+	function deletedocument(documentId) {
+		var ok = confirm('Bạn có chắc muốn xóa đơn từ này?');
 		if (ok) {
-			location.href = "${pageContext.servletContext.contextPath}/nha-cung-cap/xoa.htm?id=" + vendorId;
+			location.href = "${pageContext.servletContext.contextPath}/nha-cung-cap/xoa.htm?id=" + documentId;
 		}
 	}
 	function w3_open() {

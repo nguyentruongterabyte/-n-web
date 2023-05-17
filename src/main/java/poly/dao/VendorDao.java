@@ -27,7 +27,7 @@ public class VendorDao {
 	}
 	
 	public int getMaxId(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT max(v.id) FROM Vendor v");
 		if(query.uniqueResult() == null)
 			return 0;

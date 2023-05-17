@@ -27,7 +27,7 @@ public class DocumentDao {
 	}
 	
 	public int getMaxId(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT MAX(I.ID) FROM InOutInventoryDetail I");
 		if(query.uniqueResult() == null)
 			return 0;
@@ -48,7 +48,7 @@ public class DocumentDao {
 	
 	
 	public Message save(Document document) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 
@@ -69,7 +69,7 @@ public class DocumentDao {
 	}
 
 	public Message update(Document document) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 		try {
@@ -92,7 +92,7 @@ public class DocumentDao {
 	}
 
 	public Message delete(int documentId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Document document= (Document) session.get(Document.class, documentId);
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();

@@ -35,8 +35,10 @@ body, h1, h2, h3, h4, h5, h6 {
 			class="w3-bar-item w3-button">Close Menu</a> <a
 			href="${pageContext.servletContext.contextPath}/"
 			class="w3-bar-item w3-button">Trang chủ</a> <a
+			href="${pageContext.servletContext.contextPath}/don-tu/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách đơn từ</a><a
 			href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách kho hàng</a> <a
+			class="w3-bar-item w3-button">Danh sách kho hàng</a><a
 			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách sản phẩm</a><a
 			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
@@ -59,7 +61,7 @@ body, h1, h2, h3, h4, h5, h6 {
 	</div>
 
 	<!-- !PAGE CONTENT! -->
-	<div class="w3-main w3-content w3-padding"
+	<div class="w3-main w3-content w3-padding" onclick="w3_close()"
 		style="max-width: 1200px; margin-top: 100px">
 
 		<!-- First Photo Grid-->
