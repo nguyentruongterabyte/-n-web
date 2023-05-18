@@ -36,7 +36,7 @@ public class Product {
 	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapabilities;
 	
-	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
 	private Collection<OrderDetail> orderDetails;
 	
 	public Product() {

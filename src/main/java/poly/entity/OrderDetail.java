@@ -1,6 +1,10 @@
 package poly.entity;
 
 
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,72 +16,77 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class OrderDetail{
-	@Id
-	@GeneratedValue
-	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name = "orderId")
-	private Order order;
+	@Embeddable
+	public static class Id implements Serializable {
+		private static final long serialVersionUID = 7830032371641218402L;
+
+		@ManyToOne
+		@JoinColumn(name = "orderId")
+		private Order order;
+		
+		@ManyToOne
+		@JoinColumn(name = "productId")
+		private Product product;
+
+		public Id() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public Id(Order order, Product product) {
+			super();
+			this.order = order;
+			this.product = product;
+		}
+
+		public Order getOrder() {
+			return order;
+		}
+
+		public void setOrder(Order order) {
+			this.order = order;
+		}
+
+		public Product getProduct() {
+			return product;
+		}
+
+		public void setProduct(Product product) {
+			this.product = product;
+		}
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
+		
+		
+	}
 	
-	@ManyToOne
-	@JoinColumn(name = "productId")
-	private Product product;
-	
-	@NotBlank(message = "Vui lòng nhập giá!")
-	@DecimalMin(value = "0", message = "Giá không được âm!")
-	private float price;
+	@EmbeddedId
+	private Id embeddedId;
 	
 	@NotBlank(message = "Vui lòng nhập số lượng!")
 	@DecimalMin(value = "0", message = "Số lượng không được âm!")
 	private int quantity;
-	
-	private float result;
 
 	public OrderDetail() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public OrderDetail(int id, Order order, Product product, float price, int quantity, float result) {
+	public OrderDetail(Id embeddedId, int quantity) {
 		super();
-		this.id = id;
-		this.order = order;
-		this.product = product;
-		this.price = price;
+		this.embeddedId = embeddedId;
 		this.quantity = quantity;
-		this.result = result;
 	}
 
-	public int getId() {
-		return id;
+	public Id getEmbeddedId() {
+		return embeddedId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
+	public void setEmbeddedId(Id embeddedId) {
+		this.embeddedId = embeddedId;
 	}
 
 	public int getQuantity() {
@@ -87,13 +96,7 @@ public class OrderDetail{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
 
-	public float getResult() {
-		return result;
-	}
-
-	public void setResult(float result) {
-		this.result = result;
-	}
 	
 }
