@@ -28,7 +28,7 @@ public class VendorDebtDao {
 	}
 	
 	public int getMaxId(){
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("SELECT MAX(V.ID) FROM VendorDebt V");
 		if(query.uniqueResult() == null)
 			return 0;
@@ -49,7 +49,7 @@ public class VendorDebtDao {
 	
 	
 	public Message save(VendorDebt vendorDebt) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 
@@ -70,7 +70,7 @@ public class VendorDebtDao {
 	}
 
 	public Message update(VendorDebt vendorDebt) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();
 		try {
@@ -93,7 +93,7 @@ public class VendorDebtDao {
 	}
 
 	public Message delete(int vendorDebtId) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		VendorDebt vendorDebt= (VendorDebt) session.get(VendorDebt.class, vendorDebtId);
 		Transaction transaction = session.beginTransaction();
 		Message message = new Message();

@@ -56,6 +56,7 @@ public class CustomerController {
 		model.addAttribute("pageType", "add");
 		return "addCustomer";
 	}
+	
 	@RequestMapping(value="xac-thuc", method = RequestMethod.POST)
 	public String validate(
 			ModelMap model,
