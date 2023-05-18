@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,6 +70,11 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="w3-row-padding w3-padding-16 w3-center" id="food">
 			<div class="w3-quarter">
 				<img src="/w3images/sandwich.jpg" alt="Sandwich" style="width: 100%">
+				
+				<c:forEach var="p" items="${product}">
+					<h1>${p.name}</h1>
+				</c:forEach>
+				
 				<h3>RockStar</h3>
 				<p>Just some random text, lorem ipsum text praesent tincidunt
 					ipsum lipsum.</p>

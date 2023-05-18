@@ -19,7 +19,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Product {
 	@Id
 	@GeneratedValue
-	@Column(name = "Id")
 	private int id;
 	@NotBlank(message = "Vui lòng nhập tên sản phẩm!")
 	private String name;
