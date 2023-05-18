@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "Order_")
+@Table(name = "`Order`")
 public class Order {
 	@Id
 	@GeneratedValue
@@ -43,7 +43,7 @@ public class Order {
 	@OneToMany(mappedBy = "embeddedId.order", fetch = FetchType.EAGER)
 	private Collection<InOutInventoryDetail> inOutInventoryDetails;
 	
-	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "embeddedId.order", fetch = FetchType.EAGER)
 	private Collection<OrderDetail> orderDetails;
 	
 	@OneToOne

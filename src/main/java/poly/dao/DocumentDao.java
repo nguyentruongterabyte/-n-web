@@ -28,7 +28,7 @@ public class DocumentDao {
 	
 	public int getMaxId(){
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("SELECT MAX(I.ID) FROM InOutInventoryDetail I");
+		Query query = session.createQuery("SELECT max(d.id) FROM Document d");
 		if(query.uniqueResult() == null)
 			return 0;
 		int maxId = (int)query.uniqueResult();
@@ -38,12 +38,12 @@ public class DocumentDao {
 	public List<Document> getAll() {
 		Session session = sessionFactory.getCurrentSession();
 		String hql = "FROM Document";
-		
 		Query query = session.createQuery(hql);
-		
 		@SuppressWarnings("unchecked")
 		List<Document> list = query.list();
 		return list;
+		// ----
+		
 	}
 	
 	
@@ -55,13 +55,13 @@ public class DocumentDao {
 		try {
 			session.save(document);
 			transaction.commit();
-			message.setType("Success");
+			message.setType("success");
 			message.setContent("Thêm mới đơn thành công");
 		} catch (Exception e) {
 			// TODO: handle exception
 			transaction.rollback();
 			message.setType("error");
-			message.setContent("Thêm mới đơn thất bại");
+			message.setContent("Thêm mới đơn thất bại!" + e);
 		} finally {
 			session.close();
 		}

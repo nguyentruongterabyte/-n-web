@@ -18,12 +18,12 @@ public class Document {
 	@NotBlank(message = "Vui lòng nhập loại đơn!")
 	private String type;
 	
-	@NotNull(message = "Vui lòng nhập mã nhân viên tạo đơn!")
+	@NotNull(message = "Thiếu nhân viên tạo đơn!")
 	@ManyToOne
 	@JoinColumn(name ="Creator")
 	private Staff staff;
 	
-	@NotBlank(message = "Vui lòng nhập ngày tạo")
+	@NotBlank(message = "Vui lòng nhập ngày tạo!")
 	private String createDate;
 
 	public Document() {

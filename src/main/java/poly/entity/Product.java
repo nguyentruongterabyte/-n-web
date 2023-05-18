@@ -19,7 +19,6 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Product {
 	@Id
 	@GeneratedValue
-	@Column(name = "Id")
 	private int id;
 	@NotBlank(message = "Vui lòng nhập tên sản phẩm!")
 	private String name;
@@ -37,7 +36,7 @@ public class Product {
 	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
 	private Collection<InventoryCapability> inventoryCapabilities;
 	
-	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "embeddedId.product", fetch = FetchType.EAGER)
 	private Collection<OrderDetail> orderDetails;
 	
 	public Product() {

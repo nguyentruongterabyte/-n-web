@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 spring-config-hibernate.xml
+=======
+*.xml
+>>>>>>> 953d2b665b295efb8db7f5424f44e5221ca318b0
