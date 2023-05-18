@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "Order_")
+@Table(name = "`Order`")
 public class Order {
 	@Id
 	@GeneratedValue

@@ -142,8 +142,8 @@ public class StaffController {
 				redirectAttributes.addFlashAttribute("message", message);
 				return "redirect:danh-sach.htm?id=" + id;
 			}
+			redirectAttributes.addFlashAttribute("message", message);
 		}
-		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:danh-sach.htm";
 	}
 }

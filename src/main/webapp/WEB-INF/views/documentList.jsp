@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,16 +78,19 @@ body, h1, h2, h3, h4, h5, h6 {
 			class="w3-bar-item w3-button">Close Menu</a> <a
 			href="${pageContext.servletContext.contextPath}/"
 			class="w3-bar-item w3-button">Trang chủ</a> <a
+			href="${pageContext.servletContext.contextPath}/don-tu/danh-sach.htm"
+			class="w3-bar-item w3-button">Danh sách đơn từ</a><a
 			href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách kho hàng</a> <a
+			class="w3-bar-item w3-button">Danh sách kho hàng</a><a
 			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách sản phẩm</a><a
-			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
+			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách nhân viên</a><a
 			href="${pageContext.servletContext.contextPath}/khach-hang/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách khách hàng</a><a
 			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
 			class="w3-bar-item w3-button">Danh sách nhà cung cấp</a>
+			
 	</nav>
 	<div class="w3-top">
 		<div class="w3-white w3-xlarge"
@@ -142,7 +146,13 @@ body, h1, h2, h3, h4, h5, h6 {
 								<th><input type="text" class="form-control" placeholder="#"
 									disabled></th>
 								<th><input type="text" class="form-control"
-									placeholder="Người lập" disabled></th>
+									placeholder="Người lập" list="creators" disabled>
+									<datalist id="creators">
+										<c:forEach var="creator" items="${creators}">
+											<option>${creator.name}</option>
+										</c:forEach>
+									</datalist>
+								</th>
 								<th><input type="text" list="documentType" class="form-control"
 									placeholder="Loại đơn từ" disabled>
 									<datalist id="documentType">
@@ -170,8 +180,8 @@ body, h1, h2, h3, h4, h5, h6 {
 									<td>${d.staff.name}</td>
 									<td>
 										<c:choose>
-											<c:when test="${d.type eq 'outinventory'}">Nhập kho</c:when>											
-											<c:when test="${d.type eq 'ininventory'}">Xuất kho</c:when>											
+											<c:when test="${d.type eq 'ininventory'}">Nhập kho</c:when>											
+											<c:when test="${d.type eq 'outinventory'}">Xuất kho</c:when>											
 											<c:when test="${d.type eq 'vendororder'}">Nhập hàng</c:when>											
 											<c:when test="${d.type eq 'customerorder'}">Bán hàng</c:when>											
 											<c:when test="${d.type eq 'vendordebt'}">Nợ nhà cung cấp</c:when>											
@@ -181,10 +191,10 @@ body, h1, h2, h3, h4, h5, h6 {
 											<c:otherwise>Không xác định</c:otherwise>											
 										</c:choose>
 									</td>
-									<td>${d.createDate}</td>
+									<td>${d.createDate.split(" ")[1].substring(0, d.createDate.split(" ")[1].length() - 5)} ${d.createDate.split(" ")[0].split("-")[2]}/${d.createDate.split(" ")[0].split("-")[1]}/${d.createDate.split(" ")[0].split("-")[0]}</td>
 									<td>
 										<button
-											onclick="event.stopPropagation(); deletedocument(${d.id});"
+											onclick="event.stopPropagation(); deleteDocument(${d.id}, '${d.type}');"
 											type="button" title="Delete"
 											class="document-list__item-delete-btn btn btn-danger btn-xs">
 											<span class="glyphicon glyphicon-trash"></span>
@@ -209,10 +219,10 @@ body, h1, h2, h3, h4, h5, h6 {
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	
 	<script>
-	function deletedocument(documentId) {
+	function deleteDocument(documentId, documentType) {
 		var ok = confirm('Bạn có chắc muốn xóa đơn từ này?');
 		if (ok) {
-			location.href = "${pageContext.servletContext.contextPath}/nha-cung-cap/xoa.htm?id=" + documentId;
+			location.href = "${pageContext.servletContext.contextPath}/don-tu/xoa.htm?id=" + documentId + "&type=" + documentType;
 		}
 	}
 	function w3_open() {

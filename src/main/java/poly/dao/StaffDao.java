@@ -93,8 +93,9 @@ public class StaffDao {
 		s.setResigned(true);
 		message = this.update(s);
 		if (message.getType().equals("error")) {
-			message.setType("Xóa nhân viên thất bại");
+			message.setContent("Xóa nhân viên thất bại!");
 		} else {
+			message.setType("success");
 			message.setContent("Xóa nhân viên thành công!");			
 		}
 		
