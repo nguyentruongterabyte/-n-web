@@ -83,17 +83,29 @@ body, h1, h2, h3, h4, h5, h6 {
 		<!-- Pagination -->
 		<div class="w3-center w3-padding-32">
 			<div class="w3-bar">
-				<a href="#" class="w3-bar-item w3-button w3-hover-black">«</a> <a
-					href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=1"
-					class="w3-bar-item w3-black w3-button">1</a> <a
-					href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=2"
-					class="w3-bar-item w3-button w3-hover-black">2</a> <a
-					href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=2"
-					class="w3-bar-item w3-button w3-hover-black">3</a> <a
-					href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=3"
-					class="w3-bar-item w3-button w3-hover-black">4</a> <a
-					href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=4"
-					class="w3-bar-item w3-button w3-hover-black">»</a>
+				<c:if test="${activeProductPage != 1}">
+					<a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>			
+				</c:if>
+				<c:forEach begin="1" end="${pageProductTotal}" var="pageNumber">
+					
+					<c:choose>
+						<c:when test="${pageNumber == activeProductPage}">
+							<a
+							href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=${pageNumber}"
+							class="w3-bar-item w3-black w3-button">${pageNumber}</a>
+						</c:when>
+						<c:otherwise>
+							<a
+							href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=${pageNumber}"
+							class="w3-bar-item w3-button w3-hover-black">${pageNumber}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${activeProductPage != pageProductTotal}">
+					 <a
+						href="#"
+						class="w3-bar-item w3-button w3-hover-black">»</a>	
+				</c:if>
 			</div>
 		</div>
 

@@ -23,16 +23,26 @@ public class HomeController {
 			ModelMap model, 
 			@RequestParam(value="productPage",required = false) String productPage
 			) {
+		// Số sản phẩm được show lên màn hình chính
 		int total = 4;
+		Long ProductCount = productDao.getLength();
 		if (productPage != null) {
 			int productPageInt = Integer.parseInt(productPage);
 			productPageInt = (productPageInt - 1) * total + 1; 
 			List<Product> products = productDao.getByPage(productPageInt, total);
+			
+			// Tổng số trang của sản phẩm
+			int pageProductTotal =(int) Math.ceil((double) ProductCount / total);
+			model.addAttribute("activeProductPage", productPage);
+			model.addAttribute("pageProductTotal", pageProductTotal);
 			model.addAttribute("products", products);
 		} 
 		
 		else {
 			List<Product> products = productDao.getByPage(1, total);
+			int pageProductTotal = (int) Math.ceil((double) ProductCount / total);
+			model.addAttribute("activeProductPage", 1);
+			model.addAttribute("pageProductTotal", pageProductTotal);
 			model.addAttribute("products", products);
 		}
 		return "index";

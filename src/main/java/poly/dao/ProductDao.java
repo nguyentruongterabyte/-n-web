@@ -20,6 +20,14 @@ public class ProductDao {
 	@Autowired
 	private SessionFactory factory;
 	
+	public Long getLength() {
+		String hql = "SELECT COUNT(*) FROM Product";
+		Session session = factory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		Long count = (Long) query.uniqueResult();
+		return count;
+	}
+	
 	public List<Product> getByPage(int pageId, int total) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM Product";
