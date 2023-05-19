@@ -156,6 +156,9 @@ body, h1, h2, h3, h4, h5, h6 {
 						</div>
 					</div>
 				</div>
+				<div class="row row-no-padding">
+					
+				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="row mt-16">
@@ -165,7 +168,20 @@ body, h1, h2, h3, h4, h5, h6 {
 							<div class="panel-heading">
 								<h6>Sức chứa kho hàng</h6>
 							</div>
-							<div class="panel-body" style="max-height: 50vh;"></div>
+							<div class="panel-body" style="max-height: 50vh;">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Sản phẩm</th>
+											<th>Sức chứa tối đa</th>
+											<th>Số lượng hiện tại</th>
+										</tr>
+									</thead>
+									<tbody>
+											
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
