@@ -22,8 +22,7 @@ public class HomeController {
 			ModelMap model
 			) {
 		List<Product> products = productDao.getAll();
-		int productPagesQuantity = products.toArray().length;
-		System.out.println(productPagesQuantity);
+		
 		model.addAttribute("products", products);
 		return "index";
 	}

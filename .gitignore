@@ -1,3 +1,11 @@
+<<<<<<< HEAD
 
 ########
 *.xml
+=======
+<<<<<<< HEAD
+spring-config-hibernate.xml
+=======
+*.xml
+>>>>>>> 953d2b665b295efb8db7f5424f44e5221ca318b0
+>>>>>>> cb8cdd94d3fca2cb97101a6c49b4c6413800f951
