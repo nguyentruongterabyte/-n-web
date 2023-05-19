@@ -71,7 +71,7 @@ body, h1, h2, h3, h4, h5, h6 {
 			<div class="w3-quarter">
 				<img src="/w3images/sandwich.jpg" alt="Sandwich" style="width: 100%">
 				
-				<c:forEach var="p" items="${product}">
+				<c:forEach var="p" items="${products}">
 					<h1>${p.name}</h1>
 				</c:forEach>
 				

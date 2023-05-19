@@ -17,7 +17,7 @@ import poly.entity.Product;
 public class HomeController {
 	@Autowired
 	ProductDao productDao;
-	@RequestMapping(value = {"/", "Home"})
+	@RequestMapping(value = {"", "Home"})
 	public String index(
 			ModelMap model
 			) {
