@@ -93,18 +93,83 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="row row-no-padding">
 			<div class="col-md-6">
 				<div class="row">
-					<div class="col-md-6">
-						<div class="row">
-							<div class="col-md-6">
-								<img alt="Đơn xuất kho" src="${pageContext.servletContext.contextPath}/resource/images/inOutInventory/icons8-out-100.png">
+					<div class="col-md-3">
+						<img alt="Đơn xuất kho" src="${pageContext.servletContext.contextPath}/resource/images/inOutInventory/icons8-out-100.png">	
+					</div>
+					<div class="col-md-9">
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Mã</label>
 							</div>
-							<div class="col-md-6"></div>
+							<div class="col-md-8">
+								<input class="form-control">	
+							</div>
+							
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Người lập</label>
+							</div>
+							<div class="col-md-8">
+								<input class="form-control">	
+							</div>
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Ngày lập</label>
+							</div>
+							<div class="col-md-8">
+								<input class="form-control">	
+							</div>
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Người chịu trách nhiệm</label>
+							</div>
+							<div class="col-md-8">
+								<input class="form-control">	
+							</div>
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Phí vận chuyển</label>
+							</div>
+							<div class="col-md-8">
+								<input class="form-control">	
+							</div>
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Kho</label>
+							</div>
+							<div class="col-md-8 mt-16">
+								<input class="form-control">	
+							</div>
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-4">
+								<label>Kỳ</label>
+							</div>
+								<div class="col-md-8">
+								<input class="form-control">	
+							</div>
 						</div>
 					</div>
-					<div class="col-md-6"></div>
 				</div>
 			</div>
-			<div class="col-md-6"></div>
+			<div class="col-md-6">
+				<div class="row mt-16">
+					<div class="col-md-11 col-md-offset-1">
+
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h6>Sức chứa kho hàng</h6>
+							</div>
+							<div class="panel-body" style="max-height: 50vh;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>	
 	</div>
 	<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
