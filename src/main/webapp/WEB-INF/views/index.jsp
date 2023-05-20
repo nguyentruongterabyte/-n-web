@@ -98,7 +98,7 @@ body, h1, h2, h3, h4, h5, h6 {
 							<a
 							href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=${pageNumber}"
 							class="w3-bar-item w3-button w3-hover-black">${pageNumber}</a>
-						</c:otherwise>
+					</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<c:if test="${activeProductPage != pageProductTotal}">

@@ -20,6 +20,15 @@ public class OrderDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	public List<Order> getOrdersWithoutInOutInventory() {
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "SELECT o FROM Order o LEFT JOIN o.inOutInventoryDetails ioid WHERE ioid.id IS NULL";
+		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<Order> list = query.list();
+		return list;
+	}
+	
 	public Order get(int id) {
 		Session session = sessionFactory.getCurrentSession();
 		Order order = (Order) session.get(Order.class, id);

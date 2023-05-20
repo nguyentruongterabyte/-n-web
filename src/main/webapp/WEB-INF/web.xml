@@ -24,6 +24,8 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.jpg</url-pattern>
 		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
     <!-- Thêm các phần mở rộng tệp tin ảnh khác nếu cần -->
 	</servlet-mapping>
 	<!-- CharacterEncodingFilter -->

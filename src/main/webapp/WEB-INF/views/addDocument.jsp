@@ -127,10 +127,10 @@ body, h1, h2, h3, h4, h5, h6 {
 								</div>
 								<div class="col-md-6">
 									<form:select path="type" class="form-control">
+										<form:option value="customerorder">Bán hàng</form:option>
 										<form:option value="ininventory">Nhập kho</form:option>
 										<form:option value="outinventory">Xuất kho</form:option>
 										<form:option value="vendororder">Nhập hàng</form:option>
-										<form:option value="customerorder">Bán hàng</form:option>
 										<form:option value="vendordebt">Nợ nhà cung cấp</form:option>
 										<form:option value="customerdebt">Công nợ khách hàng</form:option>
 										<form:option value="vendorbill">Thanh toán nhà cung cấp</form:option>

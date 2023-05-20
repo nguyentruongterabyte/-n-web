@@ -56,7 +56,14 @@ body, h1, h2, h3, h4, h5, h6 {
 			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
 
 			<div class="w3-center w3-padding-16">
-				Đơn xuất kho
+				<c:choose>
+					<c:when test="${ inOutInventory.type == true}">
+						Đơn xuất kho
+					</c:when>
+					<c:otherwise>
+						Đơn nhập kho
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
@@ -156,9 +163,6 @@ body, h1, h2, h3, h4, h5, h6 {
 						</div>
 					</div>
 				</div>
-				<div class="row row-no-padding">
-					
-				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="row mt-16">
@@ -178,7 +182,7 @@ body, h1, h2, h3, h4, h5, h6 {
 										</tr>
 									</thead>
 									<tbody>
-											
+										
 									</tbody>
 								</table>
 							</div>
@@ -187,6 +191,34 @@ body, h1, h2, h3, h4, h5, h6 {
 				</div>
 			</div>
 		</div>	
+		<div class="row row-no-padding">
+			<div class="col-md-3">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h6>Danh sách đơn hàng</h6>
+					</div>
+					<div class="panel-body">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Mã đơn hàng</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+			
+			</div>
+			<div class="col-md-4">
+				
+			</div>
+		</div>
 	</div>
 	<script src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
 	<script>

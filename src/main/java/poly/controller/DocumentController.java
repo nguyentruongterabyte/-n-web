@@ -2,6 +2,7 @@ package poly.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import poly.dao.DocumentDao;
+import poly.dao.InventoryDao;
+import poly.dao.OrderDao;
 import poly.dao.StaffDao;
 import poly.entity.CustomerBill;
 import poly.entity.CustomerDebt;
 import poly.entity.CustomerOrder;
 import poly.entity.Document;
 import poly.entity.InOutInventory;
+import poly.entity.Inventory;
+import poly.entity.Order;
 import poly.entity.Staff;
 import poly.entity.VendorBill;
 import poly.entity.VendorDebt;
@@ -36,6 +41,12 @@ public class DocumentController {
 	
 	@Autowired
 	private StaffDao staffDao;
+	
+	@Autowired
+	private OrderDao orderDao;
+	
+	@Autowired
+	private InventoryDao inventoryDao;
 	
 	@RequestMapping("danh-sach")
 	public String ShowList(ModelMap model, 
@@ -76,6 +87,7 @@ public class DocumentController {
 	@RequestMapping("xac-thuc")
 	public String validate(ModelMap model,
 			RedirectAttributes redirectAttributes,
+			HttpSession session,
 			@Validated @ModelAttribute("document") Document document,
 			BindingResult errors) {
 		Message message = new Message();
@@ -91,23 +103,29 @@ public class DocumentController {
 		
 		String date = document.getCreateDate().split("T")[0] + " " + document.getCreateDate().split("T")[1];
 		document.setCreateDate(date);
-		System.out.println(date);
-		System.out.println(date.substring(0, date.length() - date.split(" ")[1].lastIndexOf(":") - 1));
 
 		switch (document.getType()) {
 		case "outinventory": {
+			List<Order> orders = orderDao.getOrdersWithoutInOutInventory();
+			
 			InOutInventory inOutInventory = new InOutInventory();
 			inOutInventory.setId(document.getId());
 			inOutInventory.setDocument(document);
+			inOutInventory.setType(true);
 			redirectAttributes.addFlashAttribute("inOutInventory", inOutInventory);
-			return "redirect:../don-nhap-xuat-kho/them-moi.htm?type=0";
+			redirectAttributes.addFlashAttribute("orders", orders);
+			return "redirect:../don-nhap-xuat-kho/them-moi.htm";
 		}
-		case "ininventory": {
+		case "ininventory": {			
+			List<Order> orders = orderDao.getOrdersWithoutInOutInventory();
+			
 			InOutInventory inOutInventory = new InOutInventory();
 			inOutInventory.setId(document.getId());
 			inOutInventory.setDocument(document);
+			inOutInventory.setType(false);
 			redirectAttributes.addFlashAttribute("inOutInventory", inOutInventory);
-			return "redirect:../don-nhap-xuat-kho/them-moi.htm?type=1";
+			redirectAttributes.addFlashAttribute("orders", orders);
+			return "redirect:../don-nhap-xuat-kho/them-moi.htm";
 		}
 		case "vendororder": {
 			VendorOrder vendorOrder = new VendorOrder();
@@ -117,10 +135,13 @@ public class DocumentController {
 			return "redirect:../don-nhap-hang/them-moi.htm";
 		}
 		case "customerorder": {
+			List<Inventory> inventories = inventoryDao.getAll();
 			CustomerOrder customerOrder = new CustomerOrder();
 			customerOrder.setId(document.getId());
 			customerOrder.setDocument(document);
-			redirectAttributes.addFlashAttribute("customerOrder", customerOrder);
+			
+			session.setAttribute("inventories", inventories);
+			session.setAttribute("customerOrder", customerOrder);
 			return "redirect:../don-ban-hang/them-moi.htm";
 		}
 		case "vendordebt": {
