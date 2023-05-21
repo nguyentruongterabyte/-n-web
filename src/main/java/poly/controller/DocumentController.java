@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import poly.dao.CustomerDao;
 import poly.dao.DocumentDao;
 import poly.dao.InventoryDao;
 import poly.dao.OrderDao;
 import poly.dao.StaffDao;
+import poly.entity.Customer;
 import poly.entity.CustomerBill;
 import poly.entity.CustomerDebt;
 import poly.entity.CustomerOrder;
@@ -47,6 +49,9 @@ public class DocumentController {
 	
 	@Autowired
 	private InventoryDao inventoryDao;
+	
+	@Autowired 
+	private CustomerDao customerDao;
 	
 	@RequestMapping("danh-sach")
 	public String ShowList(ModelMap model, 
@@ -136,13 +141,18 @@ public class DocumentController {
 		}
 		case "customerorder": {
 			List<Inventory> inventories = inventoryDao.getAll();
+			List<Customer> customers = customerDao.getAll();
 			CustomerOrder customerOrder = new CustomerOrder();
+			
 			customerOrder.setId(document.getId());
 			customerOrder.setDocument(document);
 			
+			session.setAttribute("customers", customers);
 			session.setAttribute("inventories", inventories);
 			session.setAttribute("customerOrder", customerOrder);
 			return "redirect:../don-ban-hang/them-moi.htm";
+			
+			
 		}
 		case "vendordebt": {
 			VendorDebt vendorDebt = new VendorDebt();

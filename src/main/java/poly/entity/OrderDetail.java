@@ -67,17 +67,24 @@ public class OrderDetail{
 	@NotBlank(message = "Vui lòng nhập số lượng!")
 	@DecimalMin(value = "0", message = "Số lượng không được âm!")
 	private int quantity;
+	
+	private float price;
 
 	public OrderDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderDetail(Id embeddedId, int quantity) {
+	
+
+	public OrderDetail(Id embeddedId, int quantity, float price) {
 		super();
 		this.embeddedId = embeddedId;
 		this.quantity = quantity;
+		this.price = price;
 	}
+
+
 
 	public Id getEmbeddedId() {
 		return embeddedId;
@@ -93,6 +100,18 @@ public class OrderDetail{
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+
+
+	public float getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
 	
 

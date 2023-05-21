@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import poly.dao.InventoryDao;
+import poly.entity.Customer;
 import poly.entity.CustomerOrder;
 import poly.entity.Inventory;
 
@@ -29,7 +30,14 @@ public class CustomerOrderController {
 			) {
 		@SuppressWarnings("unchecked")
 		List<Inventory> inventories = (List<Inventory>) session.getAttribute("inventories");
+		@SuppressWarnings("unchecked")
+		List<Customer> customers = (List<Customer>) session.getAttribute("customers");
 		CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
+		
+		// Test
+//		System.out.println(customerOrder.getDocument().getCreateDate());
+		
+		model.addAttribute("customers", customers);
 		model.addAttribute("customerOrder", customerOrder);
 		model.addAttribute("inventories", inventories);
 		return "addCustomerOrder";

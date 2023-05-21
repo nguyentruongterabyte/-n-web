@@ -93,58 +93,139 @@ body, h1, h2, h3, h4, h5, h6 {
 		</c:if>
 		<div class="row mt-16">
 			<div class="col-md-4">
-
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h6>Sản phẩm</h6>
-					</div>
-					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-2">Kho chứa</div>
-							<div class="col-md-10">
-								<select id="inventory" name="inventoy" class="form-control">
-									<option></option>
-									<c:forEach var="i" items="${inventories}">
-										<option value="${i.id}"
-											<c:if test="${i.id == inventory.id}">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h6>Sản phẩm</h6>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-2">Kho chứa</div>
+									<div class="col-md-10">
+										<select id="inventory" name="inventoy" class="form-control">
+											<option></option>
+											<c:forEach var="i" items="${inventories}">
+												<option value="${i.id}"
+													<c:if test="${i.id == inventory.id}">
 												selected
-											</c:if>
-										>${i.name}</option>
-									</c:forEach>
-								</select>
+											</c:if>>${i.name}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<div class="row mt-16">
+									<div class="col-md-2">Mặt hàng</div>
+									<div class="col-md-10">
+										<select id="product-selected" name="product"
+											class="form-control">
+											<c:choose>
+												<c:when test="${inventory != null}">
+													<c:forEach var="ic"
+														items="${inventory.inventoryCapabilities}">
+														<option class="product-option"
+															data-name="${ic.embeddedId.product.name}"
+															data-price="${ic.embeddedId.product.outPrice}"
+															data-current-count="${ic.currentCount}"
+															value="${ic.embeddedId.product.id}">${ic.embeddedId.product.name}
+															- còn ${ic.currentCount} ${ic.embeddedId.product.unit}</option>
+													</c:forEach>
+												</c:when>
+												<c:otherwise>
+													<option value="">Vui lòng chọn kho chứa</option>
+												</c:otherwise>
+											</c:choose>
+										</select>
+									</div>
+								</div>
+								<div class="row mt-16">
+									<div class="col-md-4 col-md-offset-8">
+										<button id="add-product-btn" class="btn-info btn btn-lg">Thêm>></button>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="row mt-16">
-							<div class="col-md-2">Mặt hàng</div>
-							<div class="col-md-10">
-								<select id="product-selected" name="product" class="form-control">
-									<c:choose>
-										<c:when test="${inventory != null}">
-											<c:forEach var="ic"
-												items="${inventory.inventoryCapabilities}">
-												<option class="product-option" data-name="${ic.embeddedId.product.name}" data-price="${ic.embeddedId.product.outPrice}" value="${ic.embeddedId.product.id}">${ic.embeddedId.product.name} - còn ${ic.currentCount} ${ic.embeddedId.product.unit}</option>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<option value="">Vui lòng chọn kho chứa</option>
-										</c:otherwise>
-									</c:choose>
-								</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h6>Khách hàng</h6>
 							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-4">
+										<label>Họ tên</label>
+									</div>
+									<div class="col-md-8"> 
+										<select id="customer-selected" name="customerName" class="form-control">
+											<c:forEach var="c" items="${customers}">
+												<option
+												id="customer-id-${c.id}"
+												 data-customer-email="${c.email}"
+												 data-customer-phone="${c.phone}"
+												 value="${c.id}">${c.name}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<div class="row mt-16">
+									<div class="col-md-4">
+										<label>Mã khách hàng</label>
+									</div>
+									<div class="col-md-8">
+										<input name="customerId" 
+										readonly="readonly" 
+										class="form-control"
+										<c:if test="${customers != null}">
+											value="${customers[0].id}"
+										</c:if>
+										
+										>
+										
+									</div>
+								</div>
+								<div class="row mt-16">
+									<div class="col-md-4">
+										<label>Số điện thoại</label>
+									</div>
+									<div class="col-md-8">
+										<input name="customerPhone" 
+										readonly="readonly" 
+										class="form-control"
+										<c:if test="${customers != null}">
+											value="${customers[0].phone}"
+										</c:if>
+										
+										>
+									</div>
+								</div>
+								<div class="row mt-16">
+									<div class="col-md-4">
+										<label>Email</label>
+									</div>					
+									<div class="col-md-8">
+										<input name="customerEmail" 
+										readonly="readonly" 
+										class="form-control"
+										<c:if test="${customers != null}">
+											value="${customers[0].email}"
+										</c:if>
+										
+										>
+									</div>			
+								</div>
+							</div> 
 						</div>
 					</div>
 				</div>
 
 			</div>
-			<div class="col-md-1">
-				<button id="add-product-btn"  class="btn-info btn btn-lg"
-				style="margin: 128px 0 0;"
-				>Thêm>></button>
-			</div>
-			<div class="col-md-7">
+			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">Chi tiết hóa đơn</div>
-					<div class="panel-body">
+					<div class="panel-body" style="max-height: 50vh; overflow-y: scroll;">
 						<table class="table table-hover">
 							<thead>
 								<tr>
@@ -152,6 +233,7 @@ body, h1, h2, h3, h4, h5, h6 {
 									<th>Giá</th>
 									<th>Số lượng</th>
 									<th>Thành tiền</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody id="product-list">
@@ -162,8 +244,16 @@ body, h1, h2, h3, h4, h5, h6 {
 				</div>
 				
 			</div>
+			<div class="col-md-8">
+				<div class="row">
+					<div class="col-md-6">
+						
+					</div>
+					<div class="col-md-6"></div>
+				</div>
+			</div>
+			 
 		</div>
-		<div class="row"></div>
 	</div>
 	<script
 		src="${pageContext.servletContext.contextPath}/resource/js/toast.js"></script>
@@ -195,7 +285,8 @@ body, h1, h2, h3, h4, h5, h6 {
 					var checkProductExist = $('#product-id-' + productSelectedId)
 					// Kiểm tra thẻ tr đã có chưa
 					// Nếu chưa có thì append vào thẻ tbody
-					if (checkProductExist) {
+					console.log(checkProductExist.text())
+					if (checkProductExist.length <= 0) {
 						// Lấy thẻ tbody để chuẩn bị append thẻ tr vào
 						var productList = $('#product-list')
 						
@@ -204,30 +295,118 @@ body, h1, h2, h3, h4, h5, h6 {
 						
 						// Lấy data-price từ thẻ option bằng value = id của sản phẩm trong thẻ option đó
 						var productSelectedPrice = $('option.product-option').filter('[value="' + productSelectedId + '"]').data('price');
-						
-						var isReadonly = true;
+						var productSelectedCurrenCount = $('option.product-option').filter('[value="' + productSelectedId + '"]').data('current-count')
 						var newRow = $('<tr>').attr('id', 'product-id-' + productSelectedId).append(
 							$('<td>').append(
+								// Cột tên sản phẩm
 								$('<input>').attr({
-									'value': productSelectedName,
-									type: 'text'
-								}).addClass('form-control')
+									value: productSelectedName,
+									type: 'text',  
+									readonly: 'readonly'
+								}).addClass('form-control'),
+								// Cột id của sản phẩm với display: none
+								$('<input>').attr({
+									value: productSelectedId,
+									style: 'display: none;',
+									name: 'productsId[]'
+								})
 							),
+							// Cột giá của sản phẩm
 							$('<td>').append(
 								$('<input>').attr({
 									value: productSelectedPrice,
-									name: 'productsPrice[]'
-								}).addClass('form-control')	
+									name: 'productsPrice[]',
+									type: 'number',
+									min: 0
+								}).addClass('form-control').on('input', calculateTotalOnPrice)
 							),
-							$('<td>'),
-							$('<td>')
+							// Cột số lượng sản phẩm
+							$('<td>').append(
+								$('<input>').attr({
+									value: 1,
+									name: 'productsQuantity[]',
+									type: 'number',
+									min: 0,
+									max: productSelectedCurrenCount
+								}).addClass('form-control').on('input',  calculateTotalOnQuantity)	
+							)
+							,
+							// Cột thành tiền = price * quantity
+							$('<td>').append(
+								$('<input>').attr({
+									value: productSelectedPrice, 
+									readonly: 'readonly'
+								}).addClass('form-control')	
+							), 
+							// Nút xóa sản phẩm khỏi danh sách
+							$('<td>').append(
+								$('<button>').attr({
+									type: 'button',
+									title: 'Delete',
+									onclick: 'event.stopPropagation(); deleteProduct("' + productSelectedId + '");'
+								}).addClass('btn btn-danger btn-xs').append(
+									$('<span>').addClass('glyphicon glyphicon-trash')
+								)
+								
+							)
+							
 						);
+						
+						// Hàm để sửa lại thành tiền khi số lượng sản phẩm thay đổi
+						function calculateTotalOnQuantity() {
+							var quantity = parseFloat($(this).val());
+							var price = parseFloat($(this).closest('tr').find('td:nth-child(2) input').val());
+							var total = quantity * price;
+							  
+							$(this).closest('tr').find('td:nth-child(4) input').val(total);
+						}
+						
+						// Hàm để sửa lại thành tiền khi giá sản phẩm thay đổi
+						function calculateTotalOnPrice() {
+							var price = parseFloat($(this).val());
+							var quantity = parseFloat($(this).closest('tr').find('td:nth-child(3) input').val());
+							var total = quantity * price;
+							  
+							$(this).closest('tr').find('td:nth-child(4) input').val(total);
+						}
+						
 						productList.append(newRow);
+					} else {
+						var quantityInput = checkProductExist.find('td:nth-child(3) input');
+						var currentQuantity = parseInt(quantityInput.val());
+						quantityInput.val(currentQuantity + 1);
 					}
 				}
 			})
+			
+			// Sự kiện thay đổi combobox khách hàng
+			$('#customer-selected').change(function() {
+				// Lấy id của khách hàng thông qua giá trị của thẻ select
+				var customerId = $(this).val();
+				// Tìm thẻ option có id là id của khách hàng được combobox chọn
+				var customerOption = $('#customer-id-' + customerId);
+				// Lấy data-customer-email từ thẻ option tìm được
+				var customerEmail = customerOption.data('customer-email');
+				
+				// Lấy data-customer-phone từ thẻ option tìm được
+				var customerPhone = customerOption.data('customer-phone');
+				
+				// Đổi value của thẻ input name=customerId thành id tương ứng với 
+				// giá trị được chọn 
+				$('input[name="customerId"]').val(customerId);
+				
+				// Tương tự thay đổi với customerPhone và customerEmail
+				$('input[name="customerPhone"]').val(customerPhone);
+				$('input[name="customerEmail"]').val(customerEmail);
+				
+			})
+			
 		})
 		
+		// Hàm xóa thẻ tr khỏi DOM khi nút xóa được nhấn
+		function deleteProduct(productId) {
+			$('#product-id-' + productId).remove();
+		}
 		
 	</script>
 </body>
