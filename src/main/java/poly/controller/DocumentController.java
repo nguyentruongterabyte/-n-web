@@ -21,16 +21,12 @@ import poly.dao.InventoryDao;
 import poly.dao.OrderDao;
 import poly.dao.StaffDao;
 import poly.entity.Customer;
-import poly.entity.CustomerBill;
-import poly.entity.CustomerDebt;
 import poly.entity.CustomerOrder;
 import poly.entity.Document;
 import poly.entity.InOutInventory;
 import poly.entity.Inventory;
 import poly.entity.Order;
 import poly.entity.Staff;
-import poly.entity.VendorBill;
-import poly.entity.VendorDebt;
 import poly.entity.VendorOrder;
 import poly.message.Message;
 
@@ -153,34 +149,6 @@ public class DocumentController {
 			return "redirect:../don-ban-hang/them-moi.htm";
 			
 			
-		}
-		case "vendordebt": {
-			VendorDebt vendorDebt = new VendorDebt();
-			vendorDebt.setId(document.getId());
-			vendorDebt.setDocument(document);
-			redirectAttributes.addFlashAttribute("vendorDebt", vendorDebt);
-			return "redirect:../phieu-no-nha-cung-cap/them-moi.htm";
-		}
-		case "customerdebt": {
-			CustomerDebt customerDebt = new CustomerDebt();
-			customerDebt.setId(document.getId());
-			customerDebt.setDocument(document);
-			redirectAttributes.addFlashAttribute("customerDebt", customerDebt);
-			return "redirect:../phieu-no-khach-hang/them-moi.htm";
-		}
-		case "vendorbill": {
-			VendorBill vendorBill = new VendorBill();
-			vendorBill.setId(document.getId());
-			vendorBill.setDocument(document);
-			redirectAttributes.addFlashAttribute("vendorBill", vendorBill);
-			return "redirect:../phieu-thanh-toan-nha-cung-cap/them-moi.htm";
-		}
-		case "customerbill": {
-			CustomerBill customerBill = new CustomerBill();
-			customerBill.setId(document.getId());
-			customerBill.setDocument(document);
-			redirectAttributes.addFlashAttribute("customerBill", customerBill);
-			return "redirect:../phieu-thanh-toan-khach-hang/them-moi.htm";
 		}
 	
 		default:

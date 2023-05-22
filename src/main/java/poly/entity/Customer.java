@@ -47,8 +47,7 @@ public class Customer {
 	@OneToMany(mappedBy = "customer", fetch =  FetchType.EAGER)
 	private Collection<CustomerOrder> customerOrders;
 	
-	@OneToMany(mappedBy = "customer", fetch =  FetchType.EAGER)
-	private Collection<CustomerDebt> customerDebts;
+
 	
 	@OneToMany(mappedBy = "customer", fetch =  FetchType.EAGER)
 	private Collection<CustomerBill> customerBills;
@@ -150,13 +149,6 @@ public class Customer {
 		this.customerOrders = customerOrders;
 	}
 
-	public Collection<CustomerDebt> getCustomerDebts() {
-		return customerDebts;
-	}
-
-	public void setCustomerDebts(Collection<CustomerDebt> customerDebts) {
-		this.customerDebts = customerDebts;
-	}
 
 	public Collection<CustomerBill> getCustomerBills() {
 		return customerBills;

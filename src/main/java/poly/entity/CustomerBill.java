@@ -28,22 +28,44 @@ public class CustomerBill {
 	@DecimalMin(value = "0", message = "Số tiền trả lại không được âm!")
 	private float changeMoney;
 	
+	private String payment; // Hình thức thanh toán
+	
 	@OneToOne
 	@JoinColumn(name = "id")
 	private Document document;
 
+	
+	
 	public CustomerBill() {
 		super();
 	}
 
-	public CustomerBill(int id, Customer customer, float receivedMoney, float changeMoney, Document document) {
+	
+
+	public CustomerBill(int id, Customer customer, float receivedMoney, float changeMoney, String payment,
+			Document document) {
 		super();
 		this.id = id;
 		this.customer = customer;
 		this.receivedMoney = receivedMoney;
 		this.changeMoney = changeMoney;
+		this.payment = payment;
 		this.document = document;
 	}
+
+	
+
+	public String getPayment() {
+		return payment;
+	}
+
+
+
+	public void setPayment(String payment) {
+		this.payment = payment;
+	}
+
+
 
 	public int getId() {
 		return id;

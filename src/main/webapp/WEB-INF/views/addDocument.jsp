@@ -130,11 +130,7 @@ body, h1, h2, h3, h4, h5, h6 {
 										<form:option value="customerorder">Bán hàng</form:option>
 										<form:option value="ininventory">Nhập kho</form:option>
 										<form:option value="outinventory">Xuất kho</form:option>
-										<form:option value="vendororder">Nhập hàng</form:option>
-										<form:option value="vendordebt">Nợ nhà cung cấp</form:option>
-										<form:option value="customerdebt">Công nợ khách hàng</form:option>
-										<form:option value="vendorbill">Thanh toán nhà cung cấp</form:option>
-										<form:option value="customerbill">Thanh toán khách hàng</form:option>
+										<form:option value="vendororder">Nhập hàng</form:option>						
 									</form:select>
 									<form:errors path="type"></form:errors>
 								</div>

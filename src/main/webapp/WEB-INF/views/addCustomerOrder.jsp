@@ -245,11 +245,108 @@ body, h1, h2, h3, h4, h5, h6 {
 				
 			</div>
 			<div class="col-md-8">
-				<div class="row">
+				<div class="row mt-16">
 					<div class="col-md-6">
-						
+						<div class="row">
+							<div class="col-md-4">
+								<label>Thành tiền sản phẩm</label>
+							</div>
+							<div class="col-md-8">
+								<input id="total-price" name="totalPrice" class="form-control" readonly="readonly">
+							</div>
+						</div>
+						<div class="row mt-12">
+							<div class="col-md-4">
+								<label>Tổng hóa đơn</label>
+							</div>
+							<div class="col-md-8">
+								<input id="final-price" name="finalPrice" class="form-control" readonly="readonly">
+							</div>
+						</div>
 					</div>
-					<div class="col-md-6"></div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4">
+										<label>Chiết khấu</label>
+									</div>
+									<div class="col-md-8">
+										<input class="form-control" value="0" name="discount" id="discount">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-4">
+										<label for="VAT">VAT</label>
+									</div>
+									<div class="col-md-8">
+										<input class="form-control" value="10%" name="VAT" id="VAT"> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-16">
+							<div class="col-md-3">
+								<label for="extraPaid">Phụ thu</label>
+							</div>
+							<div class="col-md-9">
+								<input type="number" class="form-control" value="0" name="extraPaid" id="extraPaid"> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 mt-16">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h6>Thanh toán</h6>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-4">
+												<label for="payment">Hình thức thanh toán</label>
+											</div>
+											<div class="col-md-8">
+												<select id="payment" class="form-control" name="payment">
+													<option value="cash">Tiền mặt</option>
+													<option value="bank">Ngân hàng</option>
+													<option value="momo">Momo</option>
+													<option value="zalopay">Zalo pay</option>
+												</select>
+											</div>
+										</div>
+										<div class="row mt-16">
+											<div class="col-md-4">
+												<label for="received-money">
+													Số tiền nhận
+												</label>
+											</div>
+											<div class="col-md-8">
+												<input type="number" class="form-control" name="receivedMoney" id="received-money">
+											</div>
+										</div>
+										<div class="row mt-16">
+											<div class="col-md-4">
+												<label for="change-money">
+													Số tiền trả lại
+												</label>
+											</div>
+											<div class="col-md-8">
+												<input readonly="readonly" type="number" class="form-control" name="changeMoney" id="changeMoney">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6"></div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			 

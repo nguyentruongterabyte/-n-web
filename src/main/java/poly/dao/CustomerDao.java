@@ -104,18 +104,13 @@ public class CustomerDao {
 			message.setContent("Khách hàng đã có hóa đơn mua hàng! Xóa thất bại");
 			return message;
 		}
-		if (c.getCustomerDebts().toArray().length > 0) {
-			message.setType("error");
-			message.setContent("Khách hàng còn phiếu nợ! Xóa thất bại");
-			return message;
-		}
+		
 		if (c.getCustomerOrders().toArray().length > 0) {
 			message.setType("error");
 			message.setContent("Khách hàng đã có đơn đặt hàng! Xóa thất bại");
 		}
 		try {
 			c.setCustomerBills(null);
-			c.setCustomerDebts(null);
 			c.setCustomerOrders(null);
 			
 			session.delete(c);
