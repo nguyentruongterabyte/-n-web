@@ -60,10 +60,21 @@ body, h1, h2, h3, h4, h5, h6 {
 	display: block;
 }
 
+.vendor-list__item:hover .vendor-list__item-edit-btn {
+	display: block;
+}
+
+.vendor-list__item-edit-btn {
+	position: absolute;
+	top: 38px;
+	right: 8px;
+	display: none;
+}
+
 .vendor-list__item-delete-btn {
 	position: absolute;
 	top: 8px;
-	right: 4px;
+	right: 8px;
 	display: none;	
 }
 
@@ -126,7 +137,7 @@ body, h1, h2, h3, h4, h5, h6 {
 			</div>
 		</c:if>
 		<div class="row row-no-padding">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-10 col-md-offset-1">
 				<div class="panel panel-primary vendor-list filterable">
 					<div class="vendor-list__heading panel-heading">
 						<h3 class="panel-title">Nhà cung cấp</h3>
@@ -150,6 +161,7 @@ body, h1, h2, h3, h4, h5, h6 {
 								<th><input type="text" class="form-control"
 									placeholder="Địa chỉ" disabled></th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -162,6 +174,15 @@ body, h1, h2, h3, h4, h5, h6 {
 									<td>${v.phone}</td>
 									<td>${v.email}</td>
 									<td>${v.address}</td>
+									
+									<td>
+										<button
+											onclick="event.stopPropagation(); location.href = '${pageContext.servletContext.contextPath}/nha-cung-cap/chinh-sua.htm?id=${v.id}'"
+											type="button" title="Edit"
+											class="vendor-list__item-edit-btn btn btn-info btn-xs">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</td>
 									<td>
 										<button
 											onclick="event.stopPropagation(); deleteVendor(${v.id});"
@@ -169,6 +190,7 @@ body, h1, h2, h3, h4, h5, h6 {
 											class="vendor-list__item-delete-btn btn btn-danger btn-xs">
 											<span class="glyphicon glyphicon-trash"></span>
 										</button>
+	
 									</td>
 								</tr>
 							</c:forEach>

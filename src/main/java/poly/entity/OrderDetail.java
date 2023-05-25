@@ -68,7 +68,7 @@ public class OrderDetail{
 	@DecimalMin(value = "0", message = "Số lượng không được âm!")
 	private int quantity;
 	
-	private float price;
+	private int price;
 
 	public OrderDetail() {
 		super();
@@ -77,7 +77,7 @@ public class OrderDetail{
 
 	
 
-	public OrderDetail(Id embeddedId, int quantity, float price) {
+	public OrderDetail(Id embeddedId, int quantity, int price) {
 		super();
 		this.embeddedId = embeddedId;
 		this.quantity = quantity;
@@ -104,13 +104,13 @@ public class OrderDetail{
 
 
 
-	public float getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
 
 
-	public void setPrice(float price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	
