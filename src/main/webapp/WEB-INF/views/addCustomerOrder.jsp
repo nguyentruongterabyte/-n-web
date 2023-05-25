@@ -279,8 +279,8 @@ body, h1, h2, h3, h4, h5, h6 {
 											<td>
 												<input value="${od.price}" 
 													name="displayProductPrice" 
-												
 													onchange="formatCurrency(this); convertCurrencyToInt(this, 'productsPrice[]');"
+													oninput="calculateTotalOnPrice(this)" 
 													min="0" 
 													class="form-control">
 												<input 
@@ -293,11 +293,12 @@ body, h1, h2, h3, h4, h5, h6 {
 											</td>
 											<td>
 												<input 
-													name="productsQuantity[]"
+													value="${od.quantity}"
+													name="productsQuantity[]" 
+													oninput="calculateTotalOnQuantity(this)" 
 													class="form-control"
 													type="number"
 													min="0"
-													value="${od.quantity}"
 												>
 											</td>
 											<td>
@@ -335,7 +336,13 @@ body, h1, h2, h3, h4, h5, h6 {
 								<div class="col-md-8">
 									<input 
 										id="total-price" 
+										readonly="readonly"
+										name="displayTotalPrice"
+										value="${totalPrice}"						
 										class="form-control"
+										>
+									<input
+										type="hidden"  
 										readonly="readonly"
 										name="totalPrice"
 										value="${totalPrice}"
@@ -530,7 +537,10 @@ body, h1, h2, h3, h4, h5, h6 {
 	<script>
 		$(document).ready(function() {
 			$('#inventory').change(function() {
-				window.location.href = "${pageContext.servletContext.contextPath}/don-ban-hang/chon-kho-hang.htm?id=" + $(this).val();
+				var ok = confirm("Chuyển kho chứa dữ liệu nhập sẽ mất! Xác nhận?");
+				if (ok) {				
+					window.location.href = "${pageContext.servletContext.contextPath}/don-ban-hang/chon-kho-hang.htm?id=" + $(this).val();
+				}
 			})
 			
 			
@@ -577,8 +587,9 @@ body, h1, h2, h3, h4, h5, h6 {
 									value: productSelectedPrice,
 									name: 'displayProductPrice',
 									onchange: 'formatCurrency(this); convertCurrencyToInt(this, "productsPrice[]");',
+									oninput: 'calculateTotalOnPrice(this)',
 									min: 0
-								}).addClass('form-control').on('input', calculateTotalOnPrice),
+								}).addClass('form-control'),
 								$('<input>').attr({
 									type: 'hidden',
 									name: 'productsPrice[]',
@@ -590,10 +601,11 @@ body, h1, h2, h3, h4, h5, h6 {
 								$('<input>').attr({
 									value: 1,
 									name: 'productsQuantity[]',
+									oninput: 'calculateTotalOnQuantity(this)',
 									type: 'number',
 									min: 0,
 									max: productSelectedCurrenCount
-								}).addClass('form-control').on('input',  calculateTotalOnQuantity)
+								}).addClass('form-control')
 							)
 							,
 							// Cột thành tiền = price * quantity
@@ -617,31 +629,6 @@ body, h1, h2, h3, h4, h5, h6 {
 							)
 							
 						);
-						
-						// Hàm để sửa lại thành tiền khi số lượng sản phẩm thay đổi
-						function calculateTotalOnQuantity() {
-							var quantity = parseInt($(this).val());
-							var price = parseInt($(this).closest('tr').find('td:nth-child(2) input:nth-child(2)').val());
-							var total = quantity * price;
-							var totalInput = $(this).closest('tr').find('td:nth-child(4) input');
-							totalInput.val(total);
-							formatCurrency($(totalInput));
-					
-							calculateTotalPrice();
-						}
-						
-						// Hàm để sửa lại thành tiền khi giá sản phẩm thay đổi
-						function calculateTotalOnPrice() {
-							var price = convertCurrencyToInt($(this), "");
-							console.log(price);
-							var quantity = parseInt($(this).closest('tr').find('td:nth-child(3) input').val());
-							var total = quantity * price;
-							var totalInput = $(this).closest('tr').find('td:nth-child(4) input');
-							totalInput.val(total);
-							formatCurrency($(totalInput));
-							
-							calculateTotalPrice();
-						}
 						
 						productList.append(newRow);
 					} else {
@@ -735,7 +722,15 @@ body, h1, h2, h3, h4, h5, h6 {
 			    totalPrice += isNaN(inputValue) ? 0 : inputValue;
 			});
 			// Thêm chúng vào input có id là total-price
-			$('#total-price').val(totalPrice);
+			var displayTotalPriceInput = $('#total-price')
+			var hiddenTotalPriceInput = $(displayTotalPriceInput).siblings('input[name="totalPrice"]');
+			// Nếu tồn tại thẻ input hidden
+			if (hiddenTotalPriceInput) {
+				// Thêm giá trị thuần vào total price hidden để trả về cho server
+				$(hiddenTotalPriceInput).val(totalPrice);
+			}
+			$(displayTotalPriceInput).val(totalPrice);
+			formatCurrency($(displayTotalPriceInput));
 		}
 		
 		// Hàm định dạng tiền tệ ở displayInput và thêm giá trị thuần ở hàm inputHidden
@@ -809,6 +804,30 @@ body, h1, h2, h3, h4, h5, h6 {
 				$(inputSelector).val(formattedPrice);
 			} 
 			
+		}
+		
+		// Hàm để sửa lại thành tiền khi số lượng sản phẩm thay đổi
+		function calculateTotalOnQuantity(selector) {
+			var quantity = parseInt($(selector).val());
+			var price = parseInt($(selector).closest('tr').find('td:nth-child(2) input:nth-child(2)').val());
+			var total = quantity * price;
+			var totalInput = $(selector).closest('tr').find('td:nth-child(4) input');
+			totalInput.val(total);
+			formatCurrency($(totalInput));
+	
+			calculateTotalPrice();
+		}
+		
+		// Hàm để sửa lại thành tiền khi giá sản phẩm thay đổi
+		function calculateTotalOnPrice(selector) {
+			var price = convertCurrencyToInt($(selector), "");
+			var quantity = parseInt($(selector).closest('tr').find('td:nth-child(3) input').val());
+			var total = quantity * price;
+			var totalInput = $(selector).closest('tr').find('td:nth-child(4) input');
+			totalInput.val(total);
+			formatCurrency($(totalInput));
+			
+			calculateTotalPrice();
 		}
 		
 	</script>
