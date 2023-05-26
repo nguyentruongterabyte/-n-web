@@ -116,8 +116,12 @@ public class CustomerOrderController {
 		}
 		redirectAttributes.addFlashAttribute("orderDetails", orderDetails);
 		redirectAttributes.addFlashAttribute("totalPrice", totalPrice);
-		
-		
+		redirectAttributes.addFlashAttribute("extraPaid", extraPaid);
+		redirectAttributes.addFlashAttribute("finalPrice", finalPrice);
+		redirectAttributes.addFlashAttribute("payment", payment);
+		redirectAttributes.addFlashAttribute("status", status);
+		redirectAttributes.addFlashAttribute("receivedMoney", receivedMoney);
+		redirectAttributes.addFlashAttribute("changeMoney", changeMoney);
 		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 		// Convert kiểu string của discount thành kiểu double
 		double discountDouble = Double.parseDouble(discount);

@@ -355,8 +355,27 @@ body, h1, h2, h3, h4, h5, h6 {
 								</div>
 								<div class="col-md-8">
 								
-									<input id="final-price" name="finalPrice" class="form-control"
-										readonly="readonly">
+									<input name="displayFinalPrice" 
+											class="form-control" 
+											readonly="readonly"
+											<c:choose>
+												<c:when test="${finalPrice != null}">value="${finalPrice}"</c:when>
+												<c:otherwise>
+													value="0"
+												</c:otherwise>
+											</c:choose>
+											onchange="formatCurrency(this); convertCurrencyToInt(this, 'finalPrice');"
+											>
+									<input id="final-price"
+									 		name="finalPrice" 
+									 		type="hidden"
+									 		<c:choose>
+												<c:when test="${finalPrice != null}">value="${finalPrice}"</c:when>
+												<c:otherwise>
+													value="0"
+												</c:otherwise>
+											</c:choose> 
+										>
 								</div>
 							</div>
 						</div>
@@ -382,11 +401,13 @@ body, h1, h2, h3, h4, h5, h6 {
 														</c:if>
 													</c:otherwise>
 												</c:choose> 
+												onchange="calculateFinalPrice();"
 												
 												name="displayDiscount"
 												id="discount"> 
 											<input name="discount"
 												type="hidden"
+												
 												<c:choose>
 													<c:when test="${discount != null}">
 														value="${Double.parseDouble(discount)}"
@@ -412,6 +433,9 @@ body, h1, h2, h3, h4, h5, h6 {
 										<div class="col-md-8">
 											<input name="displayVAT" 
 													class="form-control" 
+								
+													onchange="calculateFinalPrice()"
+													
 													<c:choose>
 														<c:when test="${VAT != null}">
 															value="${Double.parseDouble(VAT) * 100}%"
@@ -433,6 +457,8 @@ body, h1, h2, h3, h4, h5, h6 {
 													</c:choose>
 													id="VAT"
 													
+													
+													
 													>
 										</div>
 									</div>
@@ -443,7 +469,25 @@ body, h1, h2, h3, h4, h5, h6 {
 									<label for="extraPaid">Phụ thu</label>
 								</div>
 								<div class="col-md-9">
-									<input type="number" class="form-control" value="0"
+									<input type="text" 
+										name="displayExtraPaid" 
+										class="form-control" 
+										<c:choose>
+											<c:when test="${extraPaid != null}">value="${extraPaid}"</c:when>
+											<c:otherwise>
+												value="0"
+											</c:otherwise>
+										</c:choose> 
+										onchange="formatCurrency(this);"
+										oninput="convertCurrencyToInt(this, 'extraPaid'); calculateFinalPrice();"
+									>
+									<input type="hidden" 
+										<c:choose>
+											<c:when test="${extraPaid != null}">value="${extraPaid}"</c:when>
+											<c:otherwise>
+												value="0"											
+											</c:otherwise>
+										</c:choose> 
 										name="extraPaid" id="extraPaid">
 								</div>
 							</div>
@@ -466,10 +510,21 @@ body, h1, h2, h3, h4, h5, h6 {
 												</div>
 												<div class="col-md-8">
 													<select id="payment" class="form-control" name="payment">
-														<option value="cash">Tiền mặt</option>
-														<option value="bank">Ngân hàng</option>
-														<option value="momo">Momo</option>
-														<option value="zalopay">Zalo pay</option>
+														<option value="cash"
+																<c:if test="${payment eq 'cash'}">selected</c:if>
+																>Tiền mặt</option>
+														<option value="bank"
+																<c:if test="${payment eq 'bank'}">selected</c:if>
+																
+																>Ngân hàng</option>
+														<option value="momo"
+																<c:if test="${payment eq 'momo'}">selected</c:if>
+																
+																>Momo</option>
+														<option value="zalopay"
+																<c:if test="${payment eq 'zalopay'}">selected</c:if>
+																
+																>Zalo pay</option>
 													</select>
 												</div>
 											</div>
@@ -478,8 +533,31 @@ body, h1, h2, h3, h4, h5, h6 {
 													<label for="received-money"> Số tiền nhận </label>
 												</div>
 												<div class="col-md-8">
-													<input type="number" class="form-control"
-														name="receivedMoney" id="received-money">
+													<input class="form-control" 
+														name="displayReceivedMoney"
+														oninput="convertCurrencyToInt(this, 'receivedMoney'); calculateChangeMoney();"
+														onchange="formatCurrency(this);"
+														<c:choose>
+															<c:when test="${receivedMoney != null}">
+																value="${receivedMoney}"
+															</c:when>
+															<c:otherwise>
+																value="0"
+															</c:otherwise>
+														</c:choose> 
+														>
+													<input type="hidden"
+														name="receivedMoney" 
+														id="received-money"
+														<c:choose>
+															<c:when test="${receivedMoney != null}">
+																value="${receivedMoney}"
+															</c:when>
+															<c:otherwise>
+																value="0"
+															</c:otherwise>
+														</c:choose>
+														>
 												</div>
 											</div>
 											<div class="row mt-16">
@@ -487,8 +565,30 @@ body, h1, h2, h3, h4, h5, h6 {
 													<label for="change-money"> Số tiền trả lại </label>
 												</div>
 												<div class="col-md-8">
-													<input readonly="readonly" type="number"
-														class="form-control" name="changeMoney" id="changeMoney">
+													<input name="displayChangeMoney"
+															class="form-control" 
+															readonly="readonly"
+															<c:choose>
+																<c:when test="${changeMoney != null}">
+																	value="${changeMoney}"
+																</c:when>
+																<c:otherwise>
+																	value="0"
+																</c:otherwise>
+															</c:choose>
+															>
+													<input type="hidden"
+														 name="changeMoney" 
+														 id="changeMoney"
+													 	<c:choose>
+															<c:when test="${changeMoney != null}">
+																value="${changeMoney}"
+															</c:when>
+															<c:otherwise>
+																value="0"
+															</c:otherwise>
+														</c:choose>
+														 >
 												</div>
 											</div>
 										</div>
@@ -499,8 +599,13 @@ body, h1, h2, h3, h4, h5, h6 {
 												</div>
 												<div class="col-md-8">
 													<select name="status" id="status" class="form-control">
-														<option value="paid">Đã thanh toán</option>
-														<option value="canceled">Đã hủy</option>
+														<option value="paid" 
+																<c:if test="${status eq 'paid'}">selected</c:if>
+																>Đã thanh toán</option>
+														<option value="canceled"
+																<c:if test="${status eq 'canceled'}">selected</c:if>
+							
+																>Đã hủy</option>
 													</select>
 												</div>
 											</div>
@@ -641,6 +746,7 @@ body, h1, h2, h3, h4, h5, h6 {
 						formatCurrency($(totalInput))
 					}
 					calculateTotalPrice(); 
+					calculateFinalPrice()
 				}
 				
 			});
@@ -670,6 +776,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				$('input[name="discount"]').val(customerDiscount);
 				$('input[name="displayDiscount"]').val((parseFloat(customerDiscount) * 100) + '%')
 				
+				calculateFinalPrice();
 			});
 			
 			$('input[name="displayDiscount"]').on('input',function() {
@@ -709,6 +816,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		function deleteProduct(productId) {
 			$('#product-id-' + productId).remove();
 			calculateTotalPrice();
+			calculateFinalPrice()
 		}
 		
 		// Hàm tính thành tiền của sản phẩm
@@ -816,6 +924,7 @@ body, h1, h2, h3, h4, h5, h6 {
 			formatCurrency($(totalInput));
 	
 			calculateTotalPrice();
+			calculateFinalPrice();
 		}
 		
 		// Hàm để sửa lại thành tiền khi giá sản phẩm thay đổi
@@ -828,8 +937,61 @@ body, h1, h2, h3, h4, h5, h6 {
 			formatCurrency($(totalInput));
 			
 			calculateTotalPrice();
+			calculateFinalPrice()
 		}
 		
+		// Hàm tính tổng hóa đơn
+		function calculateFinalPrice() {
+			var totalPrice = parseInt($('input[name="totalPrice"]').val());
+			var discount = parseFloat($('input[name="discount"]').val());
+			var VAT = parseFloat($('input[name="VAT"]').val());
+			var extraPaid = parseInt($('input[name="extraPaid"]').val());
+			
+			var finalPrice = totalPrice * (1.00 - discount + VAT) + extraPaid;
+			
+			finalPrice = parseInt(finalPrice);
+	
+			$('input[name="finalPrice"]').val(finalPrice);
+			var displayFinalPriceInput = $('input[name="displayFinalPrice"]');
+			$(displayFinalPriceInput).val(finalPrice);
+			formatCurrency(displayFinalPriceInput);
+			
+			// Tính lại số tiền thừa trả cho khách
+			calculateChangeMoney();
+		}
+		
+		// Hàm tính số tiền thừa cho khách
+		function calculateChangeMoney() {
+			var finalPrice = parseInt($('input[name="finalPrice"]').val());
+			var receivedMoney = parseInt($('input[name="receivedMoney"]').val());
+			if (finalPrice == 0 || receivedMoney == 0) {
+				return;
+			}
+			
+			// Lấy thẻ hiển thị số tiền nhận lại
+			var displayChangeMoneyInput = $('input[name="displayChangeMoney"]');
+			
+			// Lấy thẻ ẩn số tiền nhận lại
+			var hiddenChangeMoneyInput = $('input[name="changeMoney"]');
+			
+			// Nếu tổng hóa đơn bé hơn số tiền nhận thì mới tính số 
+			// tiền nhận lại
+			if (finalPrice < receivedMoney) {
+				
+				// Số tiền nhận lại được tính bằng công thức
+				// tiền nhận lại = số tiền nhận - tổng hóa đơn
+				var changeMoney = receivedMoney - finalPrice;
+				
+				// Thêm giá trị lần lượt vào thẻ input ẩn và hiện của 
+				// số tiền nhạn lại
+				$(displayChangeMoneyInput).val(changeMoney);
+				$(hiddenChangeMoneyInput).val(changeMoney);
+				
+				// Định dạng lại hiển thị tiền tệ cho thẻ số tiền nhận lại
+				formatCurrency($(displayChangeMoneyInput));
+			}
+			
+		}
 	</script>
 </body>
 </html>
