@@ -113,23 +113,29 @@ body, h1, h2, h3, h4, h5, h6 {
 
 		<!-- About Section -->
 		<div class="w3-container w3-padding-32 w3-center">
-			<h3>About Me, The Food Man</h3>
-			<br> <img src="/w3images/chef.jpg" alt="Me" class="w3-image"
+			<h3>About Drinking Sales Agent</h3>
+			<br> <img src="${pageContext.servletContext.contextPath}/resource/images/home/cua-hang-tien-loi-1-0942.jpg" alt="Me" class="w3-image img img-rounded"
 				style="display: block; margin: auto" width="800" height="533">
 			<div class="w3-padding-32">
 				<h4>
-					<b>I am Who I Am!</b>
+					<b>Prestige, quality, affordable!</b>
 				</h4>
 				<h6>
-					<i>With Passion For Real, Good Food</i>
+					<i>With Passion For Real, Good Drinking</i>
 				</h6>
-				<p>Just me, myself and I, exploring the universe of unknownment.
-					I have a heart of love and an interest of lorem ipsum and mauris
-					neque quam blog. I want to share my world with you. Praesent
-					tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta
-					lectus vitae, ultricies congue gravida diam non fringilla. Praesent
-					tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta
-					lectus vitae, ultricies congue gravida diam non fringilla.</p>
+				<p>Welcome to FreshDrop, your premier destination for high-quality bottled water solutions. As a leading distributor of bottled water, we take pride in providing refreshing and pure drinking water to satisfy the thirst of our valued customers. With a commitment to excellence and customer satisfaction, we have established ourselves as a trusted agency in the industry.
+
+At FreshDrop, we understand the importance of clean and safe drinking water for your well-being. That's why we source our water from pristine natural springs, ensuring its exceptional quality. Our advanced purification processes guarantee that each drop of water meets the highest standards of purity, making it the perfect choice for hydration, whether at home, in the office, or on the go.
+
+As a reliable supplier, we offer a diverse range of bottled water options to cater to your specific needs. From conveniently sized single-serve bottles to larger containers for your home or office, we have a comprehensive selection to suit every requirement. Our wide variety of bottle designs and packaging options ensure that you can enjoy our refreshing water with style and convenience.
+
+FreshDrop is dedicated to sustainability and environmental responsibility. We prioritize the use of eco-friendly materials in our packaging and actively seek ways to reduce our carbon footprint throughout our operations. By choosing FreshDrop, you not only benefit from premium-quality water but also contribute to a greener future.
+
+We take great pride in our exceptional customer service. Our knowledgeable and friendly team is always ready to assist you with any inquiries or special requests. Whether you need guidance in selecting the right products or require timely delivery, we are committed to providing you with a seamless and enjoyable experience.
+
+So why settle for anything less than the best when it comes to your hydration needs? Choose FreshDrop as your trusted bottled water supplier and experience the refreshing difference that our premium water brings. Discover a world of pure hydration and exceptional service with FreshDrop today.
+
+Contact us now to learn more about our offerings or to place an order. Quench your thirst with FreshDrop – where pure water meets unparalleled service.</p>
 			</div>
 		</div>
 		<hr>
@@ -137,47 +143,43 @@ body, h1, h2, h3, h4, h5, h6 {
 		<!-- Footer -->
 		<footer class="w3-row-padding w3-padding-32">
 			<div class="w3-third">
-				<h3>FOOTER</h3>
-				<p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo
-					condimentum, porta lectus vitae, ultricies congue gravida diam non
-					fringilla.</p>
-				<p>
-					Powered by <a href="https://www.w3schools.com/w3css/default.asp"
-						target="_blank">w3.css</a>
-				</p>
+				<h3>CONTACT US</h3>
+				<p>Phone	: 0948915051</p>
+				<p>Email: </p>
+				<p>n20dccn015@student.ptithcm.edu.vn   n20dccn043@student.ptithcm.edu.vn</p>
+				<p>n20dccn055@student.ptithcm.edu.vn   n20dccn083@student.ptithcm.edu.vn</p>
+				
 			</div>
 
 			<div class="w3-third">
 				<h3>BLOG POSTS</h3>
 				<ul class="w3-ul w3-hoverable">
-					<li class="w3-padding-16"><img src="/w3images/workshop.jpg"
+					<li class="w3-padding-16"><img src="${pageContext.servletContext.contextPath}/resource/images/favicon/icons8-cola-16.png"
 						class="w3-left w3-margin-right" style="width: 50px"> <span
-						class="w3-large">Lorem</span><br> <span>Sed mattis
-							nunc</span></li>
-					<li class="w3-padding-16"><img src="/w3images/gondol.jpg"
+						class="w3-large">Cocacola</span><br> <span>main sponsor</span></li>
+					<li class="w3-padding-16"><img src="${pageContext.servletContext.contextPath}/resource/images/home/freshDrop.jpg"
 						class="w3-left w3-margin-right" style="width: 50px"> <span
-						class="w3-large">Ipsum</span><br> <span>Praes tinci
-							sed</span></li>
+						class="w3-large">FreshDrop</span><br> <span>
+							distribution</span></li>
 				</ul>
 			</div>
 
 			<div class="w3-third w3-serif">
 				<h3>POPULAR TAGS</h3>
 				<p>
-					<span class="w3-tag w3-black w3-margin-bottom">Travel</span> <span
-						class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New
-						York</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dinner</span>
+					<span class="w3-tag w3-black w3-margin-bottom">Cocacola</span> <span
+						class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Rockstar</span> <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dinner</span>
 					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Salmon</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">France</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Drinks</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Lemonnade</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Drinking</span>
 					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span>
 					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Flavors</span>
 					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Cuisine</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Chicken</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dressing</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fried</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fish</span>
-					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Duck</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Summers</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Winter</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Monster</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Teaplus</span>
+					<span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Milk</span>
 				</p>
 			</div>
 		</footer>
