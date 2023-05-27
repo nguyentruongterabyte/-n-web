@@ -2,6 +2,7 @@ package poly.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,14 @@ public class HomeController {
 	@RequestMapping(value = {"/", "trang-chu"})
 	public String index(
 			ModelMap model, 
+			HttpSession session,
 			@RequestParam(value="productPage",required = false) String productPage
 			) {
+		
+		if (session.getAttribute("user") == null) {
+			return "redirect:dang-nhap.htm";
+		}
+		
 		// Số sản phẩm được show lên màn hình chính
 		int total = 4;
 		Long ProductCount = productDao.getLength();

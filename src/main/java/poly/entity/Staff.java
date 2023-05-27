@@ -54,6 +54,7 @@ public class Staff {
 	private float salary;
 	
 	private boolean resigned;
+
 	
 	@OneToMany(mappedBy = "staff", fetch = FetchType.EAGER)
 	private Collection<VendorBill> vendorBills;

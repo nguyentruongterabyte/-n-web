@@ -38,17 +38,17 @@ body, h1, h2, h3, h4, h5, h6 {
 			href="${pageContext.servletContext.contextPath}/"
 			class="w3-bar-item w3-button">Trang chủ</a> <a
 			href="${pageContext.servletContext.contextPath}/don-tu/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách đơn từ</a><a
+			class="w3-bar-item w3-button">Đơn từ</a><a
 			href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách kho hàng</a><a
+			class="w3-bar-item w3-button">Kho hàng</a><a
 			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách sản phẩm</a><a
+			class="w3-bar-item w3-button">Sản phẩm</a><a
 			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách nhân viên</a><a
+			class="w3-bar-item w3-button">Nhân viên</a><a
 			href="${pageContext.servletContext.contextPath}/khach-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách khách hàng</a><a
+			class="w3-bar-item w3-button">Khách hàng</a><a
 			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách nhà cung cấp</a>
+			class="w3-bar-item w3-button">Nhà cung cấp</a>
 			
 	</nav>
 
@@ -57,7 +57,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="w3-white w3-xlarge"
 			style="max-width: 1200px; margin: auto">
 			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-			<div class="w3-right w3-padding-16">Mail</div>
+			<div class="w3-right w3-padding-16"><a href="${pageContext.servletContext.contextPath}/dang-xuat.htm">Log out <span class="glyphicon glyphicon-log-out"></span></a></div>
 			<div class="w3-center w3-padding-16">Quản lý bán nước</div>
 		</div>
 	</div>

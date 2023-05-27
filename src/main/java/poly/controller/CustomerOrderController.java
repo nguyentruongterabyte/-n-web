@@ -94,14 +94,7 @@ public class CustomerOrderController {
 			
 			) {
 		Message message = new Message();
-		@SuppressWarnings("unchecked")
-		List<Inventory> inventories = (List<Inventory>) session.getAttribute("inventories");
-		@SuppressWarnings("unchecked")
-		List<Customer> customers = (List<Customer>) session.getAttribute("customers");
-		CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
-		redirectAttributes.addFlashAttribute("customerOrder", customerOrder);
-		redirectAttributes.addFlashAttribute("customers", customers);
-		redirectAttributes.addFlashAttribute("inventories", inventories);
+//	 
 		Collection<OrderDetail> orderDetails = new ArrayList<>();
 		Order order = new Order();
 		if (productsId != null) {
@@ -141,9 +134,16 @@ public class CustomerOrderController {
 			redirectAttributes.addFlashAttribute("inventory", inventory);
 		}
 		
+		// Xác thực
 		if (productsId == null) {
 			message.setType("error");
 			message.setContent("Vui lòng không để trống giỏ hàng!");
+			redirectAttributes.addFlashAttribute("message", message);
+		}
+		
+		if (Integer.parseInt(receivedMoney) < Integer.parseInt(finalPrice)) {
+			message.setType("error");
+			message.setContent("Số tiền nhận chưa đủ!");
 			redirectAttributes.addFlashAttribute("message", message);
 		}
 		
