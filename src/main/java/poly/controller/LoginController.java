@@ -1,5 +1,6 @@
 package poly.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -32,10 +33,27 @@ public class LoginController {
 	public String login(ModelMap model, 
 				@Validated @ModelAttribute("user") User user,
 				BindingResult errors,
-				HttpSession session
+				HttpSession session,
+				HttpServletRequest request
 			) {
+		
 		Message message = new Message();
-		if (errors.hasErrors()) {
+		String captcha = session.getAttribute("captcha_security").toString();
+		String verifyCaptcha = request.getParameter("captcha");
+		
+		boolean verify = false;
+		
+		if (captcha.equals(verifyCaptcha)) {
+			verify = true;
+		} else {
+			verify = false;
+		}
+			
+		if (errors.hasErrors() || !verify) {
+			
+			if (!verify) {
+				model.addAttribute("reCaptcha", "Vui lòng nhập reCaptcha");
+			}
 			message.setType("error");
 			message.setContent("Vui lòng sửa các lỗi sau đây!");
 			model.addAttribute("user", user);

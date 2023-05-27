@@ -20,9 +20,13 @@ body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Karma", sans-serif
 }
 
+.errors{
+     color:red; font-style: italic;
+}
 </style>
 <body>
     <div class="container">
+
 		<c:if test="${message.type ne null}">
 			<div id="toast">
 				<div class="toast toast--${message.type}">
@@ -68,12 +72,17 @@ body, h1, h2, h3, h4, h5, h6 {
 		                <form:errors path="username"/>
 		                <form:input path="password" type="password" id="inputPassword" class="form-control mt-16" placeholder="Password"/>
 		                <form:errors path="password"/>
+		                <form:input path="email" type="hidden" value="@gmail.com"/>
+		                
+		                <div class="mt-16"><img src="${pageContext.request.contextPath}/captcha/index.htm"></div>
+		                <input name="captcha" type="text" placeholder="Vui lòng nhập captcha" class="form-control">
+		                <h6 class="mb-0 text-sm errors">${reCaptcha}</h6>
+		                
 		                <div id="remember" class="checkbox">
 		                    <label>
 		                        <input type="checkbox" value="remember-me"> Remember me
 		                    </label>
 		                </div>
-		                <form:input path="email" type="hidden" value="@gmail.com"/>
 		                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
 		            </form:form><!-- /form -->
 		            <a href="#" class="forgot-password">
