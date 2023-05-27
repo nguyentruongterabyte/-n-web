@@ -75,7 +75,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		                <form:input path="email" type="hidden" value="@gmail.com"/>
 		                
 		                <div class="mt-16"><img src="${pageContext.request.contextPath}/captcha/index.htm"></div>
-		                <input name="captcha" type="text" placeholder="Vui lòng nhập captcha" class="form-control">
+		                <input name="captcha" type="text" placeholder="Enter captcha" class="form-control">
 		                <h6 class="mb-0 text-sm errors">${reCaptcha}</h6>
 		                
 		                <div id="remember" class="checkbox">
