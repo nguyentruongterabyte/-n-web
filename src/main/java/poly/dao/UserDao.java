@@ -2,6 +2,7 @@ package poly.dao;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,6 +18,15 @@ import poly.message.Message;
 public class UserDao {
 	@Autowired 
 	private SessionFactory factory;
+	
+	public User getByEmail(String email) {
+		Session session = factory.getCurrentSession();
+	    Query query = session.createQuery("FROM User WHERE email = :email");
+	    query.setParameter("email", email);
+	    User user = (User) query.uniqueResult();
+	    return user;
+	}
+	
 	public Message update(User user) {
 		Session session = factory.openSession();
 		Transaction t = session.beginTransaction();

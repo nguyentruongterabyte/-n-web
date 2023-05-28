@@ -54,6 +54,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 	<!-- Top menu -->
 	<div class="w3-top">
+		
 		<div class="w3-white w3-xlarge"
 			style="max-width: 1200px; margin: auto">
 			<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
@@ -63,6 +64,36 @@ body, h1, h2, h3, h4, h5, h6 {
 	</div>
 
 	<!-- !PAGE CONTENT! -->
+			<c:if test="${message.type ne null}">
+			<div id="toast">
+				<div class="toast toast--${message.type}">
+					<div class="toast__icon">
+						<c:choose>
+							<c:when test="${message.type eq 'success'}">
+								<span class="glyphicon glyphicon-ok-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'error'}">
+								<span class="glyphicon glyphicon-exclamation-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'info'}">
+								<span class="glyphicon glyphicon-info-sign"></span>
+							</c:when>
+							<c:when test="${message.type eq 'warning'}">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+							</c:when>
+						</c:choose>
+					</div>
+					<div class="toast__body">
+						<h3 class="toast__title"></h3>
+						<p class="toast__msg">${message.content}</p>
+					</div>
+					<div class="toast__close">
+						<span class="glyphicon glyphicon-remove-circle"></span>
+					</div>
+				</div>
+			</div>
+		</c:if>
+	
 	<div class="w3-main w3-content w3-padding" onclick="w3_close()"
 		style="max-width: 1200px; margin-top: 100px">
 

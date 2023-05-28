@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import poly.dao.UserDao;
 import poly.entity.User;
@@ -23,7 +24,15 @@ public class LoginController {
 	private UserDao userDao;
 	
 	@RequestMapping(value = "dang-nhap", method = RequestMethod.GET) 
-	public String show(ModelMap model) {
+	public String show(ModelMap model, 
+			HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		if (session.getAttribute("user") != null) {
+			// Người dùng đã đăng nhập, chuyển hướng đến trang đã xác thực hoặc trang chính
+			return "redirect:/trang-chu.htm";
+		}
+		
 		User user = new User();
 		model.addAttribute("user", user);
 		return "login";
@@ -34,8 +43,10 @@ public class LoginController {
 				@Validated @ModelAttribute("user") User user,
 				BindingResult errors,
 				HttpSession session,
-				HttpServletRequest request
+				HttpServletRequest request,
+				RedirectAttributes redirectAttributes
 			) {
+		
 		
 		Message message = new Message();
 		String captcha = session.getAttribute("captcha_security").toString();
@@ -81,6 +92,9 @@ public class LoginController {
 		}
 		
 		session.setAttribute("user", user);
+		message.setContent("Đăng nhập thành công");
+		message.setType("success");
+		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:trang-chu.htm";
 	}
 }
