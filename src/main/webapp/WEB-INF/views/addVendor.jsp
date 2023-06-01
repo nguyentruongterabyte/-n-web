@@ -43,16 +43,19 @@ body, h1, h2, h3, h4, h5, h6 {
 			class="w3-bar-item w3-button">Close Menu</a> <a
 			href="${pageContext.servletContext.contextPath}/"
 			class="w3-bar-item w3-button">Trang chủ</a> <a
+			href="${pageContext.servletContext.contextPath}/don-tu/danh-sach.htm"
+			class="w3-bar-item w3-button">Đơn từ</a><a
 			href="${pageContext.servletContext.contextPath}/kho-hang/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách kho hàng</a> <a
+			class="w3-bar-item w3-button">Kho hàng</a><a
 			href="${pageContext.servletContext.contextPath}/san-pham/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách sản phẩm</a><a
+			class="w3-bar-item w3-button">Sản phẩm</a><a
 			href="${pageContext.servletContext.contextPath}/nhan-vien/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách nhân viên</a><a
+			class="w3-bar-item w3-button">Nhân viên</a><a
+			href="${pageContext.servletContext.contextPath}/khach-hang/danh-sach.htm"
+			class="w3-bar-item w3-button">Khách hàng</a><a
 			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách nhà cung cấp  </a><a
-			href="${pageContext.servletContext.contextPath}/nha-cung-cap/danh-sach.htm"
-			class="w3-bar-item w3-button">Danh sách nhà cung cấp</a>
+			class="w3-bar-item w3-button">Nhà cung cấp</a>
+			
 	</nav>
 	<div class="w3-top">
 		<div class="w3-white w3-xlarge"

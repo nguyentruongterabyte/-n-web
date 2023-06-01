@@ -7,7 +7,6 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -21,11 +20,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "`Order`")
 public class Order {
 	@Id
-	@GeneratedValue
 	@Column(name = "Id")
 	private int id;
-	@Column(name = "TransactionDate")
-	private String transactionDate;
 	@DecimalMin(value = "0", message = "Tổng giá không được âm!")
 	@NotNull(message = "Vui lòng nhập tổng giá!")
 	private float totalPrice;
@@ -56,10 +52,9 @@ public class Order {
 		orderDetails = new ArrayList<>();
 	}
 	
-	public Order(int id, String transactionDate, float totalPrice, float vat, float finalPrice, String status, Document document) {
+	public Order(int id, float totalPrice, float vat, float finalPrice, String status, Document document) {
 		super();
 		this.id = id;
-		this.transactionDate = transactionDate;
 		this.totalPrice = totalPrice;
 		this.vat = vat;
 		this.finalPrice = finalPrice;
@@ -74,15 +69,6 @@ public class Order {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getTransactionDate() {
-		return transactionDate;
-	}
-
-	public void setTransactionDate(String transactionDate) {
-		this.transactionDate = transactionDate;
-	}
-
 
 	public float getTotalPrice() {
 		return totalPrice;

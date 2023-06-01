@@ -21,7 +21,6 @@ import poly.dao.InventoryDao;
 import poly.dao.OrderDao;
 import poly.dao.StaffDao;
 import poly.entity.Customer;
-import poly.entity.CustomerOrder;
 import poly.entity.Document;
 import poly.entity.InOutInventory;
 import poly.entity.Inventory;
@@ -138,14 +137,10 @@ public class DocumentController {
 		case "customerorder": {
 			List<Inventory> inventories = inventoryDao.getAll();
 			List<Customer> customers = customerDao.getAll();
-			CustomerOrder customerOrder = new CustomerOrder();
 			
-			customerOrder.setId(document.getId());
-			customerOrder.setDocument(document);
-			
-			session.setAttribute("customers", customers);
+			session.setAttribute("document", document);
 			session.setAttribute("inventories", inventories);
-			session.setAttribute("customerOrder", customerOrder);
+			session.setAttribute("customers", customers);
 			return "redirect:../don-ban-hang/them-moi.htm";
 			
 			

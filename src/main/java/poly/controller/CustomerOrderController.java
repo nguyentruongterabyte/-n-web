@@ -15,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import poly.dao.CustomerDao;
+import poly.dao.CustomerOrderDao;
+import poly.dao.DocumentDao;
 import poly.dao.InventoryDao;
+import poly.dao.OrderDao;
+import poly.dao.OrderDetailDao;
 import poly.dao.ProductDao;
 import poly.entity.Customer;
 import poly.entity.CustomerOrder;
+import poly.entity.Document;
 import poly.entity.Inventory;
 import poly.entity.Order;
 import poly.entity.OrderDetail;
@@ -34,6 +39,18 @@ public class CustomerOrderController {
 	ProductDao productDao;
 	@Autowired
 	CustomerDao customerDao;
+	
+	@Autowired 
+	DocumentDao documentDao;
+	
+	@Autowired
+	OrderDao orderDao;
+	
+	@Autowired
+	OrderDetailDao orderDetailDao;
+	
+	@Autowired
+	CustomerOrderDao customerOrderDao;
 	
 //	final double VATDefault = 0.1;
 	
@@ -93,6 +110,7 @@ public class CustomerOrderController {
 			@RequestParam(value = "extraPaid", required = false) String extraPaid
 			
 			) {
+		// Test
 		Message message = new Message();
 //	 
 		Collection<OrderDetail> orderDetails = new ArrayList<>();
@@ -125,8 +143,9 @@ public class CustomerOrderController {
 
 		redirectAttributes.addFlashAttribute("discount", decimalFormat.format(discountDouble).replace(',', '.'));
 		redirectAttributes.addFlashAttribute("VAT", decimalFormat.format(VATDouble).replace(',', '.'));
+		Customer customer = new Customer();
 		if (customerId.trim().length() != 0) {
-			Customer customer = customerDao.get(Integer.parseInt(customerId));
+			customer = customerDao.get(Integer.parseInt(customerId));
 			redirectAttributes.addFlashAttribute("customer", customer);
 		}
 		if (inventoryId.trim().length() != 0) {
@@ -139,14 +158,47 @@ public class CustomerOrderController {
 			message.setType("error");
 			message.setContent("Vui lòng không để trống giỏ hàng!");
 			redirectAttributes.addFlashAttribute("message", message);
+			return "redirect:them-moi.htm";
+
 		}
 		
 		if (Integer.parseInt(receivedMoney) < Integer.parseInt(finalPrice)) {
 			message.setType("error");
 			message.setContent("Số tiền nhận chưa đủ!");
 			redirectAttributes.addFlashAttribute("message", message);
+			return "redirect:them-moi.htm";
+
 		}
 		
-		return "redirect:them-moi.htm";
+		// Lấy document từ session về
+		Document document = (Document) session.getAttribute("document");
+		// Lưu document vào database
+		documentDao.save(document);
+		
+		// Cài đặt các tham số cho đơn đặt hàng
+		order.setDocument(document);
+		order.setId(document.getId());
+		order.setFinalPrice(Float.parseFloat(finalPrice));
+		order.setTotalPrice(Float.parseFloat(totalPrice));
+		order.setVat(Float.parseFloat(VAT));
+		order.setStatus(status);
+		order.setOrderDetails(orderDetails);
+		// Lưu đơn đặt hàng vào database
+		Message msg = orderDao.save(order);
+		if (!msg.getType().equals("error")) {
+			for (OrderDetail orderDetail : orderDetails) {
+				OrderDetail.Id id = orderDetail.getEmbeddedId();
+				id.setOrder(order);
+				orderDetail.setEmbeddedId(id);
+				
+				// Lưu chi tiết đơn hàng vào cơ sở dữ liệu
+				orderDetailDao.save(orderDetail);
+			}
+		}
+		
+		
+		CustomerOrder customerOrder = new CustomerOrder(document.getId(), customer, Float.parseFloat(discount), Float.parseFloat(extraPaid), document);
+		customerOrderDao.save(customerOrder);
+		return "redirect:../don-tu/danh-sach.htm";
 	}
 }

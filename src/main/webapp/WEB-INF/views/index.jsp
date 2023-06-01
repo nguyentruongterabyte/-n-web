@@ -102,7 +102,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		
 			<c:forEach var="p" items="${products}">
 				<div class="w3-quarter">
-					<img alt="${p.name}" src="${pageContext.servletContext.contextPath}${p.picture}" width="200">
+					<img class="img img-rounded" alt="${p.name}" src="${pageContext.servletContext.contextPath}${p.picture}" width="200">
 					<h3>${p.name}</h3>
 					<p></p>
 				</div>
@@ -115,7 +115,7 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="w3-center w3-padding-32">
 			<div class="w3-bar">
 				<c:if test="${activeProductPage != 1}">
-					<a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>			
+					<a href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=${activeProductPage - 1}" class="w3-bar-item w3-button w3-hover-black">«</a>			
 				</c:if>
 				<c:forEach begin="1" end="${pageProductTotal}" var="pageNumber">
 					
@@ -129,12 +129,12 @@ body, h1, h2, h3, h4, h5, h6 {
 							<a
 							href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=${pageNumber}"
 							class="w3-bar-item w3-button w3-hover-black">${pageNumber}</a>
-					</c:otherwise>
+						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<c:if test="${activeProductPage != pageProductTotal}">
 					 <a
-						href="#"
+						href="${pageContext.servletContext.contextPath}/trang-chu.htm?productPage=${activeProductPage + 1}"
 						class="w3-bar-item w3-button w3-hover-black">»</a>	
 				</c:if>
 			</div>
