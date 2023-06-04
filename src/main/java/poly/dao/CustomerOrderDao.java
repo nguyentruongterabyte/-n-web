@@ -60,7 +60,7 @@ public class CustomerOrderDao {
 			// TODO: handle exception
 			transaction.rollback();
 			message.setType("error");
-			message.setContent("Thêm mới đơn đặt hàng thất bại");
+			message.setContent("Thêm mới đơn đặt hàng thất bại" + e);
 		} finally {
 			session.close();
 		}

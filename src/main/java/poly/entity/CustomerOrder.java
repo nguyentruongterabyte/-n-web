@@ -16,7 +16,6 @@ public class CustomerOrder {
 	@Id
 	private int id;
 	
-	@NotBlank(message = "Vui lòng nhập mã khách hàng!")
 	@ManyToOne
 	@JoinColumn(name = "CustomerId")
 	private Customer customer;

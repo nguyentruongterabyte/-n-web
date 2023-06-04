@@ -64,8 +64,6 @@ public class OrderDetail{
 	@EmbeddedId
 	private Id embeddedId;
 	
-	@NotBlank(message = "Vui lòng nhập số lượng!")
-	@DecimalMin(value = "0", message = "Số lượng không được âm!")
 	private int quantity;
 	
 	private int price;

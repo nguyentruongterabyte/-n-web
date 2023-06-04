@@ -77,7 +77,7 @@ public class InventoryCapabilityDao {
 	
 	public InventoryCapability get(InventoryCapability.Id embeddedId) {
 		Session session = factory.getCurrentSession();
-		InventoryCapability inventoryCapability = (InventoryCapability) session.get(InventoryCapability.class, embeddedId);
+		InventoryCapability inventoryCapability = (InventoryCapability) session.get(InventoryCapability.Id.class, embeddedId);
 		return inventoryCapability;
 	}
 	

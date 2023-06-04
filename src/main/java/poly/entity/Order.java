@@ -42,9 +42,7 @@ public class Order {
 	@OneToMany(mappedBy = "embeddedId.order", fetch = FetchType.EAGER)
 	private Collection<OrderDetail> orderDetails;
 	
-	@OneToOne
-	@JoinColumn(name = "id")
-	private Document document;
+	
 	
 	public Order() {
 		super();
@@ -52,14 +50,14 @@ public class Order {
 		orderDetails = new ArrayList<>();
 	}
 	
-	public Order(int id, float totalPrice, float vat, float finalPrice, String status, Document document) {
+	public Order(int id, float totalPrice, float vat, float finalPrice, String status) {
 		super();
 		this.id = id;
 		this.totalPrice = totalPrice;
 		this.vat = vat;
 		this.finalPrice = finalPrice;
 		this.status = status;
-		this.document = document;
+		
 	}
 
 	public int getId() {
@@ -119,13 +117,6 @@ public class Order {
 	}
 
 
-	public Document getDocument() {
-		return document;
-	}
-
-
-	public void setDocument(Document document) {
-		this.document = document;
-	}
+	
 	
 }

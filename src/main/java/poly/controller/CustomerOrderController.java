@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import poly.dao.CustomerDao;
 import poly.dao.CustomerOrderDao;
 import poly.dao.DocumentDao;
+import poly.dao.InventoryCapabilityDao;
 import poly.dao.InventoryDao;
 import poly.dao.OrderDao;
 import poly.dao.OrderDetailDao;
@@ -25,6 +26,7 @@ import poly.entity.Customer;
 import poly.entity.CustomerOrder;
 import poly.entity.Document;
 import poly.entity.Inventory;
+import poly.entity.InventoryCapability;
 import poly.entity.Order;
 import poly.entity.OrderDetail;
 import poly.entity.Product;
@@ -51,6 +53,9 @@ public class CustomerOrderController {
 	
 	@Autowired
 	CustomerOrderDao customerOrderDao;
+	
+	@Autowired
+	InventoryCapabilityDao inventoryCapabilityDao;
 	
 //	final double VATDefault = 0.1;
 	
@@ -175,14 +180,19 @@ public class CustomerOrderController {
 		// Lưu document vào database
 		documentDao.save(document);
 		
+		
+		
 		// Cài đặt các tham số cho đơn đặt hàng
-		order.setDocument(document);
 		order.setId(document.getId());
 		order.setFinalPrice(Float.parseFloat(finalPrice));
 		order.setTotalPrice(Float.parseFloat(totalPrice));
 		order.setVat(Float.parseFloat(VAT));
 		order.setStatus(status);
+		
 		order.setOrderDetails(orderDetails);
+		
+		order.setInOutInventoryDetails(null);
+	
 		// Lưu đơn đặt hàng vào database
 		Message msg = orderDao.save(order);
 		if (!msg.getType().equals("error")) {
@@ -190,15 +200,23 @@ public class CustomerOrderController {
 				OrderDetail.Id id = orderDetail.getEmbeddedId();
 				id.setOrder(order);
 				orderDetail.setEmbeddedId(id);
-				
 				// Lưu chi tiết đơn hàng vào cơ sở dữ liệu
 				orderDetailDao.save(orderDetail);
+				
 			}
 		}
 		
+		for (int i = 0; i <  productsId.length; i++) {
+			// 
+			Product p = productDao.get(Integer.parseInt(productsId[i]));
+			InventoryCapability inventoryCapability = inventoryCapabilityDao.get(new InventoryCapability.Id(p, inventoryDao.get(Integer.parseInt(inventoryId))));
+			inventoryCapability.setCurrentCount( inventoryCapability.getCurrentCount() - Integer.parseInt(productsQuantity[i]));
+			inventoryCapabilityDao.update(inventoryCapability);
+		}
 		
 		CustomerOrder customerOrder = new CustomerOrder(document.getId(), customer, Float.parseFloat(discount), Float.parseFloat(extraPaid), document);
-		customerOrderDao.save(customerOrder);
+		msg = customerOrderDao.save(customerOrder);
+		System.out.println(msg.getContent());
 		return "redirect:../don-tu/danh-sach.htm";
 	}
 }
